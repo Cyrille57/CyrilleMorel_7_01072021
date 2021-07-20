@@ -15,25 +15,12 @@ const router = express.Router();
 // PostController:
 const postCtrl = require('../controllers/postCtrl');
 
-router.get("/", postCtrl.index)
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Routes:
 
-// Création de post:
-//router.post('/', postCtrl.createPost);
-/*
-// Récupération d'un post:
-router.get('/:id', postController.getOnePost);
+router.post("/", postCtrl.save)
 
-// Récupération de tous les posts:
-router.get('/', postController.getAllPost);
-
-// Modification de post:
-router.put('/:id', postController.modifyPost);
-
-// Suppresion de post:
-router.delete('/:id', postController.deletePost);
-*/
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Exportation:
 

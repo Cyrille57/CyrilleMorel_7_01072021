@@ -11,7 +11,7 @@ const app = express();
 const postRoute = require ('./routes/postRoute');
 
 // Package body-parser:
-//const bodyParser = require("body-parser"); // Convertit le corp de la requéte en json en objet Js
+const bodyParser = require("body-parser"); // Convertit le corp de la requéte en json en objet Js
 
 // Mysql:
 //const connectDB = require('./config/connexion')
@@ -42,8 +42,8 @@ app.use((req, res, next) => {
 // Appelée à chaque requête envoyée au serveur:
 
 // Body-parser,défini la fonction json, comme middleware global pour l'application:
-//app.use(bodyParser.json());                         // convertit le corp de la requéte en json en objet Javascript
-//app.use(bodyParser.urlencoded({ extended: true}));  // force le parse dans les objet inclus dans d'autre
+app.use(bodyParser.json());                         // convertit le corp de la requéte en json en objet Javascript
+app.use(bodyParser.urlencoded({ extended: true}));  // force le parse dans les objet inclus dans d'autre
 
 // Les routes:
 app.use('/posts', postRoute)
