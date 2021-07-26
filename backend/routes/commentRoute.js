@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////
-// Logique de routing post: ///////////////////
+// Logique de routing comment: ////////////////
 ///////////////////////////////////////////////
 
 
@@ -13,7 +13,7 @@ const express = require('express')
 const router = express.Router()
 
 // PostController:
-const postCtrl = require('../controllers/postCtrl')
+const commentCtrl = require('../controllers/commentCtrl')
 
 // auth.js:
 const auth = require('../middleware/auth')
@@ -21,20 +21,20 @@ const auth = require('../middleware/auth')
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Routes:
 
-// Créer un post:
-router.post('/', auth, postCtrl.createPost)
+// Créer un comment:
+router.post('/', auth, commentCtrl.createComment)
 
-// Modifie le post:
-router.put('/:id', auth, postCtrl.modifyPost)
+// Modifie le comment:
+router.put('/:id', auth, commentCtrl.modifyComment)
 
-// Supprime le post:
-router.delete('/:id', auth, postCtrl.deletePost)
+// Supprime le comment:
+router.delete('/:id', auth, commentCtrl.deleteComment)
 
 // Récupére via l'id:
-router.get('/:id', postCtrl.getOnePost)
+router.get('/:id', commentCtrl.getOneComment)
 
 // Récupére tout:
-router.get('/', postCtrl.getAllPosts)
+router.get('/', commentCtrl.getAllComments)
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Exportation:

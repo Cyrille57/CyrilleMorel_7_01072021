@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////
-// Logique de routing post: ///////////////////
+// Logique de routing user: ///////////////////
 ///////////////////////////////////////////////
 
 
@@ -13,7 +13,7 @@ const express = require('express')
 const router = express.Router()
 
 // PostController:
-const postCtrl = require('../controllers/postCtrl')
+const userCtrl = require('../controllers/userCtrl')
 
 // auth.js:
 const auth = require('../middleware/auth')
@@ -21,20 +21,26 @@ const auth = require('../middleware/auth')
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Routes:
 
-// Créer un post:
-router.post('/', auth, postCtrl.createPost)
+// Signup:
+router.post('/signup', userCtrl.signup)
 
-// Modifie le post:
-router.put('/:id', auth, postCtrl.modifyPost)
+// Login:
+router.post('/login', userCtrl.login);
 
-// Supprime le post:
-router.delete('/:id', auth, postCtrl.deletePost)
+// Modifie le mdp:
+//router.post('/change_password', userCtrl.changePasswordUser);
+
+// Modifie le user:
+router.put('/:id', auth, userCtrl.modifyUser)
+
+// Supprime le user:
+//router.delete('/:id', userCtrl .deletePost)
 
 // Récupére via l'id:
-router.get('/:id', postCtrl.getOnePost)
+router.get('/:id', auth, userCtrl.getUserProfil)
 
 // Récupére tout:
-router.get('/', postCtrl.getAllPosts)
+//router.get('/', userCtrl .getAllPosts)
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Exportation:
