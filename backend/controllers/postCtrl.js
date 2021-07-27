@@ -22,7 +22,7 @@ exports.createPost = (req, res) => {
   const post = {
     content:    req.body.content,
     attachment: req.body.attachment,
-    idUser:     97,
+    idUser:     118,
   }
 
   const schemaValidator = {

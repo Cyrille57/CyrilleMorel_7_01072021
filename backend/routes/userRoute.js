@@ -27,17 +27,14 @@ router.post('/signup', userCtrl.signup)
 // Login:
 router.post('/login', userCtrl.login);
 
-// Modifie le mdp:
-//router.post('/change_password', userCtrl.changePasswordUser);
+// Récupére via l'id (dashboard):
+router.get('/dashboard/:id', auth, userCtrl.getUserProfil);
 
 // Modifie le user:
-router.put('/:id', auth, userCtrl.modifyUser)
+router.put('/dashboard/:id', auth, userCtrl.modifyUser);
 
 // Supprime le user:
-//router.delete('/:id', userCtrl .deletePost)
-
-// Récupére via l'id:
-router.get('/:id', auth, userCtrl.getUserProfil)
+//router.delete('/dashboard/:id', auth, userCtrl.deletePost);
 
 // Récupére tout:
 //router.get('/', userCtrl .getAllPosts)

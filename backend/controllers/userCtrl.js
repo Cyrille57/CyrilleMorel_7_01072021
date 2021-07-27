@@ -20,6 +20,8 @@ const bcrypt = require('bcrypt')
 // Jsonwebtoken d'authentification:
 const jwt = require('jsonwebtoken')
 
+const uuid = require('uuid');
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Regex :
 
@@ -49,6 +51,8 @@ exports.signup = (req, res) => {
     admin
   } = req.body
 
+  const uuid = require('uuid');
+  console.log(uuid.v4());
   // *****************************************************************************************
   // Validation des données:
 
@@ -122,7 +126,7 @@ exports.signup = (req, res) => {
               })
               .catch((err) => {
                 res.status(500).json({
-                  error: "Impossible d'ajouter un utilisateur",
+                  error: "Le pseudo existe déja",
                 })
               })
 
@@ -130,7 +134,7 @@ exports.signup = (req, res) => {
 
         } else {
           return res.status(409).json({
-            error: 'Ce compte existe déjà ',
+            error: 'L\'email existe déjà',
           })
         }
 
@@ -236,9 +240,6 @@ exports.getUserProfil = (req, res) => {
         error: error,
       })
     })
-
-
-
 }
 
 // Modifie le user:
@@ -299,14 +300,11 @@ exports.modifyUser = (req, res) => {
 
 
 
-
 /*
   let userObject = {}
-
   userObject = {
     ...req.body,
   }
-
 */
   // *****************************************************************************************
   // Vakidation des saisies utilisateur:
@@ -318,10 +316,8 @@ exports.modifyUser = (req, res) => {
       max:      50
     }
   }
-
   const v = new Validator();
   const validationResponse = v.validate(userObject, schemaValidator)
-
   if(validationResponse !== true){
     return res.status(400).json({
       message: "Validation échouée",
@@ -356,7 +352,6 @@ exports.modifyUser = (req, res) => {
         error: error
       })
     )
-
   })
   || (userObject = {
         ...req.body,
@@ -380,7 +375,6 @@ exports.modifyUser = (req, res) => {
         error,
       })
     );
-
 */
 
 }

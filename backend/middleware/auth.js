@@ -10,6 +10,7 @@ const dotEnv = require("dotenv").config();
 const jwt = require('jsonwebtoken');
 
 
+
 module.exports = (req, res, next) => {
   try {
     // Extrait le token du header Authorization de la requête entrante:

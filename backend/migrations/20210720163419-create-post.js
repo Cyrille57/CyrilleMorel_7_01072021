@@ -8,8 +8,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idUser: {
-        type: Sequelize.INTEGER,
+      uuidUser: {
+        type: Sequelize.UUID,
+        //type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
           model: 'Users',
