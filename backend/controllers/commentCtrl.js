@@ -12,6 +12,7 @@ const Validator = require("fastest-validator");
 // Model:
 const Comment = require('../models/comment')
 
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 // CRUD:
 
@@ -21,11 +22,14 @@ exports.createComment = (req, res) => {
   // *****************************************************************************************
   // Déclarations:
   const comment = {
+    userId: req.body.userid,
+    postId:  15,//req.body.postId,
     content: req.body.content,
-    idPost: 14, //req.body.idPost,
-    idUser: 97,
   }
 
+  console.log('INFO CREATECOMMENT:')
+  console.log(req.body)
+  console.log(req.body.postid)
   // *****************************************************************************************
   // Vakidation des saisies utilisateur:
   const schemaValidator = {

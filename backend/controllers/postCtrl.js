@@ -22,9 +22,12 @@ exports.createPost = (req, res) => {
   const post = {
     content:    req.body.content,
     attachment: req.body.attachment,
-    idUser:     118,
+    userId:     req.body.userid,
   }
 
+console.log('INFO CREATEPOST:')
+console.log(req.body)
+console.log(req.body.userid)
   const schemaValidator = {
     content: {
       type:     "string",

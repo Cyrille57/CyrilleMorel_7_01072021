@@ -5,9 +5,9 @@ const { Sequelize, DataTypes } = require('sequelize')
 
 const comment = db.define('Comment', {
   // Model attributes are defined here
-  content: DataTypes.TEXT,
-  idPost: DataTypes.INTEGER,
-  idUser: DataTypes.INTEGER,
+  userId: DataTypes.INTEGER,
+  postId: DataTypes.INTEGER,
+  content: DataTypes.TEXT
 })
 
 module.exports = comment

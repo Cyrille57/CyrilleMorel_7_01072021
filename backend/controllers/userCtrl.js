@@ -51,6 +51,9 @@ exports.signup = (req, res) => {
     admin
   } = req.body
 
+  console.log( 'INFOS INSCRIPTION:' )
+  console.log(req.body)
+
   const uuid = require('uuid');
   console.log(uuid.v4());
   // *****************************************************************************************
@@ -105,6 +108,7 @@ exports.signup = (req, res) => {
     })
     .then(
       ((userFound) => {
+
         if (!userFound) {
 
           bcrypt.hash(password, 10, function (err, bcryptPassword) {
@@ -115,7 +119,7 @@ exports.signup = (req, res) => {
                 email:      Buffer.from(req.body.email).toString("hex"),
                 password:   bcryptPassword,
                 bio:        bio,
-                admin:      false
+                admin:      req.body.admin
               })
 
               .then((newUser) => {
@@ -216,15 +220,17 @@ exports.login = (req, res) => {
 // Dashboard:
 exports.getUserProfil = (req, res) => {
 
+//console.log(req.params.id)
+
   models.findOne({
-    attributes: ['id', 'username', 'email', 'password', 'bio'],
+    attributes: ['id', 'username', 'email', 'password', 'bio', 'admin'],
     where: {
       id: req.params.id,
-      email:    Buffer.from(req.body.email).toString("hex")
+      //email:    Buffer.from(req.body.email).toString("hex")
     },
   })
     .then(user => {
-      if (!user) {
+      if (user) {
 
         res.status(200).json(user)
       } else {
@@ -264,27 +270,32 @@ exports.modifyUser = (req, res) => {
       id: req.params.id,
     },
   })
-  .then((user) => {
+  .then(
+    (user) => {
     if (user) {
 
-      res.status(200).json(user)
+      bcrypt.hash(password, 10, function (err, bcryptPassword) {
 
-      models.update({
-        username:   (username ? username : user.username),
-        email:      (email ? email : user.email),
-        password:   (password ? password : user.password),
-        bio:        (bio ? bio : user.bio)
-      })
-      .then(() => {
-        res.status(200).json({
-          message: 'Votre profil a correctement été modifié !'
+        user.update({
+          username:   (username ? username : user.username),
+          email:      (email ? email : user.email),
+          password:   (bcryptPassword ? bcryptPassword : bcryptPassword),
+          bio:        (bio ? bio : user.bio)
         })
-        .catch((err) => {
-          res.status(500).json({
-            error: "Impossible de modifier votre profil",
+
+        .then(() => {
+          res.status(201).json({
+            message: 'Votre profil a correctement été modifié !'
           })
         })
+        .catch((err) => {
+            res.status(500).json({
+              error: "Impossible de modifier votre profil",
+          })
+        })
+
       })
+
     } else {
       res.status(404).json({
         message: 'Profil introuvable !',

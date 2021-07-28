@@ -11,7 +11,8 @@ module.exports = {
       content: {
         type: Sequelize.TEXT
       },
-      idPost: {
+      postId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
@@ -19,7 +20,8 @@ module.exports = {
           key: 'id'
         }
       },
-      idUser: {
+      userId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {

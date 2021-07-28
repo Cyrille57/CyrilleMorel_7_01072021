@@ -20,9 +20,10 @@ module.exports = (req, res, next) => {
     // Extrait l'ID user du token:
     const userId = decodedToken.userId;
     // Si la demande contient un ID user, compare à celui extrait du token:
-    if (req.body.userId && req.body.userId !== userId) {
+    if (req.body.userId && req.body.userId !== userId ) {
       throw 'Invalid user ID';
     } else {
+      req.body.userid = userId
       // L'user est authentifié:
       next();
     }
@@ -34,4 +35,22 @@ module.exports = (req, res, next) => {
   }
 };
 
+/*
+module.exports = (req, res, next) => {
 
+  const checkAdmin = req.body.admin
+  console.log(checkAdmin)
+  const authAdmin = (permissions => {
+    if (permissions == checkAdmin){
+      console.log ('admin autorisé !')
+    } else {
+      console.log(' pas admin ? Pas de chocolat §')
+    }
+  })
+
+  console.log(checkAdmin)
+  if (req.user.admin){
+
+  }
+}
+*/

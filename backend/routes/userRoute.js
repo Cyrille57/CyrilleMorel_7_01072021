@@ -18,6 +18,8 @@ const userCtrl = require('../controllers/userCtrl')
 // auth.js:
 const auth = require('../middleware/auth')
 
+const admin = require('../middleware/authAdmin')
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Routes:
 
@@ -27,8 +29,11 @@ router.post('/signup', userCtrl.signup)
 // Login:
 router.post('/login', userCtrl.login);
 
+// Admin:
+router.post('/admin', auth, userCtrl.getUserProfil)
+
 // Récupére via l'id (dashboard):
-router.get('/dashboard/:id', auth, userCtrl.getUserProfil);
+//router.get('/dashboard/:id', auth, userCtrl.getUserProfil);
 
 // Modifie le user:
 router.put('/dashboard/:id', auth, userCtrl.modifyUser);

@@ -5,7 +5,7 @@ const { Sequelize, DataTypes } = require('sequelize')
 
 const post = db.define('Post', {
   // Model attributes are defined here
-  idUser: DataTypes.INTEGER,
+  userId: DataTypes.INTEGER,
   content: DataTypes.STRING,
   attachment: DataTypes.STRING,
   likes: DataTypes.INTEGER,
