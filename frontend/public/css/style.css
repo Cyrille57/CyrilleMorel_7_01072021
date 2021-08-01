@@ -1,6 +1,5 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400&display=swap");
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
 .bg-gradient {
   background: #dc882b;
   background: linear-gradient(124deg, #dc882b 0%, #8f5bfe 100%);

@@ -17,13 +17,23 @@ function addClass(name, classe) {
 
 //////////////////////////////////////////////////////////
 // affiche le mot de passe:
-
+/*
 function showPassword() {
-  var password = document.getElementById('inputPassword');
+
+  const password = document.getElementById('inputPassword');
+
   if (password.type === 'password') {
-  password.type = "text";
+    console.log('INFOS SHOWPASSWORD IF')
+    console.log(password.type)
+    password.type = "text";
   }
   else {
+    console.log('INFOS SHOWPASSWORD ELSE')
+    console.log(password.type)
   password.type = "password";
   }
-  }
+
+}
+*/
+
+}
