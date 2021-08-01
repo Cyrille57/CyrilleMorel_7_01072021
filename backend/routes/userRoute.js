@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////
-// Logique de routing user: ///////////////////
+// Logique de routing auth: ///////////////////
 ///////////////////////////////////////////////
 
 
@@ -12,37 +12,50 @@ const express = require('express')
 // Création de gestionnaires de route modulaires:
 const router = express.Router()
 
-// PostController:
-const userCtrl = require('../controllers/userCtrl')
+// AuthAdmin:
+const authAdmin = require('../middleware/authAdmin')
 
 // auth.js:
 const auth = require('../middleware/auth')
 
-const admin = require('../middleware/authAdmin')
+// User Controller:
+const userCtrl = require('../controllers/userCtrl')
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Routes:
+
+// *****************************************************************************************
+// Authentification:
 
 // Signup:
 router.post('/signup', userCtrl.signup)
 
 // Login:
-router.post('/login', userCtrl.login);
+router.post('/login', userCtrl.login)
 
-// Admin:
-router.post('/admin', auth, userCtrl.getUserProfil)
+// LogOut:
+/router.get('/logout', userCtrl.logout)
 
-// Récupére via l'id (dashboard):
-//router.get('/dashboard/:id', auth, userCtrl.getUserProfil);
+// *****************************************************************************************
+// Crud User:
 
-// Modifie le user:
-router.put('/dashboard/:id', auth, userCtrl.modifyUser);
-
-// Supprime le user:
-//router.delete('/dashboard/:id', auth, userCtrl.deletePost);
+// Récupére via l'id:
+router.get('/:id', auth, userCtrl.getOneUser)
 
 // Récupére tout:
-//router.get('/', userCtrl .getAllPosts)
+router.get('/', auth, userCtrl.getAllUsers)
+
+// Modifie le user:
+router.put('/:id', auth, userCtrl.modifyUser);
+
+// Supprime le user:
+router.delete('/:id', auth, userCtrl.deleteUser);
+
+// Admin:
+//router.get('/', userCtrl.getUserProfil);
+
+// Page 404:
+//router.get('*', userCtrl.notFound )
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Exportation:

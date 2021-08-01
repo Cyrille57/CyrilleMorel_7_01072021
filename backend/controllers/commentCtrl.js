@@ -23,13 +23,14 @@ exports.createComment = (req, res) => {
   // Déclarations:
   const comment = {
     userId: req.body.userid,
-    postId:  15,//req.body.postId,
+    postId:  req.body.postId,//24,//req.params.postId,//15,//req.body.postId,
     content: req.body.content,
   }
 
   console.log('INFO CREATECOMMENT:')
   console.log(req.body)
   console.log(req.body.postid)
+  //console.log(res.locals.userId)
   // *****************************************************************************************
   // Vakidation des saisies utilisateur:
   const schemaValidator = {
@@ -53,6 +54,8 @@ exports.createComment = (req, res) => {
 
   // *****************************************************************************************
   // Code création:
+
+
   Comment.create(comment)
     .then((result) => {
       res.status(201).json({
@@ -66,6 +69,7 @@ exports.createComment = (req, res) => {
         error: error
       })
     })
+
 }
 
 // Modifie le comment:

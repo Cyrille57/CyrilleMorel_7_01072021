@@ -18,6 +18,7 @@ const Post = require('../models/post')
 
 // Créer un post :
 exports.createPost = (req, res) => {
+  console.log('LOG DE REQ.USER:')
 
   const post = {
     content:    req.body.content,
@@ -26,8 +27,17 @@ exports.createPost = (req, res) => {
   }
 
 console.log('INFO CREATEPOST:')
+console.log('REQ.BODY:')
 console.log(req.body)
+console.log('REQ.BODY.USERID:')
 console.log(req.body.userid)
+console.log('REQ.BODY.ADMIN:')
+console.log(req.body.admin)
+console.log('REQ.PARAMS:')
+console.log(req.params)
+console.log('REQ.PARAMS.ADMIN:')
+console.log(req.params.admin)
+
   const schemaValidator = {
     content: {
       type:     "string",

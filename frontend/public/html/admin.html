@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
+
+  <!-- style.css -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  <title>Dashboard Admin</title>
+</head>
+<body>
+
+
+  <!-- Navbar header: -->
+  <header>
+    <nav class='navbar navbar-expand-lg navbar-light bg-light'>
+      <div class='container-fluid'>
+        <a class='navbar-brand' href='#'>Groupomania</a>
+        <button
+          class='navbar-toggler'
+          type='button'
+          data-bs-toggle='collapse'
+          data-bs-target='#navbarSupportedContent'
+          aria-controls='navbarSupportedContent'
+          aria-expanded='false'
+          aria-label='Toggle navigation'
+        >
+          <span class='navbar-toggler-icon'></span>
+        </button>
+        <div class='collapse navbar-collapse' id='navbarSupportedContent'>
+          <ul class='navbar-nav me-auto mb-2 mb-lg-0'>
+            <li class='nav-item'>
+              <a class='nav-link active' aria-current='page' href='#'>Home</a>
+            </li>
+
+
+          </ul>
+          <form class='d-flex'>
+            <input
+              class='form-control me-2'
+              type='search'
+              placeholder='Search'
+              aria-label='Search'
+            />
+            <button class='btn btn-outline-success' type='submit'>Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- TEST :-->
+
+  <h1>Authors</h1>
+<ul id="authors"></ul>
+
+   <!-- FIN TEST :-->
+
+  <div class="container">
+<!-- Tableau pour la partie administration: -->
+<table class='table table-darktable-hover table-bordered mt-5'>
+
+<thead class="">
+  <tr class="table table-ligh text-center align-middle ">
+    <th scope='col' class="col-sm-3">#</th>
+    <th scope='col' class="col-sm-3">Pseudo</th>
+    <th scope='col' class="col-sm-3">Email</th>
+    <th scope='col' class=" col-sm-3">Action</th>
+  </tr>
+</thead>
+
+<tbody>
+  <tr class="text-center table-striped align-middle text-white">
+
+    <th scope='row'>1</th>
+    <td >Mark</td>
+    <td>Otto</td>
+
+    <td class="d-flex justify-content-center ">
+      <a href='http://' type='button' class='btn btn-light btn-small'>
+        <i class='bi bi-eye'></i>
+          Vue
+      </a>
+      <a href='http://' type='button' class='btn btn-light btn-small mx-3'>
+        <i class='bi bi-pencil'></i>
+          Éditer
+      </a>
+      <a href='http://' type='button' class='btn btn-light btn-small'>
+        <i class='bi bi-person-x'></i>
+          Supprimer
+      </a>
+    </td>
+
+  </tr>
+</tbody>
+</table>
+
+</div>
+
+
+  <!-- Script: -->
+  <script src="../js/admin.js"></script>
+
+</body>
+</html>

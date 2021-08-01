@@ -3,6 +3,7 @@ const { db } = require('../config/connexion')
 
 const { Sequelize, DataTypes } = require('sequelize')
 
+
 const user = db.define('User', {
   // Model attributes are defined here
   username: {
@@ -13,7 +14,7 @@ const user = db.define('User', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
   password: {
     type: DataTypes.STRING,
@@ -23,7 +24,6 @@ const user = db.define('User', {
   admin: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-    defaultValue: false
   }
 })
 

@@ -2,6 +2,7 @@
 // Logique globale de l'application (user) ////
 ///////////////////////////////////////////////
 
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Importation :
 
@@ -20,7 +21,6 @@ const bcrypt = require('bcrypt')
 // Jsonwebtoken d'authentification:
 const jwt = require('jsonwebtoken')
 
-const uuid = require('uuid');
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Regex :
@@ -38,6 +38,9 @@ const bioRegex = /(\w+)([\W+^\s])$/
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Fonction:
 
+// *****************************************************************************************
+// Authentification:
+
 // Inscription:
 exports.signup = (req, res) => {
 
@@ -53,12 +56,13 @@ exports.signup = (req, res) => {
 
   console.log( 'INFOS INSCRIPTION:' )
   console.log(req.body)
+  console.log( 'INFOS INSCRIPTION RES.BODY.ADMIN:' )
+  console.log(req.body.admin)
 
-  const uuid = require('uuid');
-  console.log(uuid.v4());
+
   // *****************************************************************************************
   // Validation des données:
-
+/*
   // username:
   if (username.length > 20) {
     return res.json({
@@ -91,7 +95,7 @@ exports.signup = (req, res) => {
   }
 
   // bio:
-  /*  if(!bioRegex.test(bio)){
+    if(!bioRegex.test(bio)){
       return res.status(400).json({
         message: ' Les caractéres spéciaux ne sont pas valides'
       })
@@ -103,7 +107,7 @@ exports.signup = (req, res) => {
       attributes: ['email', 'username'], // --> instead of ['email'] ['username']
       where: {
         username: req.body.username, // -> If you are getting username from the request body
-        email:    Buffer.from(req.body.email).toString("hex")
+        email:    req.body.email//Buffer.from(req.body.email).toString("hex")
       }
     })
     .then(
@@ -119,13 +123,15 @@ exports.signup = (req, res) => {
                 email:      Buffer.from(req.body.email).toString("hex"),
                 password:   bcryptPassword,
                 bio:        bio,
-                admin:      req.body.admin
+                admin:      admin
               })
 
               .then((newUser) => {
                 res.status(201).json({
+                  adminoupas : newUser.admin,
                   userId: newUser.id,
                   message: 'Merci, votre inscription est bien pris en compte !'
+
                 })
               })
               .catch((err) => {
@@ -154,7 +160,8 @@ exports.login = (req, res) => {
   // Déclarations:
   const {
     email,
-    password
+    password,
+    admin
   } = req.body
 
   // *****************************************************************************************
@@ -217,36 +224,13 @@ exports.login = (req, res) => {
 
 }
 
-// Dashboard:
-exports.getUserProfil = (req, res) => {
+exports.logout = (req, res) => [
 
-//console.log(req.params.id)
+]
 
-  models.findOne({
-    attributes: ['id', 'username', 'email', 'password', 'bio', 'admin'],
-    where: {
-      id: req.params.id,
-      //email:    Buffer.from(req.body.email).toString("hex")
-    },
-  })
-    .then(user => {
-      if (user) {
 
-        res.status(200).json(user)
-      } else {
-        res.status(404).json({
-          message: 'Profil introuvable !',
-        })
-      }
-
-    })
-    .catch((error) => {
-      res.status(500).json({
-        message:'Impossible de vérifier ce profil',
-        error: error,
-      })
-    })
-}
+// *****************************************************************************************
+// Crud:
 
 // Modifie le user:
 exports.modifyUser = (req, res) => {
@@ -310,82 +294,120 @@ exports.modifyUser = (req, res) => {
   })
 
 
+}
 
-/*
-  let userObject = {}
-  userObject = {
-    ...req.body,
-  }
-*/
-  // *****************************************************************************************
-  // Vakidation des saisies utilisateur:
- /* const schemaValidator = {
-    content: {
-      type:     "string",
-      optional: false,
-      min:      2,
-      max:      50
-    }
-  }
-  const v = new Validator();
-  const validationResponse = v.validate(userObject, schemaValidator)
-  if(validationResponse !== true){
-    return res.status(400).json({
-      message: "Validation échouée",
-      errors: validationResponse
-    })
-  }*/
-/*
-  models
-  .findOne({
-    attributes: ['username', 'email', 'password', 'bio'],
+// Supprime le user:
+exports.deleteUser = (req, res) => {
+
+  models.findOne({
     where: {
       id: req.params.id,
-    }
+    },
   })
-  .then(user => {
-    models.update({
-      _id: req.params.id,
-      ...userObject
-    },{
+  .then((user) => {
+
+    models.destroy({
       where: {
         id: req.params.id,
       },
-    })
-    .then(() =>
-      res.status(200).json({
-        message: 'Votre profil a correctement été modifié !',
       })
-    )
+      .then(() =>
+        res.status(200).json({
+          message: 'L\'utilisateur a correctement été supprimé !',
+        })
+      )
+      .catch((error) =>
+        res.status(400).json({
+          error,
+        })
+      )
+
+    })
     .catch((error) =>
-      res.status(400).json({
-        message: "Désolé, votre profil n'a pas pu être modifié",
+      res.status(500).json({
+        message: 'Désolé, l\'utilisateur n\'a pas pu être supprimé !',
         error: error
       })
     )
-  })
-  || (userObject = {
-        ...req.body,
-      });
-  models.updateOne(
-    {
-      _id: req.params.id,
-    },
-    {
-      ...userObject,
-      _id: req.params.id,
-    }
-  )
-    .then(() =>
-      res.status(200).json({
-        message: "Votre profil a correctement été modifié !",
-      })
-    )
-    .catch((error) =>
-      res.status(400).json({
-        error,
-      })
-    );
-*/
-
 }
+
+// Récupére via l'id:
+exports.getOneUser = (req, res) => {
+
+  console.log('LOG DE REQ.PARAMS:')
+  console.log(req.params)
+  console.log('LOG DE REQ.BODY:')
+  console.log(req.body)
+
+
+
+  models.findOne({
+    where: {
+      id: req.params.id,
+    },
+
+  }
+  )
+    .then((user) => {
+
+      if (user) {
+        res.status(200).json(user)
+      } else {
+        res.status(404).json({
+          message: 'User introuvable !',
+        })
+      }
+
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error: error,
+      })
+    })
+}
+
+// Récupére tout:
+exports.getAllUsers =(req, res) => {
+
+console.log( 'INFOS ADMIN USERCTRL: req-body-admin')
+console.log( req.body.admin)
+console.log('REQ.PARAMS.ADMIN')
+console.log(req.params.admin)
+
+  models.findAll(
+    ({
+      attributes: {
+          exclude: ['password']
+      }
+  })
+  )
+    .then((user) => {
+      console.log('Récupere USERCTRL le .then:')
+        console.log(req.body.admin)
+
+      /*if (req.body.admin != false){
+
+        console.log('Récupere USERCTRL tout dans le if:')
+        console.log(req.body.admin)
+
+        res.status(500)
+        res.send('non autorisé')
+      }*/
+      res.status(200).json(user)
+    })
+    .catch((error) => {
+      res.status(400).json({
+        message: 'Désolés, les utilisateurs n\'ont pas pu être chargés',
+        error: error
+      })
+    })
+}
+
+
+
+
+
+
+
+
+

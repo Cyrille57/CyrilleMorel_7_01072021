@@ -12,17 +12,8 @@
 // Framework Express:
 const express = require('express')
 
-// Instance de l'objet express :
-const app = express()
-
-// Route User:
-const userRoute = require('./routes/userRoute')
-
-// Route Post:
-const postRoute = require('./routes/postRoute')
-
-// Route Comment:
-const commentRoute = require('./routes/commentRoute')
+// Module Helmet:
+const helmet = require("helmet");
 
 // Package body-parser:
 const bodyParser = require('body-parser') // Convertit le corp de la requéte en json en objet Js
@@ -30,12 +21,29 @@ const bodyParser = require('body-parser') // Convertit le corp de la requéte en
 // Mysql:
 const connectDB = require('./config/connexion')
 
+// Route Auth:
+//const authRoute = require('./routes/userRoute')
+
+// Route User:
+const userRoute = require('./routes/userRoute')
+// Route Post:
+const postRoute = require('./routes/postRoute')
+// Route Comment:
+const commentRoute = require('./routes/commentRoute')
+
+
+// Instance de l'objet express :
+const app = express()
+
+// Module helmet:
+app.use(helmet());
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Ajoute des headers pour permettre l'accées à l'api:
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000') // accés depuis localhost ou si en ligne, mettre l'ip du serveur
+  res.setHeader('Access-Control-Allow-Origin', '*') // accés depuis localhost ou si en ligne, mettre l'ip du serveur
   res.setHeader(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization'
@@ -59,13 +67,16 @@ app.use(
   })
 ) // force le parse dans les objet inclus dans d'autre
 
+
 // Les routes:
+// Authentification:
+//app.use('/api/auth', authRoute);
 // User:
-app.use('/api/auth', userRoute)
+app.use('/api/users', userRoute);
 // Post:
-app.use('/api/posts', postRoute)
+app.use('/api/posts', postRoute);
 // Comment:
-app.use('/api/comments', commentRoute)
+app.use('/api/comments', commentRoute);
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
