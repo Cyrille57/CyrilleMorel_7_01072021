@@ -177,7 +177,7 @@ function displayAll(result) {
         actionVue.setAttribute('type', 'button')
         actionVue.setAttribute("data-actionVue", result[i].id)
         actionVue.innerHTML = 'Vue'
-        console.log()
+        console.log('http://localhost:3000/api/users/' + result[i].id)
 
         // Icone de vue:
         let logoVue = createTag('i')
@@ -246,25 +246,8 @@ function displayAll(result) {
         actionDelete.appendChild(logoDelete)
 
         // Ecoue les évenement des bpoutons actions:
-        // Vue:
-        actionVue.addEventListener('click', (event) => {
-            event.preventDefault();
-            //console.log(event)
-            // Cible l'id du less utilisé:
-            let idVue = event.target.getAttribute('data-actionVue')
-        })
-
-        // Edit:
-        actionEdit.addEventListener('click', (event) => {
-            event.preventDefault();
-            //console.log(event)
-            // Cible l'id du less utilisé:
-            let idEdit = event.target.getAttribute('data-actionEdit')
-        })
-
 
         //Vue:
-        // Ecoue les évenement des bpoutons actions:
         actionVue.addEventListener('click', (event) => {
 
             // Cible l'id du delete utilisé:
@@ -283,7 +266,7 @@ function displayAll(result) {
                 headers: new Headers({
                     "Content-Type": "application/json;charset=UTF-8"
                 }),
-                //body: JSON.stringify(result),
+                body: JSON.stringify(),
                 mode: 'cors',
                 cache: 'default'
             };
@@ -297,17 +280,24 @@ function displayAll(result) {
 
         })
 
+        // Edit:
+        actionEdit.addEventListener('click', (event) => {
+            event.preventDefault();
+            //console.log(event)
+            // Cible l'id du less utilisé:
+            let idEdit = event.target.getAttribute('data-actionEdit')
+        })
+
         //Edit:
         // Ecoue les évenement des bpoutons actions:
         actionEdit.addEventListener('click', (event) => {
 
             // Cible l'id du delete utilisé:
-            let idDelete = event.target.getAttribute('data-actionEdit')
-            console.log(idDelete)
+            let idEdit = event.target.getAttribute('data-actionEdit')
+            console.log(idEdit)
 
             // Selectionne l'id  de la ligne
-            let getDelete = document.getElementById('trBody_' + idDelete)
-            console.log(getDelete)
+            let getDelete = document.getElementById('trBody_' + idEdit)
 
             // vas sur la page profil correspondant:
             const url = 'http://localhost:3000/api/users/:id'
