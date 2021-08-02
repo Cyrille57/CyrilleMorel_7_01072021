@@ -173,16 +173,17 @@ function displayAll(result) {
         addClass(actionVue, 'btn')
         addClass(actionVue, 'btn-light')
         addClass(actionVue, 'btn-small')
-        actionVue.setAttribute('href', 'http://localhost:3000/api/users/:id')
+        actionVue.setAttribute('href', 'http://localhost:3000/api/users/' + result[i].id)
         actionVue.setAttribute('type', 'button')
         actionVue.setAttribute("data-actionVue", result[i].id)
         actionVue.innerHTML = 'Vue'
+        console.log()
 
         // Icone de vue:
         let logoVue = createTag('i')
         addClass(logoVue, 'bi')
         addClass(logoVue, 'bi-eye')
-        logoVue.setAttribute("data-actionDelete", result[i].id)
+        logoVue.setAttribute("data-actionVue", result[i].id)
 
         // Edit:
         let actionEdit = createTag('a')
@@ -199,7 +200,7 @@ function displayAll(result) {
         let logoEdit = createTag('i')
         addClass(logoEdit, 'bi')
         addClass(logoEdit, 'bi-pencil-square')
-        logoEdit.setAttribute("data-actionDelete", result[i].id)
+        logoEdit.setAttribute("data-actionEdit", result[i].id)
 
         // Delete:
         let actionDelete = createTag('a')
@@ -262,7 +263,7 @@ function displayAll(result) {
         })
 
 
-         //Vue:
+        //Vue:
         // Ecoue les évenement des bpoutons actions:
         actionVue.addEventListener('click', (event) => {
 
@@ -275,14 +276,28 @@ function displayAll(result) {
             console.log(getDelete)
 
             // vas sur la page profil correspondant:
+            const url = 'http://localhost:3000/api/users/:id'
 
+            var myInit = {
+                method: "GET",
+                headers: new Headers({
+                    "Content-Type": "application/json;charset=UTF-8"
+                }),
+                //body: JSON.stringify(result),
+                mode: 'cors',
+                cache: 'default'
+            };
+
+            // Fetch à laquelle on donne en paramétres l'url et options:
+            fetch(url, myInit)
+                .then(response => response.json())
 
             // Recharge la page:
             //location.reload()
 
         })
 
-         //Edit:
+        //Edit:
         // Ecoue les évenement des bpoutons actions:
         actionEdit.addEventListener('click', (event) => {
 
@@ -295,7 +310,21 @@ function displayAll(result) {
             console.log(getDelete)
 
             // vas sur la page profil correspondant:
+            const url = 'http://localhost:3000/api/users/:id'
 
+            var myInit = {
+                method: "PUT",
+                headers: new Headers({
+                    "Content-Type": "application/json;charset=UTF-8"
+                }),
+                body: JSON.stringify(result),
+                mode: 'cors',
+                cache: 'default'
+            };
+
+            // Fetch à laquelle on donne en paramétres l'url et options:
+            fetch(url, myInit)
+                .then(response => response.json())
 
             // Recharge la page:
             //location.reload()
@@ -313,15 +342,15 @@ function displayAll(result) {
             // supprime la ligne:
             getDelete.remove(idDelete)
 
-            let getDataBdd = JSON.parse('result')
+            //let getDataBdd = JSON.parse(result.getItem('result'))
 
             let removeIndex = getDataBdd.map(function (item) {
-                return item.idDelete ;
+                return item.idDelete;
             }).indexOf(idDelete);
 
             getDataBdd.splice(removeIndex, 1)
 
-            if (getDataBdd.length == 0){
+            if (getDataBdd.length == 0) {
                 // Va à la page:
                 //window.location = "panierEmpty.html"
             }
@@ -331,17 +360,17 @@ function displayAll(result) {
             var myInit = {
                 method: "DELETE",
                 headers: new Headers({
-                  "Content-Type": "application/json;charset=UTF-8"
+                    "Content-Type": "application/json;charset=UTF-8"
                 }),
                 body: JSON.stringify(result),
                 mode: 'cors',
                 cache: 'default'
-              };
+            };
 
-              // Fetch à laquelle on donne en paramétres l'url et options:
-              fetch(url, myInit)
+            // Fetch à laquelle on donne en paramétres l'url et options:
+            fetch(url, myInit)
                 .then(response => response.json())
-                // Quand la promesse est tenue, elle est parsée au format Json
+            // Quand la promesse est tenue, elle est parsée au format Json
 
             // Recharge la page:
             //location.reload()
@@ -402,5 +431,3 @@ function findOne(result) {
     })
 
 }
-
-
