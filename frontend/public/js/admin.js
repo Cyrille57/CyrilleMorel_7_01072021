@@ -182,6 +182,7 @@ function displayAll(result) {
         let logoVue = createTag('i')
         addClass(logoVue, 'bi')
         addClass(logoVue, 'bi-eye')
+        logoVue.setAttribute("data-actionDelete", result[i].id)
 
         // Edit:
         let actionEdit = createTag('a')
@@ -198,6 +199,7 @@ function displayAll(result) {
         let logoEdit = createTag('i')
         addClass(logoEdit, 'bi')
         addClass(logoEdit, 'bi-pencil-square')
+        logoEdit.setAttribute("data-actionDelete", result[i].id)
 
         // Delete:
         let actionDelete = createTag('a')
@@ -213,6 +215,7 @@ function displayAll(result) {
         let logoDelete = createTag('i')
         addClass(logoDelete, 'bi')
         addClass(logoDelete, 'bi-x-square')
+        logoDelete.setAttribute("data-actionDelete", result[i].id)
 
         // Ajout corp du tableau:
         tBody.appendChild(trBody)
