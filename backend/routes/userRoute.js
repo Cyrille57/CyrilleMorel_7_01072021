@@ -40,10 +40,10 @@ router.post('/login', userCtrl.login)
 // Crud User:
 
 // Récupére via l'id:
-router.get('/:id', auth, userCtrl.getOneUser)
+router.get('/:id',  userCtrl.getOneUser)
 
 // Récupére tout:
-router.get('/', auth, userCtrl.getAllUsers)
+router.get('/',  userCtrl.getAllUsers)
 
 // Modifie le user:
 router.put('/:id', auth, userCtrl.modifyUser);

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,25 +12,20 @@
   <!-- style.css -->
   <link rel="stylesheet" href="../css/style.css">
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
   <title>Dashboard Admin</title>
 </head>
-<body>
 
+<body>
 
   <!-- Navbar header: -->
   <header>
     <nav class='navbar navbar-expand-lg navbar-light bg-light'>
       <div class='container-fluid'>
         <a class='navbar-brand' href='#'>Groupomania</a>
-        <button
-          class='navbar-toggler'
-          type='button'
-          data-bs-toggle='collapse'
-          data-bs-target='#navbarSupportedContent'
-          aria-controls='navbarSupportedContent'
-          aria-expanded='false'
-          aria-label='Toggle navigation'
-        >
+        <button class='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarSupportedContent'
+          aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
           <span class='navbar-toggler-icon'></span>
         </button>
         <div class='collapse navbar-collapse' id='navbarSupportedContent'>
@@ -42,69 +38,78 @@
           </ul>
           <form class='d-flex'>
             <input
-              class='form-control me-2'
-              type='search'
-              placeholder='Search'
-              aria-label='Search'
-            />
-            <button class='btn btn-outline-success' type='submit'>Search</button>
+            id="search"
+            class='form-control me-2'
+            type='search'
+            placeholder='Search'
+            value=""
+            aria-label='Search' />
+  <!--          <button
+            id="searchButton"
+            class='btn btn-outline-success'
+            type='submit'>Search</button>-->
           </form>
-        </div>
+          <div id="suggestions"></div>
       </div>
+
     </nav>
+
   </header>
 
-  <!-- TEST :-->
+  <main><!--
+    <div class="container">
+      <div class="row">
+        <div class="col-12 ">-->
+          <!-- Tableau pour la partie administration: -->
+<!--       <table class='table table-dark table-hover table-bordered mt-5'>
 
-  <h1>Authors</h1>
-<ul id="authors"></ul>
+            <thead class="">
+              <tr class="table table-light text-center align-middle">
+                <th scope='col' class="col-sm-3">#</th>
+                <th scope='col' class="col-sm-3">Pseudo</th>
+                <th scope='col' class="col-sm-3">Email</th>
+                <th scope='col' class=" col-sm-3">Action</th>
+              </tr>
+            </thead>
 
-   <!-- FIN TEST :-->
+            <tbody>
+              <tr class="text-center table-striped align-middle text-white">
 
-  <div class="container">
-<!-- Tableau pour la partie administration: -->
-<table class='table table-darktable-hover table-bordered mt-5'>
+                <th scope='row'>1</th>
+                <td>Mark</td>
+                <td>Otto</td>
 
-<thead class="">
-  <tr class="table table-ligh text-center align-middle ">
-    <th scope='col' class="col-sm-3">#</th>
-    <th scope='col' class="col-sm-3">Pseudo</th>
-    <th scope='col' class="col-sm-3">Email</th>
-    <th scope='col' class=" col-sm-3">Action</th>
-  </tr>
-</thead>
+                <td class="d-flex justify-content-center ">
+                  <a href='http://' type='button' class='btn btn-light btn-small'>
+                    <i class='bi bi-eye'></i>
+                    Vue
+                  </a>
 
-<tbody>
-  <tr class="text-center table-striped align-middle text-white">
+                  <a href='http://' type='button' class='btn btn-light btn-small mx-3'>
+                    <i class='bi bi-pencil'></i>
+                    Éditer
+                  </a>
 
-    <th scope='row'>1</th>
-    <td >Mark</td>
-    <td>Otto</td>
+                  <a href='http://' type='button' class='btn btn-light btn-small'>
+                    <i class='bi bi-person-x'></i>
+                    Supprimer
+                  </a>
+                </td>
 
-    <td class="d-flex justify-content-center ">
-      <a href='http://' type='button' class='btn btn-light btn-small'>
-        <i class='bi bi-eye'></i>
-          Vue
-      </a>
-      <a href='http://' type='button' class='btn btn-light btn-small mx-3'>
-        <i class='bi bi-pencil'></i>
-          Éditer
-      </a>
-      <a href='http://' type='button' class='btn btn-light btn-small'>
-        <i class='bi bi-person-x'></i>
-          Supprimer
-      </a>
-    </td>
+              </tr>
 
-  </tr>
-</tbody>
-</table>
 
-</div>
-
+            </tbody>
+          </table>-->
+        </div>
+      </div>
+    </div>
+  </main>
 
   <!-- Script: -->
+  <script src="../js/function.js"></script>
   <script src="../js/admin.js"></script>
 
 </body>
+
 </html>

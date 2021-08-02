@@ -107,7 +107,7 @@ exports.signup = (req, res) => {
       attributes: ['email', 'username'], // --> instead of ['email'] ['username']
       where: {
         username: req.body.username, // -> If you are getting username from the request body
-        email:    req.body.email//Buffer.from(req.body.email).toString("hex")
+        email:    req.body.email
       }
     })
     .then(
@@ -120,7 +120,7 @@ exports.signup = (req, res) => {
             const newUser = models
               .create({
                 username:   username,
-                email:      Buffer.from(req.body.email).toString("hex"),
+                email:      email,
                 password:   bcryptPassword,
                 bio:        bio,
                 admin:      admin
@@ -186,7 +186,7 @@ exports.login = (req, res) => {
   models
     .findOne({
       where: {
-        email: Buffer.from(req.body.email).toString("hex")
+        email: req.body.email
       }
     })
     .then(user => {
@@ -402,7 +402,6 @@ console.log(req.params.admin)
       })
     })
 }
-
 
 
 

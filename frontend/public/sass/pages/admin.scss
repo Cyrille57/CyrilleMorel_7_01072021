@@ -1,0 +1,36 @@
+// ***************************************
+// admin.html ****************************
+// ***************************************
+
+/*
+Search
+#suggestions > li {
+  position: relative;
+  bottom: 40px;
+  left: 40px;
+  text-decoration: none;
+  list-style-type: none;
+  color: red;
+}
+*/
+
+#suggestions{
+  max-height: 50px;
+  width: 26%;
+  position: relative;
+  top: 44px;
+  right: 230px;
+  background-color: white;
+  overflow:  auto;
+
+  li{
+    list-style: none;
+  }
+}
+
+.lienSearch{
+
+  background-color: white;
+  color: black;
+  text-decoration: none;
+}
