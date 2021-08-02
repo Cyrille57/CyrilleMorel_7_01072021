@@ -305,10 +305,40 @@ function displayAll(result) {
             // Cible l'id du delete utilisé:
             let idDelete = event.target.getAttribute('data-actionDelete')
             console.log(idDelete)
+            // Cible l'id de la ligne correspondant:
             let getDelete = document.getElementById('trBody_' + idDelete)
-            console.log(getDelete)
             // supprime la ligne:
             getDelete.remove(idDelete)
+
+            let getDataBdd = JSON.parse('result')
+
+            let removeIndex = getDataBdd.map(function (item) {
+                return item.idDelete ;
+            }).indexOf(idDelete);
+
+            getDataBdd.splice(removeIndex, 1)
+
+            if (getDataBdd.length == 0){
+                // Va à la page:
+                //window.location = "panierEmpty.html"
+            }
+
+            const url = 'http://localhost:3000/api/users/:id'
+
+            var myInit = {
+                method: "DELETE",
+                headers: new Headers({
+                  "Content-Type": "application/json;charset=UTF-8"
+                }),
+                body: JSON.stringify(result),
+                mode: 'cors',
+                cache: 'default'
+              };
+
+              // Fetch à laquelle on donne en paramétres l'url et options:
+              fetch(url, myInit)
+                .then(response => response.json())
+                // Quand la promesse est tenue, elle est parsée au format Json
 
             // Recharge la page:
             //location.reload()

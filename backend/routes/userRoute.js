@@ -49,7 +49,7 @@ router.get('/',  userCtrl.getAllUsers)
 router.put('/:id', auth, userCtrl.modifyUser);
 
 // Supprime le user:
-router.delete('/:id', auth, userCtrl.deleteUser);
+router.delete('/:id',  userCtrl.deleteUser);
 
 // Admin:
 //router.get('/', userCtrl.getUserProfil);
