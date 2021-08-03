@@ -5,11 +5,54 @@
 
 const url = 'http://localhost:3000/api/users/login'
 
- // Création de l'objet;
-let userConnect = {
+const loginForm = document.getElementById('loginForm')
+
+singUpForm.addEventListener('submit', function(event) {
+
+  event.preventDefault()
+  console.log('Connexion.js log de event:')
+  console.log(event)
+
+  // Création de l'objet;
+  let formData = {
   email: document.getElementById('inputEmail').value,
   password: document.getElementById('inputPassword').value
+  }
+  console.log('connexion.js log de formData:')
+  console.log(formData)
+
+  var myInit = {
+    method: "post",
+    headers: new Headers({
+      "Content-Type": "application/json;charset=UTF-8"
+    }),
+    body: JSON.stringify(formData),
+    mode: 'cors',
+    cache: 'default'
+  };
+  console.log('connexion.js log de myInit:')
+  console.log(myInit)
+
+    // Fetch à laquelle on donne en paramétres l'url et options:
+  fetch(url, myInit)
+  .then(response => response.json())
+  // Quand la promesse est tenue, elle est parsée au format Json
+  /*.then(json_object => {
+      // Quand la promesse est tenue, crée une variable qui contient l'objet:
+      let getUser = json_object
+      console.log(getUser)
+      // Va à la page:-
+      //window.location = "../html/postWall.html"
+  })*/
+  .catch((error) => {
+    console.log(error)
+  })
+
 }
+
+
+
+
 
 console.log('DETAILS USERCONNECT:')
 console.log(userConnect)
@@ -30,7 +73,7 @@ console.log(url)
 
 // Fetch à laquelle on donne en paramétres l'url et options:
 fetch(url, myInit)
-  .then(response => response.json())
+  .then(response => console.log(response)//response.json())
   // Quand la promesse est tenue, elle est parsée au format Json
   .then(json_object => {
       // Quand la promesse est tenue, crée une variable qui contient l'objet:
