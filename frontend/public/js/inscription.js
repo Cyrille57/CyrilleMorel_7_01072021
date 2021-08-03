@@ -2,20 +2,20 @@
 // Inscription.js /////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 
-const sendSignIn = (() =>{
 
-  // Sélection du bouton "valider la commande":
+
+  // Sélection du bouton submit:
   let btnValidateOrder = document.getElementById('buttonConfirmationSignIn')
 
   btnValidateOrder.addEventListener("click", (event) => {
 
-    event.preventDefault()
+    //event.preventDefault()
 
      // Création de l'objet;
     let userRegister = {
-      username: document.getElementById('inputPseudo').value,
-      email: document.getElementById('inputEmail').value,
-      password: document.getElementById('inputPassword').value
+      username:   document.getElementById('inputPseudo').value,
+      email:      document.getElementById('inputEmail').value,
+      password:   document.getElementById('inputPassword').value
     }
     console.log(userRegister)
 
@@ -47,7 +47,6 @@ const sendSignIn = (() =>{
       //window.location = "confirmation.html"
   })
 
-})
 
 
 
