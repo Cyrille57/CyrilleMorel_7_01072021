@@ -54,52 +54,52 @@ exports.signup = (req, res) => {
     admin
   } = req.body
 
-  console.log( 'INFOS INSCRIPTION:' )
+  console.log('INFOS INSCRIPTION:')
   console.log(req.body)
-  console.log( 'INFOS INSCRIPTION RES.BODY.ADMIN:' )
+  console.log('INFOS INSCRIPTION RES.BODY.ADMIN:')
   console.log(req.body.admin)
 
 
   // *****************************************************************************************
   // Validation des données:
-/*
-  // username:
-  if (username.length > 20) {
-    return res.json({
-      status: 'error',
-      message: 'Le nombre de caractére dépasse le nombre requis'
-    })
-  }
-
-  if (username.length <= 2) {
-    return res.json({
-      status: 'error',
-      message: 'Le nombre de caractére n\'as pas atteint le nombre requis'
-    })
-  }
-
-  // email:
-  if (!emailRegex.test(email)) {
-    return res.json({
-      status: 'error',
-      message: 'Le mail n\'est pas valide'
-    })
-  }
-
-  //  password:
-  if (!passwordRegex.test(password)) {
-    return res.json({
-      status: 'error',
-      message: 'Le mot de passe doit contenir une lettre majuscule, une lettre minuscule, un chiffre, un caractère spécial et au moins 8 caractères'
-    })
-  }
-
-  // bio:
-    if(!bioRegex.test(bio)){
-      return res.status(400).json({
-        message: ' Les caractéres spéciaux ne sont pas valides'
+  /*
+    // username:
+    if (username.length > 20) {
+      return res.json({
+        status: 'error',
+        message: 'Le nombre de caractére dépasse le nombre requis'
       })
-    }*/
+    }
+
+    if (username.length <= 2) {
+      return res.json({
+        status: 'error',
+        message: 'Le nombre de caractére n\'as pas atteint le nombre requis'
+      })
+    }
+
+    // email:
+    if (!emailRegex.test(email)) {
+      return res.json({
+        status: 'error',
+        message: 'Le mail n\'est pas valide'
+      })
+    }
+
+    //  password:
+    if (!passwordRegex.test(password)) {
+      return res.json({
+        status: 'error',
+        message: 'Le mot de passe doit contenir une lettre majuscule, une lettre minuscule, un chiffre, un caractère spécial et au moins 8 caractères'
+      })
+    }
+
+    // bio:
+      if(!bioRegex.test(bio)){
+        return res.status(400).json({
+          message: ' Les caractéres spéciaux ne sont pas valides'
+        })
+      }*/
   // *****************************************************************************************
   // Code inscription:
   models
@@ -107,7 +107,7 @@ exports.signup = (req, res) => {
       attributes: ['email', 'username'], // --> instead of ['email'] ['username']
       where: {
         username: req.body.username, // -> If you are getting username from the request body
-        email:    req.body.email
+        email: req.body.email
       }
     })
     .then(
@@ -119,16 +119,16 @@ exports.signup = (req, res) => {
 
             const newUser = models
               .create({
-                username:   username,
-                email:      email,
-                password:   bcryptPassword,
-                bio:        bio,
-                admin:      admin
+                username: username,
+                email: email,
+                password: bcryptPassword,
+                bio: bio,
+                admin: admin
               })
 
               .then((newUser) => {
                 res.status(201).json({
-                  adminoupas : newUser.admin,
+                  adminoupas: newUser.admin,
                   userId: newUser.id,
                   message: 'Merci, votre inscription est bien pris en compte !'
 
@@ -207,9 +207,9 @@ exports.login = (req, res) => {
           }
           res.status(200).json({
             //data: token,
-            status:   '201',
-            message:  'Authentification reussie !',
-            token:    jwt.sign({
+            status: '201',
+            message: 'Authentification reussie !',
+            token: jwt.sign({
                 userId: user.id
               },
               process.env.TOKEN_LOGIN_USER, {
@@ -248,51 +248,50 @@ exports.modifyUser = (req, res) => {
   // *****************************************************************************************
   // Code modification:
   models
-  .findOne({
-    attributes: ['id', 'username', 'email', 'password', 'bio'],
-    where: {
-      id: req.params.id,
-    },
-  })
-  .then(
-    (user) => {
-    if (user) {
-
-      bcrypt.hash(password, 10, function (err, bcryptPassword) {
-
-        user.update({
-          username:   (username ? username : user.username),
-          email:      (email ? email : user.email),
-          password:   (bcryptPassword ? bcryptPassword : bcryptPassword),
-          bio:        (bio ? bio : user.bio)
-        })
-
-        .then(() => {
-          res.status(201).json({
-            message: 'Votre profil a correctement été modifié !'
-          })
-        })
-        .catch((err) => {
-            res.status(500).json({
-              error: "Impossible de modifier votre profil",
-          })
-        })
-
-      })
-
-    } else {
-      res.status(404).json({
-        message: 'Profil introuvable !',
-      })
-    }
-  })
-  .catch((error) => {
-    res.status(500).json({
-      message:'Impossible de vérifier ce profil',
-      error: error,
+    .findOne({
+      attributes: ['id', 'username', 'email', 'password', 'bio'],
+      where: {
+        id: req.params.id,
+      },
     })
-  })
+    .then(
+      (user) => {
+        if (user) {
 
+          bcrypt.hash(password, 10, function (err, bcryptPassword) {
+
+            user.update({
+                username: (username ? username : user.username),
+                email: (email ? email : user.email),
+                password: (bcryptPassword ? bcryptPassword : bcryptPassword),
+                bio: (bio ? bio : user.bio)
+              })
+
+              .then(() => {
+                res.status(201).json({
+                  message: 'Votre profil a correctement été modifié !'
+                })
+              })
+              .catch((err) => {
+                res.status(500).json({
+                  error: "Impossible de modifier votre profil",
+                })
+              })
+
+          })
+
+        } else {
+          res.status(404).json({
+            message: 'Profil introuvable !',
+          })
+        }
+      })
+    .catch((error) => {
+      res.status(500).json({
+        message: 'Impossible de vérifier ce profil',
+        error: error,
+      })
+    })
 
 }
 
@@ -300,27 +299,27 @@ exports.modifyUser = (req, res) => {
 exports.deleteUser = (req, res) => {
 
   models.findOne({
-    where: {
-      id: req.params.id,
-    },
-  })
-  .then((user) => {
-
-    models.destroy({
       where: {
         id: req.params.id,
       },
-      })
-      .then(() =>
-        res.status(200).json({
-          message: 'L\'utilisateur a correctement été supprimé !',
+    })
+    .then((user) => {
+
+      models.destroy({
+          where: {
+            id: req.params.id,
+          },
         })
-      )
-      .catch((error) =>
-        res.status(400).json({
-          error,
-        })
-      )
+        .then(() =>
+          res.status(200).json({
+            message: 'L\'utilisateur a correctement été supprimé !',
+          })
+        )
+        .catch((error) =>
+          res.status(400).json({
+            error,
+          })
+        )
 
     })
     .catch((error) =>
@@ -342,12 +341,11 @@ exports.getOneUser = (req, res) => {
 
 
   models.findOne({
-    where: {
-      id: req.params.id,
-    },
+      where: {
+        id: req.params.id,
+      },
 
-  }
-  )
+    })
     .then((user) => {
 
       if (user) {
@@ -367,23 +365,23 @@ exports.getOneUser = (req, res) => {
 }
 
 // Récupére tout:
-exports.getAllUsers =(req, res) => {
+exports.getAllUsers = (req, res) => {
 
-console.log( 'INFOS ADMIN USERCTRL: req-body-admin')
-console.log( req.body.admin)
-console.log('REQ.PARAMS.ADMIN')
-console.log(req.params.admin)
+  console.log('INFOS ADMIN USERCTRL: req-body-admin')
+  console.log(req.body.admin)
+  console.log('REQ.PARAMS.ADMIN')
+  console.log(req.params.admin)
 
   models.findAll(
-    ({
-      attributes: {
+      ({
+        attributes: {
           exclude: ['password']
-      }
-  })
-  )
+        }
+      })
+    )
     .then((user) => {
       console.log('Récupere USERCTRL le .then:')
-        console.log(req.body.admin)
+      console.log(req.body.admin)
 
       /*if (req.body.admin != false){
 
@@ -402,11 +400,3 @@ console.log(req.params.admin)
       })
     })
 }
-
-
-
-
-
-
-
-

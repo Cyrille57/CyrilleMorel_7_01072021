@@ -173,7 +173,8 @@ function displayAll(result) {
         addClass(actionVue, 'btn')
         addClass(actionVue, 'btn-light')
         addClass(actionVue, 'btn-small')
-        actionVue.setAttribute('href', 'http://localhost:3000/api/users/' + result[i].id)
+        //actionVue.setAttribute('href', 'http://localhost:3000/api/users/' + result[i].id)
+        actionVue.setAttribute('href', '../html/vueProfil.html')
         actionVue.setAttribute('type', 'button')
         actionVue.setAttribute("data-actionVue", result[i].id)
         actionVue.innerHTML = 'Vue'
@@ -332,7 +333,7 @@ function displayAll(result) {
             // supprime la ligne:
             getDelete.remove(idDelete)
 
-            //let getDataBdd = JSON.parse(result.getItem('result'))
+            let getDataBdd = JSON.parse(result.getItem('result'))
 
             let removeIndex = getDataBdd.map(function (item) {
                 return item.idDelete;

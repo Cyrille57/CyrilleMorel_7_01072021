@@ -7,7 +7,7 @@ const { Sequelize, DataTypes } = require('sequelize')
 const user = db.define('User', {
   // Model attributes are defined here
   username: {
-    type: DataTypes.TEXT,
+    type: DataTypes.STRING,
     allowNull: false,
     unique: true
   },
