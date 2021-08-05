@@ -6,8 +6,6 @@
 const url = 'http://localhost:3000/api/posts'
 
 
-
-
 async function connect(url) {
 
     // Creer un nouvel objet Ajax de type XMLHttpRequest:
@@ -24,7 +22,7 @@ async function connect(url) {
 
             // envoie le result à la fonction display:
             displayAll(result)
-            getUrlUser (result)
+            getUrlUser(result)
             //findOne(result)
 
         } else if (this.readyState == XMLHttpRequest.DONE && this.status == 500) {
@@ -42,9 +40,9 @@ async function connect(url) {
 connect(url)
 
 
-function getUrlUser(result){
+function getUrlUser(result) {
 
-    const urlGetUser = []
+    let urlGetUser = []
     for (var i = 0; i < result.length; i++) {
 
         let findUrlUser = 'http://localhost:3000/api/users/' + result[i].userId
@@ -60,13 +58,7 @@ function getUrlUser(result){
 
 function displayAll(result, urlGetUser) {
 
-
-    //console.log(urlGetUser.length)
-    //console.log(urlGetUser.length)
-    //console.log(urlGetUser)
-
-    //console.log(result.username)
-
+    console.log(urlGetUser)
 
     //Selectionne l'id parent:
     let main = document.querySelector('main')
@@ -134,6 +126,7 @@ function displayAll(result, urlGetUser) {
     addClass(divBtnSendPost, 'btn--sendPost')
     addClass(divBtnSendPost, 'shadow')
     addClass(divBtnSendPost, 'rounded')
+    divBtnSendPost.setAttribute('id', 'btnSendPost')
     divBtnSendPost.setAttribute('type', 'button')
     divBtnSendPost.innerHTML = 'Post'
 
@@ -149,10 +142,8 @@ function displayAll(result, urlGetUser) {
     // Ajout des élément de base:
     main.appendChild(divContainer)
 
-
     divContainer.appendChild(divRow)
     divRow.appendChild(divCol)
-
 
     // Frame card-send-post:
     divCol.appendChild(divFrameCardSendPost)
@@ -176,142 +167,176 @@ function displayAll(result, urlGetUser) {
     divFrameBtn.appendChild(divBtnSendPost)
 
     // icone Post:
-    divBtnSendPost.appendChild( spanIconPost)
+    divBtnSendPost.appendChild(spanIconPost)
 
 
     for (var i = 0; i < result.length; i++) {
 
+        // Frame card read post:
+        let divFrameCardReadPost = createTag('div')
+        addClass(divFrameCardReadPost, 'frameCard')
+        addClass(divFrameCardReadPost, 'd-flex')
+        addClass(divFrameCardReadPost, 'justify-content-center')
 
+        // Card read post:
+        let divCardRead = createTag('div')
+        addClass(divCardRead, 'card-read-post')
+        addClass(divCardRead, 'shadow')
+        addClass(divCardRead, 'rounded')
 
-        /*
-            let = createTag('')
-            addClass(, '')
-            .setAttribute('', '')
-
-
-        */
-            // Frame card read post:
-            let divFrameCardReadPost = createTag('div')
-            addClass(divFrameCardReadPost, 'frameCard')
-            addClass(divFrameCardReadPost, 'd-flex')
-            addClass(divFrameCardReadPost, 'justify-content-center')
-
-            // Card read post:
-            let divCardRead = createTag('div')
-            addClass(divCardRead, 'card-read-post')
-            addClass(divCardRead, 'shadow')
-            addClass(divCardRead, 'rounded')
-
-            // Card read Post username:
-            let divCardReadPostUsername = createTag('div')
-            addClass(divCardReadPostUsername, 'card-read-post__username')
+        // Card read Post username:
+        let divCardReadPostUsername = createTag('div')
+        addClass(divCardReadPostUsername, 'card-read-post__username')
 
 
 
 
 
-            // Nom de l'user:
-            let h2User = createTag('h2')
-            h2User.innerHTML= result[i].username
+        // Nom de l'user:
+        let h2User = createTag('h2')
+        h2User.innerHTML = result[i].username
 
-            // Card read Post displayPost:
-            let divCardReadPostDisplayPost = createTag('div')
-            addClass(divCardReadPostDisplayPost, 'card-read-post__displayPost')
-            addClass(divCardReadPostDisplayPost, 'shadow')
-            addClass(divCardReadPostDisplayPost, 'rounded')
-            addClass(divCardReadPostDisplayPost, 'text-white')
+        // Card read Post displayPost:
+        let divCardReadPostDisplayPost = createTag('div')
+        addClass(divCardReadPostDisplayPost, 'card-read-post__displayPost')
+        addClass(divCardReadPostDisplayPost, 'shadow')
+        addClass(divCardReadPostDisplayPost, 'rounded')
+        addClass(divCardReadPostDisplayPost, 'text-white')
 
-            // Post:
-            let pPost = createTag('p')
-            pPost.innerHTML = result[i].content
+        // Post:
+        let pPost = createTag('p')
+        pPost.innerHTML = result[i].content
 
-            // Icon modifyPost
-            let spanIconModifyPost = createTag('span')
-            addClass(spanIconModifyPost , 'card-read-post__iconModifyPost')
+        // Icon modifyPost
+        let spanIconModifyPost = createTag('span')
+        addClass(spanIconModifyPost, 'card-read-post__iconModifyPost')
 
-            // Icon:
-            let iconModifyPost = createTag('i')
-            addClass(iconModifyPost, 'fas')
-            addClass(iconModifyPost, 'fa-bars')
+        // Icon:
+        let iconModifyPost = createTag('i')
+        addClass(iconModifyPost, 'fas')
+        addClass(iconModifyPost, 'fa-bars')
 
-            // card-read-post__option"
-            let divPostOption = createTag('div')
-            addClass(divPostOption, 'card-read-post__option')
+        // card-read-post__option"
+        let divPostOption = createTag('div')
+        addClass(divPostOption, 'card-read-post__option')
 
-            // card-read-post__createComment
-            let divOptionCreateComment = createTag('div')
-            addClass(divOptionCreateComment, 'card-read-post__createComment')
+        // card-read-post__createComment
+        let divOptionCreateComment = createTag('div')
+        addClass(divOptionCreateComment, 'card-read-post__createComment')
 
-            // button createComment:
-            let buttonCreateComment = createTag('button')
-            addClass(buttonCreateComment, 'btn-sendComment')
-            addClass(buttonCreateComment, 'shadow')
-            addClass(buttonCreateComment, 'rounded')
-            buttonCreateComment.setAttribute('type', 'button')
-            buttonCreateComment.innerHTML= "Comment"
+        // button createComment:
+        let buttonCreateComment = createTag('button')
+        addClass(buttonCreateComment, 'btn-sendComment')
+        addClass(buttonCreateComment, 'shadow')
+        addClass(buttonCreateComment, 'rounded')
+        buttonCreateComment.setAttribute('type', 'button')
+        buttonCreateComment.innerHTML = "Comment"
 
-            // Icone createComment:
-            let iconCreateComment= createTag('i')
-            addClass(iconCreateComment ,'far')
-            addClass(iconCreateComment ,'fa-comment')
-            addClass(iconCreateComment ,'p-2')
+        // Icone createComment:
+        let iconCreateComment = createTag('i')
+        addClass(iconCreateComment, 'far')
+        addClass(iconCreateComment, 'fa-comment')
+        addClass(iconCreateComment, 'p-2')
+
+        // card-read-post__date":
+        let divOptionDate = createTag('div')
+        addClass(divOptionDate, 'card-read-post__date')
+
+        // date:
+        let getDateCreate = result[i].createdAt
+        let convertsDate = new Date(getDateCreate);
+        let dateFormat = (convertsDate.toLocaleString())
+
+        let pDate = createTag('p')
+        pDate.innerHTML = dateFormat
+
+        // Frame card read post:
+        divCol.appendChild(divFrameCardReadPost)
+
+        // Card read post:
+        divFrameCardReadPost.appendChild(divCardRead)
+
+        // Card read Post username:
+        divCardRead.appendChild(divCardReadPostUsername)
+
+        // Nom de l'user:
+        divCardReadPostUsername.appendChild(h2User)
+
+        // Card read Post displayPost:
+        divCardRead.appendChild(divCardReadPostDisplayPost)
+
+        // Post:
+        divCardReadPostDisplayPost.appendChild(pPost)
+
+        // Icon modifyPost:
+        divCardReadPostDisplayPost.appendChild(spanIconModifyPost)
+
+        //Icon:
+        spanIconModifyPost.appendChild(iconModifyPost)
+
+        // card-read-post__option":
+        divCardRead.appendChild(divPostOption)
+
+        // card-read-post__createComment
+        divPostOption.appendChild(divOptionCreateComment)
+
+        // button createComment:
+        divOptionCreateComment.appendChild(buttonCreateComment)
+
+        // card-read-post__date":
+        divPostOption.appendChild(divOptionDate)
+
+        //
+        divOptionDate.appendChild(pDate)
+
+        //divFrameCardReadPost.appendChild()
 
 
 
-            // card-read-post__date":
-            let divOptionDate = createTag('div')
-            addClass(divOptionDate, 'card-read-post__date')
+        btnSendPost.addEventListener('click', (event) => {
+            event.preventDefault();
+            console.log(event)
 
-            // date:
-            let getDateCreate = result[i].createdAt
-            let convertsDate= new Date(getDateCreate );
-            let dateFormat = (convertsDate.toLocaleString())
-
-            let pDate = createTag('p')
-            pDate.innerHTML = dateFormat
+            let url = 'http://localhost:3000/api/posts'
 
 
 
-            // Frame card read post:
-            divCol.appendChild(divFrameCardReadPost)
+                let formData = {
+                    userId: result[i].userId,
+                  content:    document.getElementById('inputPost').value
+                }
+                //console.log('connexion.js log de formData:')
+                //console.log(formData)
 
-            // Card read post:
-            divFrameCardReadPost.appendChild(divCardRead)
+                var myInit = {
+                  method:   "post",
+                  headers:  new Headers({
+                            "Content-Type": "application/json;charset=UTF-8"
+                  }),
+                  body:     JSON.stringify(formData),
+                  mode:     'cors',
+                  cache:    'default'
+                };
+                //console.log('Connexion.js log de myInit:')
+                //console.log(myInit)
 
-            // Card read Post username:
-            divCardRead.appendChild(divCardReadPostUsername)
+                fetch(url, myInit)
+                .then(response => response.json())
+                .then(json_object => {
 
-            // Nom de l'user:
-            divCardReadPostUsername.appendChild(h2User)
+                  let getPost = json_object
+                  //console.log(getPost)
 
-            // Card read Post displayPost:
-            divCardRead.appendChild(divCardReadPostDisplayPost)
+                  //window.location = "/frontend/public/html/postWall.html"
+              })
+                .catch((error) => {
+                  console.log(error)
+                })
 
-            // Post:
-            divCardReadPostDisplayPost.appendChild(pPost)
 
-            // Icon modifyPost:
-            divCardReadPostDisplayPost.appendChild(spanIconModifyPost)
 
-            //Icon:
-            spanIconModifyPost.appendChild(iconModifyPost)
 
-            // card-read-post__option":
-            divCardRead.appendChild(divPostOption)
-
-            // card-read-post__createComment
-            divPostOption.appendChild(divOptionCreateComment)
-
-            // button createComment:
-            divOptionCreateComment.appendChild(buttonCreateComment)
-
-            // card-read-post__date":
-            divPostOption.appendChild(divOptionDate)
-
-            //
-            divOptionDate.appendChild(pDate)
-
-            //divFrameCardReadPost.appendChild()
+        })
 
     }
 
