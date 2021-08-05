@@ -22,7 +22,7 @@ const auth = require('../middleware/auth')
 // Routes:
 
 // Créer un post:
-router.post('/', auth, postCtrl.createPost)
+router.post('/',  postCtrl.createPost)
 
 // Modifie le post:
 router.put('/:id', auth, postCtrl.modifyPost)

@@ -6,7 +6,6 @@
 const url = 'http://localhost:3000/api/posts'
 
 
-
 async function connect(url) {
 
     // Creer un nouvel objet Ajax de type XMLHttpRequest:
@@ -44,7 +43,6 @@ function displayAll(result) {
 
     //Selectionne l'id parent:
     let main = document.querySelector('main')
-
 
     //////////////////////////////////////////////////////////
     // Création des éléments de base enfants:
@@ -151,18 +149,6 @@ function displayAll(result) {
     // icone Post:
     divBtnSendPost.appendChild(spanIconPost)
 
-    /*for (var i = 0; i < result.length; i++) {
-        console.log(result)
-
-        var getUser = result[i]
-        console.log(getUser)
-
-        connect(getUser)
-        //console.log(getUser[i].username)
-        console.log(connect(result))
-
-    }*/
-
 
     for (var i = 0; i < result.length; i++) {
 
@@ -189,7 +175,7 @@ function displayAll(result) {
         let findUrlUser = 'http://localhost:3000/api/users/' + result[i].userId
         console.log(findUrlUser)
 
-         // Creer un nouvel objet Ajax de type XMLHttpRequest:
+        // Creer un nouvel objet Ajax de type XMLHttpRequest:
         let xhr = new XMLHttpRequest()
 
         xhr.onreadystatechange = function () {
@@ -199,7 +185,7 @@ function displayAll(result) {
                 var getUser = JSON.parse(this.responseText)
                 console.log(getUser)
 
-                h2User.innerHTML =  getUser.username
+                h2User.innerHTML = getUser.username
 
             } else if (this.readyState == XMLHttpRequest.DONE && this.status == 500) {
 
@@ -212,9 +198,6 @@ function displayAll(result) {
 
         // Envoie la requête:
         xhr.send()
-
-
-        //h2User.innerHTML = getUser[i].username
 
         // Card read Post displayPost:
         let divCardReadPostDisplayPost = createTag('div')
@@ -312,55 +295,49 @@ function displayAll(result) {
         //divFrameCardReadPost.appendChild()
 
 
-/*
         btnSendPost.addEventListener('click', (event) => {
             event.preventDefault();
             console.log(event)
 
             let url = 'http://localhost:3000/api/posts'
 
+            for (var i = 0; i < result.length; i++) {
+                console.log(result.length)
 
+                let formData = {
+                    userId:     result[i].userId,
+                    content:    document.getElementById('inputPost').value
+                }
+                console.log(result[i].userId)
+                console.log(formData)
 
-            let formData = {
-                userId: result[i].userId,
-                content: document.getElementById('inputPost').value
+                var myInit = {
+                    method: "post",
+                    headers: new Headers({
+                        "Content-Type": "application/json;charset=UTF-8"
+                    }),
+                    body: JSON.stringify(formData),
+                    mode: 'cors',
+                    cache: 'default'
+                };
+
+                fetch(url, myInit)
+                    .then(response => response.json())
+                    .then(json_object => {
+
+                        let getPost = json_object
+                        console.log(getPost)
+
+                        //window.location = "/frontend/public/html/postWall.html"
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
             }
-            //console.log('connexion.js log de formData:')
-            //console.log(formData)
 
-            var myInit = {
-                method: "post",
-                headers: new Headers({
-                    "Content-Type": "application/json;charset=UTF-8"
-                }),
-                body: JSON.stringify(formData),
-                mode: 'cors',
-                cache: 'default'
-            };
-            //console.log('Connexion.js log de myInit:')
-            //console.log(myInit)
-
-            fetch(url, myInit)
-                .then(response => response.json())
-                .then(json_object => {
-
-                    let getPost = json_object
-                    //console.log(getPost)
-
-                    //window.location = "/frontend/public/html/postWall.html"
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-
-
-
-
-        })*/
+        })
 
     }
-
-
 
 }
 

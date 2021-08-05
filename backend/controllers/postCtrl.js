@@ -23,20 +23,22 @@ exports.createPost = (req, res) => {
   const post = {
     content:    req.body.content,
     attachment: req.body.attachment,
-    userId:     req.body.userid,
+    userId:     req.body.userId,
   }
+
 
 console.log('INFO CREATEPOST:')
 console.log('REQ.BODY:')
 console.log(req.body)
 console.log('REQ.BODY.USERID:')
-console.log(req.body.userid)
+console.log(req.body.userId)
 console.log('REQ.BODY.ADMIN:')
 console.log(req.body.admin)
 console.log('REQ.PARAMS:')
 console.log(req.params)
 console.log('REQ.PARAMS.ADMIN:')
 console.log(req.params.admin)
+
 
   const schemaValidator = {
     content: {
@@ -57,17 +59,18 @@ console.log(req.params.admin)
     })
   }
 
+
   Post.create(post)
     .then((result) => {
       res.status(201).json({
         message: 'Votre message a correctement été ajouter!',
-        post: result,
+        post:     result
       })
     })
     .catch((error) => {
       res.status(500).json({
         message: "Désolé, impossible d'ajouter votre message !",
-        error: error,
+        error: error
       })
     })
 }
