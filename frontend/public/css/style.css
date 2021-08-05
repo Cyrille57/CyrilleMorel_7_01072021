@@ -11080,6 +11080,16 @@ Search
   color: red;
 }
 */
+.container-fluid, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
+  flex-direction: row;
+}
+
+ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+
 #suggestions {
   max-height: 50px;
   width: 26%;
@@ -11097,6 +11107,190 @@ Search
   background-color: white;
   color: black;
   text-decoration: none;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Raleway", sans-serif;
+}
+
+body {
+  background: #2152ab;
+  background: linear-gradient(124deg, #2152ab 0%, #d1515a 95%, #a62020 100%);
+  background-image: linear-gradient(124deg, #2152ab 0%, #d1515a 95%, #a62020 100%);
+  background-image: linear-gradient(124deg, #2152ab 0%, #d1515a 95%, #a62020 100%);
+  min-height: 100vh;
+}
+
+nav {
+  width: 100%;
+  height: 75px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 3% 3% 50% 50% !important;
+  display: flex;
+  justify-content: space-around;
+}
+
+.frame-logo {
+  width: 30%;
+  height: 50%;
+  display: flex;
+}
+
+.frame-logo > a {
+  margin-left: 3%;
+  margin-top: 3%;
+}
+
+.frameUlNav {
+  width: 60%;
+  height: 50%;
+  display: flex;
+  justify-content: right;
+  align-content: center;
+}
+
+.frameUlNav > ul {
+  width: 20%;
+  padding-left: 0%;
+  margin-top: 2%;
+  margin-bottom: 0%;
+  height: 80%;
+}
+
+.linkProfil {
+  margin-right: 15%;
+}
+
+.color {
+  color: black;
+}
+
+.card-send-post {
+  max-width: 400px;
+  min-width: 370px;
+  max-height: 450;
+  min-height: 150px;
+  margin-top: 10%;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 3% 3% 3% 50% !important;
+}
+
+.postForm {
+  width: 100%;
+  height: 100%;
+}
+
+textarea {
+  width: 90% !important;
+  resize: none;
+}
+
+.frameBtnSendPost {
+  display: flex;
+  justify-content: right;
+  margin-right: 30px;
+}
+.frameBtnSendPost .btn--sendPost {
+  width: 80px;
+  height: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.card-read-post {
+  max-width: 450px;
+  min-width: 350px;
+  max-height: 450;
+  min-height: 150px;
+  height: auto;
+  margin-top: 10%;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 3% !important;
+  display: flex;
+  flex-direction: column;
+}
+.card-read-post__username > h2, .card-read-post__username > .h2 {
+  width: 50%;
+  margin-left: 3%;
+  font-size: 1.5em;
+  color: black;
+}
+.card-read-post__displayPost {
+  width: 98%;
+  max-height: 450;
+  min-height: 150px;
+  height: auto;
+  margin: 3%;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 3% 3% 3% 3% !important;
+  border-right: none;
+}
+.card-read-post__displayPost p {
+  width: 90%;
+  margin: 3%;
+  height: auto;
+  overflow: hidden;
+  word-wrap: break-word;
+  text-align: left;
+}
+.card-read-post__iconModifyPost {
+  width: 10px;
+  height: 30px;
+  cursor: pointer;
+}
+.card-read-post__option {
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3%;
+  width: 100%;
+  color: yellowgreen;
+}
+.card-read-post__date {
+  width: 80%;
+  max-height: 30px;
+  height: 50px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: black;
+}
+.card-read-post__date p {
+  width: 60%;
+  height: 30px;
+  margin-bottom: 0%;
+  margin-left: 3%;
+  font-size: 0.8em;
+}
+.card-read-post__createComment {
+  width: 30%;
+  height: 30px;
+  display: flex;
+  margin-left: 5%;
+}
+.card-read-post button {
+  height: 30px;
+  width: 110px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /*# sourceMappingURL=style.css.map */

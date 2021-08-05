@@ -54,9 +54,9 @@ exports.signup = (req, res) => {
     admin
   } = req.body
 
-  console.log('INFOS INSCRIPTION:')
+  console.log('userCtrl.js back signUp req.body:')
   console.log(req.body)
-  console.log('INFOS INSCRIPTION RES.BODY.ADMIN:')
+  console.log('userCtrl.js back signUp req.body.admin:')
   console.log(req.body.admin)
 
 
@@ -123,18 +123,17 @@ exports.signup = (req, res) => {
                 email: email,
                 password: bcryptPassword,
                 bio: bio,
-                admin: admin
+                admin: false
               })
-
               .then((newUser) => {
                 res.status(201).json({
                   adminoupas: newUser.admin,
                   userId: newUser.id,
                   message: 'Merci, votre inscription est bien pris en compte !'
-
                 })
               })
               .catch((err) => {
+                console.log(err)
                 res.status(500).json({
                   error: "Le pseudo existe déja",
                 })

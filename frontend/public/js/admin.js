@@ -1,14 +1,4 @@
-/*
-// GET Request.
-fetch(url)
-    // Handle success
-    .then(response => response.json())  // convert to json
-    .then(json => console.log(json))    //print data to console
-    .catch(err => console.log('Request Failed', err)); // Catch errors
-*/
 
-//const { Console } = require("console")
-//const { findOne } = require("../../../backend/models/user")
 
 // 1) ////////////////////////////////////////////////////////
 // XMLHttpRequest se connecte et récupére les données:
@@ -29,10 +19,7 @@ async function connect(url) {
             var result = JSON.parse(this.responseText)
             console.log(result)
             // Réponse: retourne le tableau avec les produits
-
-            // envoie le result à la fonction display:
             displayAll(result)
-            findOne(result)
 
         } else if (this.readyState == XMLHttpRequest.DONE && this.status == 500) {
             // Si erreur 500 affiche dans console:
@@ -260,7 +247,7 @@ function displayAll(result) {
             console.log(getDelete)
 
             // vas sur la page profil correspondant:
-            const url = 'http://localhost:3000/api/users/:id'
+            const url = 'http://localhost:3000/api/users/' + result.id
 
             var myInit = {
                 method: "GET",

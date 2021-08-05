@@ -10,45 +10,42 @@ const singUpForm = document.getElementById('signInForm')
 singUpForm.addEventListener('submit', function(event) {
 
   event.preventDefault()
-  console.log('Inscription.js log de event:')
-  console.log(event)
+  //console.log('Inscription.js log de event:')
+  //console.log(event)
 
   let formData = {
     username: document.getElementById('inputPseudo').value,
     email:    document.getElementById('inputEmail').value,
     password: document.getElementById('inputPassword').value
   }
-  console.log('Inscription.js log de formData:')
-  console.log(formData)
+  //console.log('Inscription.js log de formData:')
+  //console.log(formData)
 
   var myInit = {
-    method: "post",
-    headers: new Headers({
-      "Content-Type": "application/json;charset=UTF-8"
+    method:   "post",
+    headers:  new Headers({
+              "Content-Type": "application/json;charset=UTF-8"
     }),
-    body: JSON.stringify(formData),
-    mode: 'cors',
-    cache: 'default'
+    body:     JSON.stringify(formData),
+    mode:     'cors',
+    cache:    'default'
   };
-  console.log('Inscription.js log de myInit:')
-  console.log(myInit)
+  //console.log('Inscription.js log de myInit:')
+  //console.log(myInit)
 
-    // Fetch à laquelle on donne en paramétres l'url et options:
   fetch(url, myInit)
   .then(response => response.json())
   // Quand la promesse est tenue, elle est parsée au format Json
-  /*.then(json_object => {
-      // Quand la promesse est tenue, crée une variable qui contient l'objet:
+  .then(json_object => {
+
       let getUser = json_object
-      console.log(getUser)
-      // Va à la page:-
-      //window.location = "../html/postWall.html"
-  })*/
+      //console.log(getUser)
+
+      window.location = "/frontend/public/html/postWall.html"
+  })
   .catch((error) => {
     console.log(error)
   })
-
-
 
 })
 

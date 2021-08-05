@@ -34,7 +34,7 @@ router.post('/signup', userCtrl.signup)
 router.post('/login', userCtrl.login)
 
 // LogOut:
-/router.get('/logout', userCtrl.logout)
+//router.get('/logout', userCtrl.logout)
 
 // *****************************************************************************************
 // Crud User:
