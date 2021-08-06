@@ -29,7 +29,7 @@ router.post('/', auth, commentCtrl.createComment)
 router.put('/:id', auth, commentCtrl.modifyComment)
 
 // Supprime le comment:
-router.delete('/:id', auth, commentCtrl.deleteComment)
+router.delete('/:id',  commentCtrl.deleteComment)
 
 // Récupére via l'id:
 router.get('/:id', commentCtrl.getOneComment)

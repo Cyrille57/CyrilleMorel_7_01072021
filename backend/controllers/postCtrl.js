@@ -19,6 +19,7 @@ const Post = require('../models/post')
 // Créer un post :
 exports.createPost = (req, res) => {
   console.log('LOG DE REQ.USER:')
+  console.log(req.body)
 
   const post = {
     content:    req.body.content,
@@ -129,6 +130,8 @@ exports.modifyPost = (req, res) => {
 
 // Supprime le post:
 exports.deletePost = (req, res) => {
+  console.log('INFO delete req.body:')
+  console.log(req.params)
 
   Post.findOne({
     where: {

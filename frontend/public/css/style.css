@@ -10784,8 +10784,10 @@ h2, .h2 {
 body {
   background: #2152ab;
   background: linear-gradient(124deg, #2152ab 0%, #d1515a 95%, #a62020 100%);
+  background: linear-gradient(135deg, #00c3ff, #eeef1c);
+  background: linear-gradient(135deg, #fc00ff, #00dbde);
   background-image: linear-gradient(124deg, #2152ab 0%, #d1515a 95%, #a62020 100%);
-  background-image: linear-gradient(124deg, #2152ab 0%, #d1515a 95%, #a62020 100%);
+  background-image: linear-gradient(124deg, #2152ab 0%, #d1515a 95%, #a62020 200%);
   min-height: 100vh;
 }
 
@@ -10936,7 +10938,6 @@ body {
   background: linear-gradient(124deg, #2152ab 0%, #d1515a 95%, #a62020 100%);
   background-image: linear-gradient(124deg, #2152ab 0%, #d1515a 95%, #a62020 100%);
   background-image: linear-gradient(124deg, #2152ab 0%, #d1515a 95%, #a62020 100%);
-  min-height: 100vh;
 }
 
 .wrapper {
@@ -11114,9 +11115,12 @@ ul {
   padding: 0;
   box-sizing: border-box;
   font-family: "Raleway", sans-serif;
+  background-size: 100% auto;
 }
 
 body {
+  width: 100%;
+  height: 100%;
   background: #2152ab;
   background: linear-gradient(124deg, #2152ab 0%, #d1515a 95%, #a62020 100%);
   background-image: linear-gradient(124deg, #2152ab 0%, #d1515a 95%, #a62020 100%);
@@ -11206,6 +11210,10 @@ textarea {
   background: rgba(255, 255, 255, 0.1);
 }
 
+.frameCard {
+  height: auto;
+}
+
 .card-read-post {
   max-width: 450px;
   min-width: 350px;
@@ -11250,9 +11258,26 @@ textarea {
   text-align: left;
 }
 .card-read-post__iconModifyPost {
-  width: 10px;
-  height: 30px;
+  width: 15px;
+  height: 100%;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
   cursor: pointer;
+}
+.card-read-post__iconModifyPost > i {
+  height: 20px;
+  width: 10;
+  margin-bottom: 5%;
+}
+.card-read-post__iconModifyPost > i:nth-child(2)::before {
+  content: "";
+}
+.card-read-post__iconModifyPost > i:nth-child(2) {
+  height: 10px;
+  margin-top: 5%;
 }
 .card-read-post__option {
   height: 40px;
@@ -11291,6 +11316,13 @@ textarea {
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.1);
+}
+
+.frameTextereaModifyPost {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
 }
 
 /*# sourceMappingURL=style.css.map */

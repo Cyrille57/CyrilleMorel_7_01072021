@@ -28,7 +28,7 @@ router.post('/',  postCtrl.createPost)
 router.put('/:id', auth, postCtrl.modifyPost)
 
 // Supprime le post:
-router.delete('/:id', auth, postCtrl.deletePost)
+router.delete('/:id', postCtrl.deletePost)
 
 // Récupére via l'id:
 router.get('/:id', postCtrl.getOnePost)

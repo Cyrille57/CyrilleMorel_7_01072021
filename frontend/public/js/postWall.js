@@ -17,6 +17,8 @@ async function connect(url) {
 
             // Envoie terminé, contenu récupéré et convertit en Json:
             var result = JSON.parse(this.responseText)
+            console.log(result)
+            result.reverse()
             //console.log(result)
             // Réponse: retourne le tableau avec les produits
 
@@ -95,7 +97,7 @@ function displayAll(result) {
     textarea.setAttribute('name', 'post')
     textarea.setAttribute('type', 'text')
     textarea.setAttribute('rows', '2')
-    textarea.setAttribute('placeholder', 'Quoi de neuf')
+    textarea.setAttribute('placeholder', 'Un petit mot ?')
 
     // Frame Btn
     let divFrameBtn = createTag('div')
@@ -109,6 +111,52 @@ function displayAll(result) {
     divBtnSendPost.setAttribute('id', 'btnSendPost')
     divBtnSendPost.setAttribute('type', 'button')
     divBtnSendPost.innerHTML = 'Post'
+
+
+    ///////////////////////////////////////////////////////////////////////
+    // Send Post:
+
+    divBtnSendPost.addEventListener('click', (event) => {
+        event.preventDefault();
+        console.log(divBtnSendPost)
+        console.log(event)
+
+        const url = "http://localhost:3000/api/posts"
+
+        function createFormData() {
+            for (var i = 0; i < result.length; i++) {
+                let formData = {
+                    userId: result[i].userId,
+                    content: document.getElementById('inputPost').value
+                }
+
+                console.log(formData)
+                console.log(result[i].userId)
+                console.log(('inputPost').value)
+                return formData
+            }
+        }
+
+        console.log(createFormData())
+        var myInit = {
+            method: "POST",
+            headers: new Headers({
+                "Content-Type": "application/json;charset=UTF-8"
+            }),
+            body: JSON.stringify(createFormData()),
+            mode: 'cors',
+            cache: 'default'
+        };
+
+        fetch(url, myInit)
+            .then(res => res.text()) // or res.json()
+            .then(res => window.location.reload())
+
+
+    })
+    ///////////////////////////////////////////////////////////////////////
+
+
 
     // Icone Post:
     let spanIconPost = createTag('span')
@@ -152,11 +200,14 @@ function displayAll(result) {
 
     for (var i = 0; i < result.length; i++) {
 
+        ////////////////////////////////////////////////////////////////////
+        // Card ou apparais les posts:
         // Frame card read post:
         let divFrameCardReadPost = createTag('div')
         addClass(divFrameCardReadPost, 'frameCard')
         addClass(divFrameCardReadPost, 'd-flex')
         addClass(divFrameCardReadPost, 'justify-content-center')
+        divFrameCardReadPost.setAttribute("id", "post_" + result[i].id)
 
         // Card read post:
         let divCardRead = createTag('div')
@@ -175,7 +226,7 @@ function displayAll(result) {
         let findUrlUser = 'http://localhost:3000/api/users/' + result[i].userId
         console.log(findUrlUser)
 
-        // Creer un nouvel objet Ajax de type XMLHttpRequest:
+
         let xhr = new XMLHttpRequest()
 
         xhr.onreadystatechange = function () {
@@ -199,12 +250,13 @@ function displayAll(result) {
         // Envoie la requête:
         xhr.send()
 
-        // Card read Post displayPost:
+        // Card read Post displayPost: **********************************
         let divCardReadPostDisplayPost = createTag('div')
         addClass(divCardReadPostDisplayPost, 'card-read-post__displayPost')
         addClass(divCardReadPostDisplayPost, 'shadow')
         addClass(divCardReadPostDisplayPost, 'rounded')
         addClass(divCardReadPostDisplayPost, 'text-white')
+        divCardReadPostDisplayPost.setAttribute('id', 'displayPost')
 
         // Post:
         let pPost = createTag('p')
@@ -217,7 +269,187 @@ function displayAll(result) {
         // Icon:
         let iconModifyPost = createTag('i')
         addClass(iconModifyPost, 'fas')
-        addClass(iconModifyPost, 'fa-bars')
+        addClass(iconModifyPost, 'fa-reply')
+        iconModifyPost.setAttribute('id', 'iconModify')
+        iconModifyPost.setAttribute("data-idModifyPost", result[i].id)
+
+        ///////////////////////////////////////////////////////////////////////
+        // Modify Post:
+
+        iconModifyPost.addEventListener('click', (event) => {
+            event.preventDefault();
+            console.log(iconModifyPost)
+            console.log(event)
+
+
+            divCardReadPostDisplayPost.style.display = 'none'
+            divPostOption.style.display = 'none'
+
+            let formModify = createTag('form')
+            addClass(formModify, 'd-flex')
+            addClass(formModify, 'flex-column')
+            addClass(formModify, 'justify-content-around')
+            addClass(formModify, 'postForm')
+
+            let frameTextereaModifyPost = createTag('div')
+            addClass(frameTextereaModifyPost, 'frameTextereaModifyPost')
+            //addClass(frameTextereaModifyPost, 'd-flex')
+            //addClass(frameTextereaModifyPost, 'justify-content-center')
+            addClass(frameTextereaModifyPost, 'input-field')
+
+
+            let textareaModyfyPost = createTag('textarea')
+            addClass(textareaModyfyPost, 'form-control')
+            addClass(textareaModyfyPost, 'input-lg')
+            addClass(textareaModyfyPost, 'p-text-area')
+            addClass(textareaModyfyPost, 'shadow')
+            addClass(textareaModyfyPost, 'rounded')
+            textareaModyfyPost.setAttribute('id', 'modifyPost')
+            textareaModyfyPost.setAttribute('name', 'post')
+            textareaModyfyPost.setAttribute('type', 'text')
+            textareaModyfyPost.setAttribute('rows', '2')
+            textareaModyfyPost.setAttribute('placeholder', 'On efface et on recommence ?')
+
+            // Btn:
+            let divBtnSendPostModify = createTag('button')
+            addClass(divBtnSendPostModify, 'btn--sendPostModify')
+            addClass(divBtnSendPostModify, 'shadow')
+            addClass(divBtnSendPostModify, 'rounded')
+            addClass(divBtnSendPostModify, 'mt-3')
+            divBtnSendPostModify.setAttribute('id', 'btnSendPostModify')
+            divBtnSendPostModify.setAttribute('type', 'button')
+            divBtnSendPostModify.innerHTML = 'Mettre à jour'
+
+        /*    // Icon:
+            let iconSendModifyPost = createTag('i')
+            addClass(iconSendModifyPost, 'far')
+            addClass(iconSendModifyPost, 'fa-paper-plane')
+            iconSendModifyPost.setAttribute('id', 'iconSendModifyPost')
+            //iconSendModifyPost.setAttribute("data-idSendModifyPost", result[i].id)
+        */
+
+            let btnReturnReadPost = createTag('button')
+            addClass(btnReturnReadPost, 'btn--sendPostModify')
+            addClass(btnReturnReadPost, 'shadow')
+            addClass(btnReturnReadPost, 'rounded')
+            addClass(btnReturnReadPost, 'my-3')
+            btnReturnReadPost.setAttribute('id', 'btnReturnReadPost')
+            btnReturnReadPost.setAttribute('type', 'button')
+            btnReturnReadPost.setAttribute('href', 'javascript:history.back()')
+            btnReturnReadPost.innerHTML = 'Retour'
+
+            divCardRead.appendChild(formModify)
+            formModify.appendChild(frameTextereaModifyPost)
+            frameTextereaModifyPost.appendChild(textareaModyfyPost)
+            frameTextereaModifyPost.appendChild(divBtnSendPostModify)
+            //divBtnSendPostModify.appendChild(iconSendModifyPost)
+            frameTextereaModifyPost.appendChild(btnReturnReadPost)
+
+            //<i class="far fa-paper-plane"></i>
+
+
+            divBtnSendPostModify.addEventListener('click', (event) => {
+
+                let idModify = event.target.getAttribute('data-idModifyPost')
+
+                let getModify = document.getElementById('post_' + idModify)
+
+                function getUrlModify() {
+                    for (var i = 0; i < result.length; i++) {
+
+                        const url = "http://localhost:3000/api/posts/" + idModify
+                        console.log(url)
+                        return url
+                    }
+
+                }
+
+                function modifyFormData() {
+                    for (var i = 0; i < result.length; i++) {
+                        let formData = {
+                            content: document.getElementById('inputPost').value
+                        }
+
+                        console.log(formData)
+                        console.log(result[i].userId)
+                        console.log(('inputPost').value)
+                        return formData
+                    }
+                }
+
+                    console.log(modifyFormData())
+                var myInit = {
+                    method: "PUT",
+                    headers: new Headers({
+                        "Content-Type": "application/json;charset=UTF-8"
+                    }),
+                    body: JSON.stringify(modifyFormData()),
+                    mode: 'cors',
+                    cache: 'default'
+                };
+
+                fetch(url, myInit)
+                    .then(response => response.json())
+                    .then(res => res.text()) // or res.json()
+                    .then(res => window.location.reload())
+                    .catch(err => console.log(err))
+
+
+            })
+
+        })
+
+
+        ///////////////////////////////////////////////////////////////////////
+
+        let iconDeletePost = createTag('i')
+        addClass(iconDeletePost, 'fas')
+        addClass(iconDeletePost, 'fa-times-circle"')
+        iconDeletePost.setAttribute('id', 'iconDeletePost')
+        iconDeletePost.setAttribute("data-idDeletePost", result[i].id)
+
+
+        ///////////////////////////////////////////////////////////////////////
+        // Delete:
+        iconDeletePost.addEventListener('click', (event) => {
+            event.preventDefault();
+            console.log(iconDeletePost)
+            console.log(event)
+
+
+            let idDelete = event.target.getAttribute('data-idDeletePost')
+
+            let getDelete = document.getElementById('post_' + idDelete)
+
+            getDelete.remove(idDelete)
+
+            function getUrlDelete() {
+                for (var i = 0; i < result.length; i++) {
+
+                    const url = "http://localhost:3000/api/posts/" + idDelete
+                    console.log(url)
+                    return url
+                }
+
+            }
+            getUrlDelete()
+
+            //console.log(url)
+            var myInit = {
+                method: "DELETE"
+            };
+
+            fetch(getUrlDelete(), myInit)
+                .then(res => res.text()) // or res.json()
+                .then(res => console.log(res))
+
+            //location.reload()
+
+        })
+        ///////////////////////////////////////////////////////////////////////
+
+
+
 
         // card-read-post__option"
         let divPostOption = createTag('div')
@@ -234,6 +466,7 @@ function displayAll(result) {
         addClass(buttonCreateComment, 'rounded')
         buttonCreateComment.setAttribute('type', 'button')
         buttonCreateComment.innerHTML = "Comment"
+        buttonCreateComment.setAttribute("data-createComment", result[i].id)
 
         // Icone createComment:
         let iconCreateComment = createTag('i')
@@ -274,8 +507,11 @@ function displayAll(result) {
         // Icon modifyPost:
         divCardReadPostDisplayPost.appendChild(spanIconModifyPost)
 
-        //Icon:
+        //Icon Modify:
         spanIconModifyPost.appendChild(iconModifyPost)
+
+        // Icon Delete:
+        spanIconModifyPost.appendChild(iconDeletePost)
 
         // card-read-post__option":
         divCardRead.appendChild(divPostOption)
@@ -293,55 +529,59 @@ function displayAll(result) {
         divOptionDate.appendChild(pDate)
 
         //divFrameCardReadPost.appendChild()
-
-
-        btnSendPost.addEventListener('click', (event) => {
-            event.preventDefault();
-            console.log(event)
-
-            let url = 'http://localhost:3000/api/posts'
-
-            for (var i = 0; i < result.length; i++) {
-                console.log(result.length)
-
-                let formData = {
-                    userId:     result[i].userId,
-                    content:    document.getElementById('inputPost').value
-                }
-                console.log(result[i].userId)
-                console.log(formData)
-
-                var myInit = {
-                    method: "post",
-                    headers: new Headers({
-                        "Content-Type": "application/json;charset=UTF-8"
-                    }),
-                    body: JSON.stringify(formData),
-                    mode: 'cors',
-                    cache: 'default'
-                };
-
-                fetch(url, myInit)
-                    .then(response => response.json())
-                    .then(json_object => {
-
-                        let getPost = json_object
-                        console.log(getPost)
-
-                        //window.location = "/frontend/public/html/postWall.html"
-                    })
-                    .catch((error) => {
-                        console.log(error)
-                    })
-            }
-
-        })
-
     }
+
+
+    btnSendPost.addEventListener('click', (event) => {
+        event.preventDefault();
+        console.log(event)
+
+
+
+        for (var i = 0; i < result.length; i++) {
+            console.log(result.length)
+
+            let formData = {
+                userId: result[i].userId,
+                content: document.getElementById('inputPost').value
+            }
+            console.log(result[i].userId)
+            console.log(formData)
+
+
+        }
+
+    })
 
 }
 
+function postSend() {
 
+    let url = 'http://localhost:3000/api/posts'
+
+    var myInit = {
+        method: "POST",
+        headers: new Headers({
+            "Content-Type": "application/json;charset=UTF-8"
+        }),
+        body: JSON.stringify(formData),
+        mode: 'cors',
+        cache: 'default'
+    };
+
+    fetch(url, myInit)
+        .then(response => response.json())
+        .then(json_object => {
+
+            let getPost = json_object
+            console.log(getPost)
+
+            //window.location = "/frontend/public/html/postWall.html"
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+}
 
 
 // pour mettre le pseudo dinamiquement exemple:
