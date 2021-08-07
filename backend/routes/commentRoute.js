@@ -23,10 +23,10 @@ const auth = require('../middleware/auth')
 // Routes:
 
 // Créer un comment:
-router.post('/', auth, commentCtrl.createComment)
+router.post('/',  commentCtrl.createComment)
 
 // Modifie le comment:
-router.put('/:id', auth, commentCtrl.modifyComment)
+router.put('/:id', commentCtrl.modifyComment)
 
 // Supprime le comment:
 router.delete('/:id',  commentCtrl.deleteComment)

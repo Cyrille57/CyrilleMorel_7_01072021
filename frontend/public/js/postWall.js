@@ -13,45 +13,37 @@ const url = 'http://localhost:3000/api/posts'
 
 async function connect(url) {
 
-    // Creer un nouvel objet Ajax de type XMLHttpRequest:
     let xhr = new XMLHttpRequest()
 
     xhr.onreadystatechange = function () {
-        // Détecte l'état de la requête:
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-
-            // Envoie terminé, contenu récupéré et convertit en Json:
             var result = JSON.parse(this.responseText)
-            console.log(result)
-            result.reverse()
-            //console.log(result)
-            // Réponse: retourne le tableau avec les produits
 
-            // envoie le result à la fonction display:
+            result.reverse()
+
             displayAll(result)
-            //findOne(result)
 
         } else if (this.readyState == XMLHttpRequest.DONE && this.status == 500) {
-            // Si erreur 500 affiche dans console:
             console.log("Erreur 500")
         }
     }
 
-    // Ouvre la connexion en précisant la méthode:
     xhr.open("GET", url, true)
-
-    // Envoie la requête:
     xhr.send()
 }
 connect(url)
 
+///////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////
+// Post:
 
 function displayAll(result) {
 
     //Selectionne l'id parent:
     let main = document.querySelector('main')
 
-    //////////////////////////////////////////////////////////
+    //---------------------------------------------------------
     // Création des éléments de base enfants:
 
     // Container:
@@ -65,6 +57,9 @@ function displayAll(result) {
     // Col-12
     let divCol = createTag('div') //
     addClass(divCol, 'col-12')
+
+    //---------------------------------------------------------
+    // Card Post:
 
     // Frame card-send-post:
     let divFrameCardSendPost = createTag('div')
@@ -118,8 +113,8 @@ function displayAll(result) {
     divBtnSendPost.innerHTML = 'Post'
 
 
-    ///////////////////////////////////////////////////////////////////////
-    // Send Post:
+    ///////////////////////////////////////////////////////////
+    // Envoie le post:
 
     divBtnSendPost.addEventListener('click', (event) => {
         event.preventDefault();
@@ -159,9 +154,8 @@ function displayAll(result) {
 
 
     })
-    ///////////////////////////////////////////////////////////////////////
 
-
+    ///////////////////////////////////////////////////////////
 
     // Icone Post:
     let spanIconPost = createTag('span')
@@ -169,14 +163,17 @@ function displayAll(result) {
     addClass(spanIconPost, 'fa-paper-plane')
     addClass(spanIconPost, 'p-2')
 
-    //////////////////////////////////////////////////////////
-    // Création des éléments de base enfants:
+    ///////////////////////////////////////////////////////////
+    // Injecte dans le html:
 
     // Ajout des élément de base:
     main.appendChild(divContainer)
 
     divContainer.appendChild(divRow)
     divRow.appendChild(divCol)
+
+    //---------------------------------------------------------
+    // Card Post:
 
     // Frame card-send-post:
     divCol.appendChild(divFrameCardSendPost)
@@ -202,11 +199,18 @@ function displayAll(result) {
     // icone Post:
     divBtnSendPost.appendChild(spanIconPost)
 
+    ///////////////////////////////////////////////////////////
 
+    ///////////////////////////////////////////////////////////
+    // Affiche les posts:
     for (var i = 0; i < result.length; i++) {
 
-        ////////////////////////////////////////////////////////////////////
-        // Card ou apparais les posts:
+        //---------------------------------------------------------
+        // Card qui affiche les posts:
+
+        let divPostAndComment = createTag('div')
+        addClass(divPostAndComment, 'divPostAndComment')
+
         // Frame card read post:
         let divFrameCardReadPost = createTag('div')
         addClass(divFrameCardReadPost, 'frameCard')
@@ -227,10 +231,11 @@ function displayAll(result) {
         // Nom de l'user:
         let h2User = createTag('h2')
 
-        // Url d
+        // Id de l'user
         let findUrlUser = 'http://localhost:3000/api/users/' + result[i].userId
-        console.log(findUrlUser)
 
+        ///////////////////////////////////////////////////////////
+        // Recuperation du username de l'user::
 
         let xhr = new XMLHttpRequest()
 
@@ -239,7 +244,6 @@ function displayAll(result) {
             if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
 
                 var getUser = JSON.parse(this.responseText)
-                console.log(getUser)
 
                 h2User.innerHTML = getUser.username
 
@@ -249,11 +253,11 @@ function displayAll(result) {
             }
         }
 
-        // Ouvre la connexion en précisant la méthode:
         xhr.open("GET", findUrlUser, true)
 
-        // Envoie la requête:
         xhr.send()
+
+        ///////////////////////////////////////////////////////////
 
         // Card read Post displayPost: **********************************
         let divCardReadPostDisplayPost = createTag('div')
@@ -278,19 +282,16 @@ function displayAll(result) {
         iconModifyPost.setAttribute('id', 'iconModify')
         iconModifyPost.setAttribute("data-idModifyPost", result[i].id)
         const getIdModify = ("data-idModifyPost", result[i].id)
-        console.log(getIdModify)
-        console.log(result[i].id)
 
-        ///////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////
         // Modify Post:
 
+        //---------------------------------------------------------
+        // Ecoute le bouton modify ( la fleche retourné ):
         iconModifyPost.addEventListener('click', (event) => {
-            //event.preventDefault();
-            console.log(iconModifyPost)
-            console.log(event)
 
-
-
+            //---------------------------------------------------------
+            // Cache le post pour introduire le input pour update le post:
             divCardReadPostDisplayPost.style.display = 'none'
             divPostOption.style.display = 'none'
 
@@ -329,37 +330,32 @@ function displayAll(result) {
 
             divBtnSendPostModify.addEventListener('click', (event) => {
 
-                //console.log(getIdModify)
-                let idModify = getIdModify/////////////////////
-                //console.log(idModify)
+                ///////////////////////////////////////////////////////////
+                // Fonction Modify Post:
+
+                //---------------------------------------------------------
+                // Recupere l'id du post et l'ajoute a l'url updatePost:
+                let idModify = getIdModify
                 let getModify = document.getElementById('post_' + idModify)
-                //console.log(getModify)
 
                 function getUrlModify() {
-                    //for (var i = 0; i < result.length; i++) {
 
-                        const url = "http://localhost:3000/api/posts/" + idModify
-                        console.log(url)
-                        return url
-                    //}
-
+                    const url = "http://localhost:3000/api/posts/" + idModify
+                    return url
                 }
-                //console.log(getUrlModify())
 
+                //---------------------------------------------------------
+                // Recupere la modification du post:
                 function modifyFormData() {
                     for (var i = 0; i < result.length; i++) {
                         let formData = {
                             id: idModify,
                             content: document.getElementById('modifyPost').value
                         }
-                        console.log(getIdModify)
-                        console.log(formData)
                         return formData
                     }
                 }
 
-
-                    console.log(modifyFormData())
                 var myInit = {
                     method: "PUT",
                     headers: new Headers({
@@ -370,25 +366,22 @@ function displayAll(result) {
                     cache: 'default'
                 };
 
-                console.log(myInit)
                 fetch(getUrlModify(), myInit)
                     .then(response => response.json())
-                    .then(res => res.text()) // or res.json()
-                    .then(res => window.location.reload())
+                    .then(res => document.location.reload())
                     .catch(err => console.log(err))
-
-
-
 
             })
 
-        /*    // Icon:
-            let iconSendModifyPost = createTag('i')
-            addClass(iconSendModifyPost, 'far')
-            addClass(iconSendModifyPost, 'fa-paper-plane')
-            iconSendModifyPost.setAttribute('id', 'iconSendModifyPost')
-            //iconSendModifyPost.setAttribute("data-idSendModifyPost", result[i].id)
-        */
+            /*
+                // Rajout de l'icone au bouton  dans la version amélioré:
+                // Icon:
+                let iconSendModifyPost = createTag('i')
+                addClass(iconSendModifyPost, 'far')
+                addClass(iconSendModifyPost, 'fa-paper-plane')
+                iconSendModifyPost.setAttribute('id', 'iconSendModifyPost')
+                //iconSendModifyPost.setAttribute("data-idSendModifyPost", result[i].id)
+            */
 
             let btnReturnReadPost = createTag('button')
             addClass(btnReturnReadPost, 'btn--sendPostModify')
@@ -399,6 +392,11 @@ function displayAll(result) {
             btnReturnReadPost.setAttribute('type', 'button')
             btnReturnReadPost.innerHTML = 'Retour'
 
+            ///////////////////////////////////////////////////////////
+            // Retour aux posts:
+
+            //---------------------------------------------------------
+            // Ecoute le bouton retour:
             btnReturnReadPost.addEventListener('click', (event) => {
 
                 document.location.reload()
@@ -411,11 +409,7 @@ function displayAll(result) {
             //divBtnSendPostModify.appendChild(iconSendModifyPost)
             frameTextereaModifyPost.appendChild(btnReturnReadPost)
 
-
-
-
         })
-
 
         ///////////////////////////////////////////////////////////////////////
 
@@ -428,30 +422,40 @@ function displayAll(result) {
 
         ///////////////////////////////////////////////////////////////////////
         // Delete:
+
+        //---------------------------------------------------------
+        // Ecoute le bouton delete ( la petite croix ):
         iconDeletePost.addEventListener('click', (event) => {
             event.preventDefault();
+            stopPropagation();
+
             console.log(iconDeletePost)
             console.log(event)
 
+            ///////////////////////////////////////////////////////////
+            // Fonction DELETE Post:
+
+            //---------------------------------------------------------
+            // Recupere l'id du post et l'ajoute a l'url deletePost:
 
             let idDelete = event.target.getAttribute('data-idDeletePost')
 
             let getDelete = document.getElementById('post_' + idDelete)
 
-            getDelete.remove(idDelete)
-
             function getUrlDelete() {
                 for (var i = 0; i < result.length; i++) {
-
                     const url = "http://localhost:3000/api/posts/" + idDelete
-                    console.log(url)
                     return url
                 }
-
             }
             getUrlDelete()
 
-            //console.log(url)
+            //---------------------------------------------------------
+            // Supprime le post coté front:
+            getDelete.remove(idDelete)
+
+            //---------------------------------------------------------
+            // Supprime le post coté back:
             var myInit = {
                 method: "DELETE"
             };
@@ -459,18 +463,19 @@ function displayAll(result) {
             fetch(getUrlDelete(), myInit)
                 .then(res => res.text()) // or res.json()
                 .then(res => console.log(res))
-
-            //location.reload()
+                .then(res => document.location.reload())
 
         })
-        ///////////////////////////////////////////////////////////////////////
 
+        ///////////////////////////////////////////////////////////
 
-
+        ///////////////////////////////////////////////////////////
+        // Zone avec le bouton comment et la date:
 
         // card-read-post__option"
         let divPostOption = createTag('div')
         addClass(divPostOption, 'card-read-post__option')
+        divPostOption.setAttribute('id', 'divPostOption')
 
         // card-read-post__createComment
         let divOptionCreateComment = createTag('div')
@@ -484,6 +489,292 @@ function displayAll(result) {
         buttonCreateComment.setAttribute('type', 'button')
         buttonCreateComment.innerHTML = "Comment"
         buttonCreateComment.setAttribute("data-createComment", result[i].id)
+        const getIdPost = ("data-createComment", result[i].id)
+
+
+        ///////////////////////////////////////////////////////////
+        // Création du comment:
+
+        //---------------------------------------------------------
+        // Ecoute le bouton comment :
+        buttonCreateComment.addEventListener('click', (event) => {
+            console.log(event)
+            console.log(result)
+
+            //---------------------------------------------------------
+            // Cache le post pour introduire le input pour update le post:
+            divCardReadPostDisplayPost.style.display = 'none'
+            divPostOption.style.display = 'none'
+
+            let formSendComment = createTag('form')
+            addClass(formSendComment, 'd-flex')
+            addClass(formSendComment, 'flex-column')
+            addClass(formSendComment, 'justify-content-around')
+            addClass(formSendComment, 'postForm')
+
+            let frameTextereaSendComment = createTag('div')
+            addClass(frameTextereaSendComment, 'frameTextereaModifyPost')
+            addClass(frameTextereaSendComment, 'input-field')
+
+
+            let textareaSendComment = createTag('textarea')
+            addClass(textareaSendComment, 'form-control')
+            addClass(textareaSendComment, 'input-lg')
+            addClass(textareaSendComment, 'p-text-area')
+            addClass(textareaSendComment, 'shadow')
+            addClass(textareaSendComment, 'rounded')
+            textareaSendComment.setAttribute('id', 'sendComment')
+            textareaSendComment.setAttribute('name', 'comment')
+            textareaSendComment.setAttribute('type', 'text')
+            textareaSendComment.setAttribute('rows', '2')
+            textareaSendComment.setAttribute('placeholder', 'Un commentaire peut être ? ?')
+
+            // Btn:
+            let divBtnSendComment = createTag('button')
+            addClass(divBtnSendComment, 'btn--SendComment')
+            addClass(divBtnSendComment, 'shadow')
+            addClass(divBtnSendComment, 'rounded')
+            addClass(divBtnSendComment, 'mt-3')
+            divBtnSendComment.setAttribute('id', 'btnSendComment')
+            divBtnSendComment.setAttribute('type', 'button')
+            divBtnSendComment.innerHTML = 'Envoyer'
+
+            //---------------------------------------------------------
+            // Ecoute le bouton envoyer:
+            divBtnSendComment.addEventListener('click', (event) => {
+
+                ///////////////////////////////////////////////////////////
+                // Fonction Send Comment:
+
+                event.preventDefault();
+                console.log(divBtnSendComment)
+                console.log(event)
+
+                const url = "http://localhost:3000/api/comments"
+
+                //---------------------------------------------------------
+                // Recupere l'id du post:
+                let idPost = getIdPost
+                console.log(idPost)
+
+                //---------------------------------------------------------
+                // Creer l'objet du post:
+                function createFormData() {
+                    for (var i = 0; i < result.length; i++) {
+                        let formData = {
+                            userId: result[i].userId,
+                            postId: idPost,
+                            content: document.getElementById('sendComment').value
+                        }
+
+                        console.log(formData)
+                        console.log(result[i].userId)
+                        console.log(('inputPost').value)
+                        return formData
+                    }
+                }
+
+                console.log(createFormData())
+                var myInit = {
+                    method: "POST",
+                    headers: new Headers({
+                        "Content-Type": "application/json;charset=UTF-8"
+                    }),
+                    body: JSON.stringify(createFormData()),
+                    mode: 'cors',
+                    cache: 'default'
+                };
+
+                fetch(url, myInit)
+                    .then(res => res.text()) // or res.json()
+                    //.then(res => window.location.reload())
+                    .then(() => {
+
+                        ///////////////////////////////////////////////////////////
+                        // Affiche les comment:
+
+                        // Url pour recupérer les comments:
+                        const url = 'http://localhost:3000/api/comments'
+
+                        async function connect(url) {
+
+                            let xhr = new XMLHttpRequest()
+
+                            xhr.onreadystatechange = function () {
+                                if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                                    var resultComment = JSON.parse(this.responseText)
+                                    console.log(resultComment)
+                                    resultComment.reverse()
+
+                                    displayAllComments(resultComment)
+
+                                } else if (this.readyState == XMLHttpRequest.DONE && this.status == 500) {
+                                    console.log("Erreur 500")
+                                }
+                            }
+
+                            xhr.open("GET", url, true)
+                            xhr.send()
+                        }
+                        connect(url)
+
+                        ///////////////////////////////////////////////////////////
+
+                        ///////////////////////////////////////////////////////////
+                        // Comments:
+
+                        function displayAllComments(resultComment) {
+
+
+                            divCardReadPostDisplayPost.style.display = 'block'
+                            divPostOption.style.display = 'block'
+                            textareaSendComment.style.display = 'none'
+                            divBtnSendComment.style.display = 'none'
+
+
+
+                            //Selectionne l'id parent:
+                            let mainComment = document.getElementById('divPostOption')
+                            console.log(mainComment)
+
+                            let essdiv = createTag('div')
+                            addClass(essdiv, 'essdiv')
+
+                            let displayComment = createTag('div')
+                            addClass(displayComment, 'displayComment')
+                            addClass(displayComment, 'shadow')
+                            addClass(displayComment, 'rounded')
+
+                            ///////////////////////////////////////////////////////////
+                            // Affiche les comments:
+
+                            function getResultComment() {
+
+                                for (var i = 0; i < resultComment.length; i++) {
+                                    let getUserIdComment = resultComment[i].userId
+                                    let getIdPost = resultComment[i].id
+                                    let getContentComment = resultComment[i].content
+
+                                    return getUserIdComment, getIdPost, getContentComment
+                                }
+
+                            }getResultComment()
+
+                                // Frame card read post:
+                                let divFrameCardReadComment = createTag('div')
+                                addClass(divFrameCardReadComment, 'frameCard')
+                                addClass(divFrameCardReadComment, 'd-flex')
+                                addClass(divFrameCardReadComment, 'justify-content-center')
+                                divFrameCardReadPost.setAttribute("id", "post_" + resultComment[i].id)
+
+                                // Card read post:
+                                let divCardReadComment = createTag('div')
+                                addClass(divCardReadComment, 'card-read-post')
+                                addClass(divCardReadComment, 'shadow')
+                                addClass(divCardRead, 'rounded')
+
+                                // Card read Post username:
+                                let divCardReadCommentUsername = createTag('div')
+                                addClass(divCardReadCommentUsername, 'card-read-post__username')
+
+                                // Nom de l'user:
+                                let h2UseComment = createTag('h2')
+
+                                // Id de l'user
+                                let findUrlUserComment = 'http://localhost:3000/api/users/' + resultComment[i].userId
+                                console.log(findUrlUserComment)
+
+                                ///////////////////////////////////////////////////////////
+                                // Recuperation du username de l'user qui comment:
+
+                                let xhr = new XMLHttpRequest()
+
+                                xhr.onreadystatechange = function () {
+
+                                    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+
+                                        var getUserComment = JSON.parse(this.responseText)
+                                        console.log(getUserComment.username)
+
+                                        h2UseComment.innerHTML = getUserComment.username
+
+                                    } else if (this.readyState == XMLHttpRequest.DONE && this.status == 500) {
+
+                                        console.log("Erreur 500")
+                                    }
+                                }
+
+                                xhr.open("GET", findUrlUserComment, true)
+
+                                xhr.send()
+
+                                ///////////////////////////////////////////////////////////
+
+                                // Card read Post displayPost: **********************************
+                                let divCardReadPostDisplayComment = createTag('div')
+                                addClass(divCardReadPostDisplayComment, 'card-read-post__displayPost')
+                                addClass(divCardReadPostDisplayComment, 'shadow')
+                                addClass(divCardReadPostDisplayComment, 'rounded')
+                                addClass(divCardReadPostDisplayComment, 'text-white')
+                                divCardReadPostDisplayPost.setAttribute('id', 'displayPost')
+
+                                // Post:
+                                let pComment = createTag('p')
+                                pComment.innerHTML = resultComment[i].content
+                                console.log(pComment)
+
+                                // Icon modifyPost
+                                let spanIconModifyPost = createTag('span')
+                                addClass(spanIconModifyPost, 'card-read-post__iconModifyComment')
+
+                                // Icon:
+                                let iconModifyPost = createTag('i')
+                                addClass(iconModifyPost, 'fas')
+                                addClass(iconModifyPost, 'fa-reply')
+                                iconModifyPost.setAttribute('id', 'iconModifyComment')
+                                iconModifyPost.setAttribute("data-idModifyComment", resultComment[i].id)
+                                const getIdModify = ("data-idModifyComment", resultComment[i].id)
+
+
+                                divFrameCardReadPost.appendChild(essdiv)
+                                essdiv.appendChild(h2UseComment)
+                                essdiv.appendChild(displayComment)
+                                displayComment.appendChild(pComment)
+                                //.appendChild()
+                                //.appendChild()
+                                //.appendChild()
+                                //.appendChild()
+                                //.appendChild()
+                                //.appendChild()
+                                //.appendChild()
+
+
+
+                        }
+
+                    })
+
+                //.then(res => window.location.reload())
+
+            })
+
+
+            divCardRead.appendChild(formSendComment)
+            formSendComment.appendChild(frameTextereaSendComment)
+            frameTextereaSendComment.appendChild(textareaSendComment)
+            frameTextereaSendComment.appendChild(divBtnSendComment)
+
+
+
+        })
+        ///////////////////////////////////////////////////////////
+
+
+
+
+
+
+
 
         // Icone createComment:
         let iconCreateComment = createTag('i')
@@ -503,9 +794,12 @@ function displayAll(result) {
         let pDate = createTag('p')
         pDate.innerHTML = dateFormat
 
-        // Frame card read post:
-        divCol.appendChild(divFrameCardReadPost)
+        // Frame card read post:                         //divPostAndComment
+       // divCol.appendChild(divFrameCardReadPost)
+       divCol.appendChild(divPostAndComment)         // divCol.appendChild(divPostAndComment)
 
+        // divPostAndComment                              // Frame card read post:
+        divPostAndComment.appendChild(divFrameCardReadPost)                                             // divPostAndComment.appendChild(divFrameCardReadPost)
         // Card read post:
         divFrameCardReadPost.appendChild(divCardRead)
 
@@ -542,67 +836,8 @@ function displayAll(result) {
         // card-read-post__date":
         divPostOption.appendChild(divOptionDate)
 
-        //
+        // date:
         divOptionDate.appendChild(pDate)
-
-        //divFrameCardReadPost.appendChild()
     }
 
-
-    btnSendPost.addEventListener('click', (event) => {
-        event.preventDefault();
-        console.log(event)
-
-
-
-        for (var i = 0; i < result.length; i++) {
-            console.log(result.length)
-
-            let formData = {
-                userId: result[i].userId,
-                content: document.getElementById('inputPost').value
-            }
-            console.log(result[i].userId)
-            console.log(formData)
-
-
-        }
-
-    })
-
 }
-
-function postSend() {
-
-    let url = 'http://localhost:3000/api/posts'
-
-    var myInit = {
-        method: "POST",
-        headers: new Headers({
-            "Content-Type": "application/json;charset=UTF-8"
-        }),
-        body: JSON.stringify(formData),
-        mode: 'cors',
-        cache: 'default'
-    };
-
-    fetch(url, myInit)
-        .then(response => response.json())
-        .then(json_object => {
-
-            let getPost = json_object
-            console.log(getPost)
-
-            //window.location = "/frontend/public/html/postWall.html"
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-}
-
-
-// pour mettre le pseudo dinamiquement exemple:
-//newdiv.innerHTML = "<input type = 'text' placeholder ='ghi gyt' >";
-
-// icone
-//<span class="far fa-edit p-2"></span>

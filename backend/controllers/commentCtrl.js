@@ -22,7 +22,7 @@ exports.createComment = (req, res) => {
   // *****************************************************************************************
   // Déclarations:
   const comment = {
-    userId: req.body.userid,
+    userId: req.body.userId,
     postId:  req.body.postId,//24,//req.params.postId,//15,//req.body.postId,
     content: req.body.content,
   }
