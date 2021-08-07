@@ -2,6 +2,11 @@
 // PostWall.js: ///////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 
+
+
+///////////////////////////////////////////////////////////
+// Connexion :
+
 // Url pour recupérer les post:
 const url = 'http://localhost:3000/api/posts'
 
@@ -272,14 +277,18 @@ function displayAll(result) {
         addClass(iconModifyPost, 'fa-reply')
         iconModifyPost.setAttribute('id', 'iconModify')
         iconModifyPost.setAttribute("data-idModifyPost", result[i].id)
+        const getIdModify = ("data-idModifyPost", result[i].id)
+        console.log(getIdModify)
+        console.log(result[i].id)
 
         ///////////////////////////////////////////////////////////////////////
         // Modify Post:
 
         iconModifyPost.addEventListener('click', (event) => {
-            event.preventDefault();
+            //event.preventDefault();
             console.log(iconModifyPost)
             console.log(event)
+
 
 
             divCardReadPostDisplayPost.style.display = 'none'
@@ -293,8 +302,6 @@ function displayAll(result) {
 
             let frameTextereaModifyPost = createTag('div')
             addClass(frameTextereaModifyPost, 'frameTextereaModifyPost')
-            //addClass(frameTextereaModifyPost, 'd-flex')
-            //addClass(frameTextereaModifyPost, 'justify-content-center')
             addClass(frameTextereaModifyPost, 'input-field')
 
 
@@ -320,6 +327,61 @@ function displayAll(result) {
             divBtnSendPostModify.setAttribute('type', 'button')
             divBtnSendPostModify.innerHTML = 'Mettre à jour'
 
+            divBtnSendPostModify.addEventListener('click', (event) => {
+
+                //console.log(getIdModify)
+                let idModify = getIdModify/////////////////////
+                //console.log(idModify)
+                let getModify = document.getElementById('post_' + idModify)
+                //console.log(getModify)
+
+                function getUrlModify() {
+                    //for (var i = 0; i < result.length; i++) {
+
+                        const url = "http://localhost:3000/api/posts/" + idModify
+                        console.log(url)
+                        return url
+                    //}
+
+                }
+                //console.log(getUrlModify())
+
+                function modifyFormData() {
+                    for (var i = 0; i < result.length; i++) {
+                        let formData = {
+                            id: idModify,
+                            content: document.getElementById('modifyPost').value
+                        }
+                        console.log(getIdModify)
+                        console.log(formData)
+                        return formData
+                    }
+                }
+
+
+                    console.log(modifyFormData())
+                var myInit = {
+                    method: "PUT",
+                    headers: new Headers({
+                        "Content-Type": "application/json;charset=UTF-8"
+                    }),
+                    body: JSON.stringify(modifyFormData()),
+                    mode: 'cors',
+                    cache: 'default'
+                };
+
+                console.log(myInit)
+                fetch(getUrlModify(), myInit)
+                    .then(response => response.json())
+                    .then(res => res.text()) // or res.json()
+                    .then(res => window.location.reload())
+                    .catch(err => console.log(err))
+
+
+
+
+            })
+
         /*    // Icon:
             let iconSendModifyPost = createTag('i')
             addClass(iconSendModifyPost, 'far')
@@ -335,8 +397,12 @@ function displayAll(result) {
             addClass(btnReturnReadPost, 'my-3')
             btnReturnReadPost.setAttribute('id', 'btnReturnReadPost')
             btnReturnReadPost.setAttribute('type', 'button')
-            btnReturnReadPost.setAttribute('href', 'javascript:history.back()')
             btnReturnReadPost.innerHTML = 'Retour'
+
+            btnReturnReadPost.addEventListener('click', (event) => {
+
+                document.location.reload()
+            })
 
             divCardRead.appendChild(formModify)
             formModify.appendChild(frameTextereaModifyPost)
@@ -345,57 +411,8 @@ function displayAll(result) {
             //divBtnSendPostModify.appendChild(iconSendModifyPost)
             frameTextereaModifyPost.appendChild(btnReturnReadPost)
 
-            //<i class="far fa-paper-plane"></i>
 
 
-            divBtnSendPostModify.addEventListener('click', (event) => {
-
-                let idModify = event.target.getAttribute('data-idModifyPost')
-
-                let getModify = document.getElementById('post_' + idModify)
-
-                function getUrlModify() {
-                    for (var i = 0; i < result.length; i++) {
-
-                        const url = "http://localhost:3000/api/posts/" + idModify
-                        console.log(url)
-                        return url
-                    }
-
-                }
-
-                function modifyFormData() {
-                    for (var i = 0; i < result.length; i++) {
-                        let formData = {
-                            content: document.getElementById('inputPost').value
-                        }
-
-                        console.log(formData)
-                        console.log(result[i].userId)
-                        console.log(('inputPost').value)
-                        return formData
-                    }
-                }
-
-                    console.log(modifyFormData())
-                var myInit = {
-                    method: "PUT",
-                    headers: new Headers({
-                        "Content-Type": "application/json;charset=UTF-8"
-                    }),
-                    body: JSON.stringify(modifyFormData()),
-                    mode: 'cors',
-                    cache: 'default'
-                };
-
-                fetch(url, myInit)
-                    .then(response => response.json())
-                    .then(res => res.text()) // or res.json()
-                    .then(res => window.location.reload())
-                    .catch(err => console.log(err))
-
-
-            })
 
         })
 

@@ -79,6 +79,7 @@ console.log(req.params.admin)
 // Modifie le post:
 exports.modifyPost = (req, res) => {
 
+
   let postObject = {}
 
   postObject = {
@@ -120,6 +121,10 @@ exports.modifyPost = (req, res) => {
         message: 'Votre message a correctement été modifié !',
       })
     )
+    .then(response => {
+      console.log('Response:', response)
+      return response.json();
+    })
     .catch((error) =>
       res.status(400).json({
         message: "Désolé, votre message n'a pas pu être modifié",
