@@ -3,20 +3,46 @@
 // ***************************************
 
 
+
 * {
-    // Retire la marge et le padding par défault
     margin: 0;
     padding: 0;
-}
+    box-sizing: border-box;
+    font-family: 'Raleway', sans-serif;
+    background-size: 100% auto;
+  }
 
 html {
     height: 100%;
 }
 
-body {
-    font-family: 'Raleway', sans-serif;
+header {
+    width: 100%;
+    height: 12%;
 }
 
-h2 {
-    margin-top: 3%;
+
+// ***************************************
+// Body index:
+
+
+// ***************************************
+// Body inscription:
+
+
+// ***************************************
+// Body postWall:
+.postWall-body{
+    width: 100%;
+    height: 100%;
+    background-color: #2152ab;
 }
+
+
+// ***************************************
+// Body admin:
+
+
+// ***************************************
+// Body vueProfil:
+

@@ -1,0 +1,71 @@
+// ***************************************
+// *********** Card-post.scss ************
+// ***************************************
+
+
+
+// ***************************************
+// Card envoie Post:
+
+
+// post*frameCard base:
+.post-frameCard{
+
+  display: flex;
+  justify-content: center;
+
+  // card-send-post contenu dans frameCard :
+  &__send-post{
+    width:  100%;
+    height: 150px;
+    margin-top: 10%;
+
+    background: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 3% 3% 3% 50% !important;
+  }
+
+// form post contenu dans card-send-post:
+  &__form
+  {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+  }
+
+  &__input{
+    display: flex;
+    justify-content: center;
+
+      // Textarea:
+    textarea{
+      width: 90% !important;
+      resize: none;
+    }
+  }
+
+  &__frameBtn{
+    margin-right: 30px;
+
+    display: flex;
+    justify-content: right;
+
+  }
+
+  &__btn{
+    width: 80px;
+    height: 30px;
+
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+}

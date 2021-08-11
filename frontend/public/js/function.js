@@ -11,8 +11,10 @@ function createTag(tag) {
 //////////////////////////////////////////////////////////
 // Fonction qui ajoute des classes aux balises:
 function addClass(name, classe) {
-  return name.classList.add(classe)
+  return name.classList.add(...classe)
 }
+
+
 
 //////////////////////////////////////////////////////////
 // affiche le mot de passe:

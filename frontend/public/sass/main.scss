@@ -1,3 +1,8 @@
+// ***************************************
+// **************** Main *****************
+// ***************************************
+
+
 // utils:
 @import "./utils/variable_overrides";
 @import "./utils/variables";
@@ -10,19 +15,24 @@
 
 // base:
 @import "./base/fonts.scss";
+
 // components:
 @import "./components/buttons.scss";
-//@import "./components/carte.scss";
+@import "./components/card-post.scss";
+//@import "./components;
+
 // layout:
 @import "./layout/general.scss";
-//@import "./layout/navbar.scss";
-//@import "./layout/jumbotron.scss";
+@import "./layout/navbar.scss";
+//@import "./layout";
+
 // pages:
 @import "./pages/connexion.scss";
 @import "./pages/inscription.scss";
 @import "./pages/admin.scss";
 @import "./pages//postWall.scss";
-//@import "./pages/panierEmpty.scss";
+//@import "./pages";
+
 // themes:
 
 
