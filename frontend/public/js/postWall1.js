@@ -278,12 +278,12 @@ function displayAll(result) {
         addClass(spanIconModifyPost, 'card-read-post__iconModifyPost')
 
         // Icon:
-        let iconModifyPost = createTag('i')
-        addClass(iconModifyPost, 'fas')
-        addClass(iconModifyPost, 'fa-reply')
-        iconModifyPost.setAttribute('id', 'iconModify')
-        iconModifyPost.setAttribute("data-idModifyPost", result[i].id)
-        const getIdModify = ("data-idModifyPost", result[i].id)
+        let iconModifyPost = createTag('i')//
+        addClass(iconModifyPost, 'fas')//
+        addClass(iconModifyPost, 'fa-reply')//
+        iconModifyPost.setAttribute('id', 'iconModify')//
+        iconModifyPost.setAttribute("data-idModifyPost", result[i].id)//
+        const getIdModify = ("data-idModifyPost", result[i].id)//
 
         ///////////////////////////////////////////////////////////
         // Modify Post:
@@ -306,7 +306,6 @@ function displayAll(result) {
             let frameTextereaModifyPost = createTag('div')
             addClass(frameTextereaModifyPost, 'frameTextereaModifyPost')
             addClass(frameTextereaModifyPost, 'input-field')
-
 
             let textareaModyfyPost = createTag('textarea')
             addClass(textareaModyfyPost, 'form-control')
@@ -375,7 +374,7 @@ function displayAll(result) {
 
             })
 
-            /*
+
                 // Rajout de l'icone au bouton  dans la version amélioré:
                 // Icon:
                 let iconSendModifyPost = createTag('i')

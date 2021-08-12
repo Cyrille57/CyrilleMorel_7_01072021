@@ -39,7 +39,7 @@ loginForm.addEventListener('submit', function(event) {
     let getUser = json_object
     console.log(json_object)
 
-    //window.location = "/frontend/public/html/postWall.html"
+    window.location = "/frontend/public/html/postWall.html"
 })
   .catch((error) => {
     console.log(error)
