@@ -42,6 +42,7 @@ connect(url)
 
 function displayAll(result) {
 
+    /*
     //Selectionne l'id parent:
     let main = document.querySelector('main')
 
@@ -114,10 +115,10 @@ function displayAll(result) {
     divBtnSendPost.setAttribute('type', 'button')
     divBtnSendPost.innerHTML = 'Post'
 
-
+    */
     ///////////////////////////////////////////////////////////
     // Envoie le post:
-
+    /*
     divBtnSendPost.addEventListener('click', (event) => {
         event.preventDefault();
         console.log(divBtnSendPost)
@@ -156,9 +157,10 @@ function displayAll(result) {
 
 
     })
+    */
 
     ///////////////////////////////////////////////////////////
-
+    /*
     // Icone Post:
     let spanIconPost = createTag('span')
     addClass(spanIconPost, 'fas')
@@ -200,7 +202,7 @@ function displayAll(result) {
 
     // icone Post:
     divBtnSendPost.appendChild(spanIconPost)
-
+    */
     ///////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////
@@ -210,7 +212,7 @@ function displayAll(result) {
         //---------------------------------------------------------
         // Card qui affiche les posts:
 
-        let divPostAndComment = createTag('div')
+    /*      let divPostAndComment = createTag('div')
         addClass(divPostAndComment, 'divPostAndComment')
 
         // Frame card read post:
@@ -258,10 +260,10 @@ function displayAll(result) {
         xhr.open("GET", findUrlUser, true)
 
         xhr.send()
-
+    */
         ///////////////////////////////////////////////////////////
 
-        // Card read Post displayPost: **********************************
+    /*    // Card read Post displayPost: **********************************
         let divCardReadPostDisplayPost = createTag('div')
         addClass(divCardReadPostDisplayPost, 'card-read-post__displayPost')
         addClass(divCardReadPostDisplayPost, 'shadow')
@@ -284,13 +286,13 @@ function displayAll(result) {
         iconModifyPost.setAttribute('id', 'iconModify')//
         iconModifyPost.setAttribute("data-idModifyPost", result[i].id)//
         const getIdModify = ("data-idModifyPost", result[i].id)//
-
+    */
         ///////////////////////////////////////////////////////////
         // Modify Post:
 
         //---------------------------------------------------------
         // Ecoute le bouton modify ( la fleche retourné ):
-        iconModifyPost.addEventListener('click', (event) => {
+    /*        iconModifyPost.addEventListener('click', (event) => {
 
             //---------------------------------------------------------
             // Cache le post pour introduire le input pour update le post:
@@ -382,9 +384,9 @@ function displayAll(result) {
                 addClass(iconSendModifyPost, 'fa-paper-plane')
                 iconSendModifyPost.setAttribute('id', 'iconSendModifyPost')
                 //iconSendModifyPost.setAttribute("data-idSendModifyPost", result[i].id)
-            */
+    */
 
-            let btnReturnReadPost = createTag('button')
+    /*        let btnReturnReadPost = createTag('button')
             addClass(btnReturnReadPost, 'btn--sendPostModify')
             addClass(btnReturnReadPost, 'shadow')
             addClass(btnReturnReadPost, 'rounded')
@@ -409,11 +411,11 @@ function displayAll(result) {
             frameTextereaModifyPost.appendChild(divBtnSendPostModify)
             //divBtnSendPostModify.appendChild(iconSendModifyPost)
             frameTextereaModifyPost.appendChild(btnReturnReadPost)
-
+    */
         })
 
         ///////////////////////////////////////////////////////////////////////
-
+/*
         let iconDeletePost = createTag('i')
         addClass(iconDeletePost, 'fas')
         addClass(iconDeletePost, 'fa-times-circle"')
@@ -467,7 +469,7 @@ function displayAll(result) {
                 .then(res => document.location.reload())
 
         })
-
+*/
         ///////////////////////////////////////////////////////////
 
         ///////////////////////////////////////////////////////////

@@ -25,7 +25,7 @@ const auth = require('../middleware/auth')
 router.post('/',  postCtrl.createPost)
 
 // Modifie le post:
-router.put('/:id', auth, postCtrl.modifyPost)
+router.put('/:id', postCtrl.modifyPost)
 
 // Supprime le post:
 router.delete('/:id', postCtrl.deletePost)
