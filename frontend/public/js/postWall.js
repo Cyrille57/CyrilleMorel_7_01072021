@@ -23,6 +23,7 @@ async function connectPost(urlPost) {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
       //xhr.setRequestHeader("Authorization", "Bearer {token}");
       var post = JSON.parse(this.responseText)
+      console.log(post)
 
       post.reverse()
 
@@ -297,8 +298,6 @@ function displayAllPosts(post) {
     const idViewComment = ('data-lookComment', post[i].id)
     sessionStorage.setItem("idViewComment", idViewComment)
 
-
-
     // Icone dans le bouton vue:
     let iconeViewComment = createTag('i')
     addClass(iconeViewComment, ['far', 'fa-eye'])
@@ -306,9 +305,11 @@ function displayAllPosts(post) {
     // Bouton creer un commentaires:
     let btnEditComment = createTag('button')
     addClass(btnEditComment, ['display-frameCard__btn-sendComment', 'shadow', 'rounded'])
+    btnEditComment.setAttribute('id', 'createComment')
     btnEditComment.setAttribute('type', 'button')
     btnEditComment.setAttribute('data-createComment', post[i].id)
     btnEditComment.innerHTML = 'Comment'
+    createComment(post, divReadPost, btnEditComment, divDisplayPost, divFrameButton)
 
     // Icone dans le bouton edit:
     let iconeEditComment = createTag('i')
@@ -389,7 +390,7 @@ function displayAllPosts(post) {
 
 
 ///////////////////////////////////////////////////////////
-// Affiche le username du post: a voisr si valide quand auth en place
+// Affiche le username du post: a voir si valide quand auth en place
 
 
 function displayUsername(post) {
@@ -616,7 +617,7 @@ function deletePost(iconDeletePost) {
 // Url pour recupérer les comments:
 const urlComment = 'http://localhost:3000/api/comments'
 
-// Fonction qui récupére les comments:
+// Fonction qui récupére les comments: Valide
 async function connectComment() {
 
   console.log(urlComment)
@@ -643,12 +644,145 @@ async function connectComment() {
 connectComment()
 
 
+///////////////////////////////////////////////////////////
+// Crér un commentaire: Valide
+
+
+function createComment(post, divReadPost, btnEditComment, divDisplayPost, divFrameButton) {
+
+
+  btnEditComment.addEventListener('click', (event) => {
+    console.log(event)
+
+    //---------------------------------------------------------
+    // Affiche l'input pour écrire le commentaire:
+
+    // Cache le post pour introduire le input pour écrire le commentaire:
+    divDisplayPost.style.display = 'none'
+    divFrameButton.style.display = 'none'
+
+    let formcretaComment = createTag('form')
+    addClass(formcretaComment, ['d-flex', 'flex-column', 'justify-content-around', 'postForm'])
+
+    let frameTextereaCreateComment = createTag('div')
+    addClass(frameTextereaCreateComment, ['frameTextereaModifyPost', 'input-field'])
+    //returnModifyPost(frameTextereaCreateComment)
+
+    let textareaCreateComment = createTag('textarea')
+    addClass(textareaCreateComment, ['form-control', 'input-lg', 'p-text-area', 'shadow', 'rounded'])
+    textareaCreateComment.setAttribute('id', 'createComment')
+    textareaCreateComment.setAttribute('name', 'post')
+    textareaCreateComment.setAttribute('type', 'text')
+    textareaCreateComment.setAttribute('rows', '2')
+    textareaCreateComment.setAttribute('placeholder', 'Un ptit commentaire ?')
+
+    // Btn:
+    let divBtnCreateComment = createTag('button')
+    addClass(divBtnCreateComment, ['btn--sendPostModify', 'shadow', 'rounded', 'mt-3'])
+    divBtnCreateComment.setAttribute('id', 'btnCreateComment')
+    divBtnCreateComment.setAttribute('type', 'button')
+    divBtnCreateComment.innerHTML = 'Envoyer'
+
+    //---------------------------------------------------------
+    // Envoie le commentaire:
+
+    // Cible le bouton edit comment pa  r rapport a l'id du post:
+    let idCreateComment = event.target.getAttribute('data-createComment')
+    console.log(idCreateComment)
+
+    // Function qui créer l'objet a envoyer:
+    function prepareTheComment() {
+
+      for (var i = 0; i < post.length; i++) {
+
+        let formData = {
+          userId: post[i].userId,
+          postId: idCreateComment,
+          content: textareaCreateComment.value
+        }
+        return formData
+      }
+    }
+
+    // Ecoute le btn envoyer:
+    divBtnCreateComment.addEventListener('click', (event) => {
+      console.log(event)
+
+      prepareTheComment()
+
+      const url = "http://localhost:3000/api/comments"
+
+      var myInit = {
+        method: "POST",
+        headers: new Headers({
+          "Content-Type": "application/json;charset=UTF-8"
+        }),
+        body: JSON.stringify(prepareTheComment()),
+        mode: 'cors',
+        cache: 'default'
+      };
+
+      fetch(url, myInit)
+        .then(res => res.text())
+        //.then(res => document.location.reload())
+        .catch(err => console.log(err))
+
+    })
+
+    divReadPost.appendChild(formcretaComment)
+    formcretaComment.appendChild(frameTextereaCreateComment)
+    frameTextereaCreateComment.appendChild(textareaCreateComment)
+    frameTextereaCreateComment.appendChild(divBtnCreateComment)
+
+    returnCreateComment(frameTextereaCreateComment)
+  })
+
+
+
+  /*
+    const url = "http://localhost:3000/api/comments"
+
+    var myInit = {
+      method: "POST",
+      headers: new Headers({
+        "Content-Type": "application/json;charset=UTF-8"
+      }),
+      body: JSON.stringify(prepareTheComment()),
+      mode: 'cors',
+      cache: 'default'
+    };
+
+
+    fetch(url , myInit)
+      .then(response => response.json())
+      //.then(res => document.location.reload())
+      .catch(err => console.log(err))
+  */
+
+
+}
+createComment()
+
 
 ///////////////////////////////////////////////////////////
-// Affiche tous les comments:
+// Return posts: Valide
 
-function createComment (){
 
+function returnCreateComment(frameTextereaCreateComment) {
+
+  let btnReturndPost = createTag('button')
+  addClass(btnReturndPost, ['btn--sendPostModify', 'shadow', 'shadow', 'rounded', 'my-3'])
+  btnReturndPost.setAttribute('id', 'btnReturnReadPost')
+  btnReturndPost.setAttribute('type', 'button')
+  btnReturndPost.innerHTML = 'Retour'
+
+  //---------------------------------------------------------
+  // Ecoute le bouton retour:
+  btnReturndPost.addEventListener('click', (event) => {
+    document.location.reload()
+  })
+
+  frameTextereaCreateComment.appendChild(btnReturndPost)
 
 }
 
@@ -656,14 +790,23 @@ function createComment (){
 ///////////////////////////////////////////////////////////
 // Affiche tous les comments:
 
+
+async function displayAllComments(comment) {
+
+  let btnLookComment = document.getElementById('btnViewComment')
+  console.log(btnLookComment)
+  console.log(comment)
+
+  btnLookComment.addEventListener('click', (event) => {
+    console.log(event)
+
+    //let idViewComment = event.target.getAttribute('data-lookComment')
+    //console.log(idViewComment)
+
+  })
+
+
 /*
-function displayAllComments(comment) {
-
-  //let btnLookComment = document.getElementById('btnViewComment')
-  //console.log(btnLookComment)
-  //console.log(comment)
-
-
   //btnLookComment, divReadPost
 
 
@@ -770,8 +913,8 @@ function displayAllComments(comment) {
 
   //})
 
-
+*/
 
 }
-displayAllComments()
-*/
+displayAllComments(comment)
+
