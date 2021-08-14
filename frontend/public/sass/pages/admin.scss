@@ -14,33 +14,70 @@ Search
 }
 */
 
-.container-fluid{
-  flex-direction: row;
-  //justify-content: space-around !important;
-}
-ul{
-  display:flex;
+// ***************************************
+// Navbar postWall:
+
+ul {
+  display: flex;
   flex-direction: row;
   list-style: none;
 }
 
-#suggestions{
-  max-height: 50px;
-  width: 26%;
-  position: relative;
-  top: 44px;
-  right: 230px;
-  background-color: white;
-  overflow:  auto;
+.display-frameCard__cardUser {
 
-  li{
-    list-style: none;
-  }
+  width: 100%;
+  height: auto;
+  min-height: 150px;
+
+  margin-top: 10%;
+
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+
+  //border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 2px solid black;
+  border-radius: 3% !important;
+
+  display: flex;
+  justify-content: center;
+
 }
 
-.lienSearch{
+.divLeftCardUser {
+  width: 45%;
+  height: auto;
 
-  background-color: white;
+  margin-top: 3%;
+
+  overflow: hidden;
+
+  border: 1px solid red;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.divRightCardUser {
+  width: 45%;
+  height: auto;
+
+  margin-top: 3%;
+
+  overflow: hidden;
+
+  border: 1px solid rgb(158, 231, 21)
+}
+
+.display-frameCard__cardUserUsername>h2 {
+
+  width: 100%;
+
+  font-size: 28px;
+  font-weight: bold;
   color: black;
-  text-decoration: none;
+
+  display: flex;
+  justify-content: center;
 }

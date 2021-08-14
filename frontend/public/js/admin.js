@@ -23,7 +23,7 @@ async function connectUser(urlUser) {
 
 
             var getUser = JSON.parse(this.responseText)
-            console.log(getUser)
+            //console.log(getUser)
 
             displayAll(getUser)
 
@@ -43,7 +43,7 @@ connectUser(urlUser)
 // Affiche les users
 
 function displayAll(getUser) {
-    console.log(getUser)
+    //console.log(getUser)
     //Selectionne l'id parent:
     let main = document.querySelector('main')
     console.log(main)
@@ -62,6 +62,7 @@ function displayAll(getUser) {
     // Col-12
     let divCol = createTag('div')
     addClass(divCol, ['col-12'])
+    divCol.setAttribute('id', 'divCol')
 
     //---------------------------------------------------------
     // Création du tableau:
@@ -141,7 +142,8 @@ function displayAll(getUser) {
         // Corp du tableau:
         let trBody = createTag('tr')
         addClass(trBody, ['text-center', 'table-striped', 'align-middle', 'text-white'])
-        trBody.setAttribute("id", "trBody_" + getUser[i].id)
+        trBody.setAttribute("id", "trRowUser_" + getUser[i].id)
+        console.log(trBody)
 
         // Entete de la ligne:
         let thRow = createTag('th')
@@ -153,6 +155,7 @@ function displayAll(getUser) {
 
         // Colonne pseudo:
         let tdBodyUsername = createTag('td')
+        tdBodyUsername.setAttribute("id", "trRowUserName_" + getUser[i].id)
         tdBodyUsername.innerHTML = getUser[i].username
 
         // Colonne email:
@@ -169,43 +172,41 @@ function displayAll(getUser) {
         // Vue:
         let actionVue = createTag('a')
         addClass(actionVue, ['btn', 'btn-light', 'btn-small'])
-        //actionVue.setAttribute('href', 'http://localhost:3000/api/users/' + getUser[i].id)
         actionVue.setAttribute('href', '../html/vueProfil.html')
         actionVue.setAttribute('type', 'button')
-        actionVue.setAttribute("data-actionVue", getUser[i].id)
+        actionVue.setAttribute("data-actionvue", getUser[i].id)
         actionVue.innerHTML = 'Vue'
-        console.log('http://localhost:3000/api/users/' + getUser[i].id)
 
         // Icone de vue:
         let logoVue = createTag('i')
         addClass(logoVue, ['bi', 'bi-eye'])
-        logoVue.setAttribute("data-actionVue", getUser[i].id)
+        logoVue.setAttribute("data-actionvue", getUser[i].id)
 
         // Edit:
         let actionEdit = createTag('a')
         addClass(actionEdit, ['btn', 'btn-light', 'btn-small', 'mx-3'])
         actionEdit.setAttribute('href', '#')
         actionEdit.setAttribute('type', 'button')
-        actionEdit.setAttribute("data-actionEdit", getUser[i].id)
+        actionEdit.setAttribute("data-actionedit", getUser[i].id)
         actionEdit.innerHTML = 'Edit'
 
         // Icone de edit:
         let logoEdit = createTag('i')
         addClass(logoEdit, ['bi', 'bi-pencil-square'])
-        logoEdit.setAttribute("data-actionEdit", getUser[i].id)
+        logoEdit.setAttribute("data-actionedit", getUser[i].id)
 
         // Delete:
         let actionDelete = createTag('a')
         addClass(actionDelete, ['btn', 'btn-light', 'btn-small'])
         actionDelete.setAttribute('href', '#')
         actionDelete.setAttribute('type', 'button')
-        actionDelete.setAttribute("data-actionDelete", getUser[i].id)
+        actionDelete.setAttribute("data-actiondelete", getUser[i].id)
         actionDelete.innerHTML = 'Delete'
 
         // Icone de delete:
         let logoDelete = createTag('i')
         addClass(logoDelete, ['bi', 'bi-x-square'])
-        logoDelete.setAttribute("data-actionDelete", getUser[i].id)
+        logoDelete.setAttribute("data-actiondelete", getUser[i].id)
 
         //---------------------------------------------------------
         // Injecte dans le html:
@@ -241,39 +242,112 @@ function displayAll(getUser) {
         actionDelete.appendChild(logoDelete)
 
         //---------------------------------------------------------
-        // Ecoute les évenement des bpoutons actions:
+        // Fonction de Vue, Edit, et Delete:
 
         //Vue:
         actionVue.addEventListener('click', (event) => {
+
             event.preventDefault();
 
             // Cible l'id de vue utilisé:
-            let idView = event.target.getAttribute('data-actionVue')
+            let idView = parseInt(event.target.getAttribute('data-actionvue'))
             console.log(idView)
 
-            // Selectionne l'id de la ligne:
-            //let getDelete = document.getElementById('trBody_' + idView)
-            //console.log(getDelete)
+            // Sélectionne la ligne de l'user:
+            let getRowUser = document.getElementById("trRowUser_" + idView)
+            console.log(getRowUser)
 
-            // vas sur la page profil correspondant:
-            const url = 'http://localhost:3000/api/users/' + idView
+            //---------------------------------------------------------
+            // Cache le tableau pour afficher la card user:
+            table.style.display = 'none'
 
-            var myInit = {
-                method: "GET",
-                headers: new Headers({
-                    "Content-Type": "application/json;charset=UTF-8"
-                }),
-                body: JSON.stringify(),
-                mode: 'cors',
-                cache: 'default'
-            };
+            //---------------------------------------------------------
+            // Cadre de la card qui affiche l'user:
 
-            // Fetch à laquelle on donne en paramétres l'url et options:
-            fetch(url, myInit)
-                .then(response => response.json())
+            // Selectionne l'id parent:
+            let getDivCol = document.getElementById('divCol')
 
-            // Recharge la page:
-            //location.reload()
+            // Card:
+            let cardUser = createTag('div')
+            addClass(cardUser, ['cardUser'])
+
+            // Frame de la card:
+            let divReadCardUser = createTag('div')
+            addClass(divReadCardUser, ['display-frameCard__cardUser', 'shadow', 'rounded'])
+
+            // Div gauche:
+            let divLeftCardUser = createTag('div')
+            addClass(divLeftCardUser, ['divLeftCardUser'])
+
+            // Div droite:
+            let divRightCardUser = createTag('div')
+            addClass(divRightCardUser, ['divRightCardUser'])
+
+            // Injecte dans le html:
+            getDivCol.appendChild(cardUser)
+            cardUser.appendChild(divReadCardUser)
+            divReadCardUser.appendChild(divLeftCardUser)
+            divReadCardUser.appendChild(divRightCardUser)
+
+            //---------------------------------------------------------
+            // Intérieur de la card:
+
+            // H2 Cadre Username:
+            let divDisplayUsername = createTag('div')
+            addClass(divDisplayUsername, ['display-frameCard__cardUserUsername'])
+
+            //---------------------------------------------------------
+            // Cherche l'id user pour atteindre les éléments:
+
+            // Username:
+            const getUsername = getUser.find(user => user.id === idView).username
+            // Email:
+            const getEmail = getUser.find(user => user.id === idView).email
+            // Rôles:
+            const getRole = getUser.find(user => user.id === idView).admin
+            // Bio:
+            const getBio = getUser.find(user => user.id === idView).bio
+
+            // Username:
+            let divUsername = createTag('h2')
+            divUsername.innerHTML = getUsername
+
+            // Email;
+            let divEmailUser = createTag('p')
+            addClass(divEmailUser, ['divEmailUser'])
+            divEmailUser.innerHTML = "Email: " + getEmail
+
+            // Rôles:
+            let divInfoRole = createTag('p')
+            addClass(divInfoRole, ['divInfoRole'])
+            if (getRole == true) {
+                divInfoRole.innerHTML = "Rôles: " + "Cette personne est administrateur."
+            } else(
+                divInfoRole.innerHTML = "Rôles: " + "Cette personne n'est pas administrateur."
+            )
+
+            let divBio = createTag('p')
+            addClass(divBio, ['divBio'])
+            console.log(getBio)
+            if (getBio === null){
+                divBio.innerHTML = "Bio: </br>" + "Cette personne n'a pas rempli sa biographie."
+            }else{
+                divBio.innerHTML = "Bio: </br>" + getBio
+            }
+
+
+            //---------------------------------------------------------
+            // Injecte dans le html:
+
+            // Username:
+            divLeftCardUser.appendChild(divDisplayUsername)
+            divDisplayUsername.appendChild(divUsername)
+            // Email:
+            divDisplayUsername.appendChild(divEmailUser)
+            // Rôles:
+            divDisplayUsername.appendChild(divInfoRole)
+            // Bio:
+            divRightCardUser.appendChild(divBio)
 
         })
 
@@ -388,56 +462,5 @@ function displayAll(getUser) {
         })
 
     }
-
-
-
-}
-
-function findOne(getUser) {
-    console.log('Fc FindOne:')
-    console.log('getUser:' + getUser)
-
-    var search = document.getElementById('search')
-    console.log('SEARCH=' + search)
-
-    search.addEventListener('keyup', (event) => {
-        //event.preventDefault();
-        const valueSearch = search.value
-
-        const getUserFind = getUser.filter(
-            elt => elt.username.toLocaleLowerCase().includes(valueSearch.toLocaleLowerCase()))
-
-        let sugg = ''
-
-        if (valueSearch != '') {
-            getUserFind.forEach(res =>
-                //sugg += '<a href="' + res.username +'"> '+ res.username +'  </a> ')
-                sugg += res.username + ',')
-        }
-        //document.getElementById('suggestions').innerHTML = sugg
-
-        var splits = sugg.split(",");
-        console.log(splits)
-
-        var filterSplits = splits.filter(Boolean)
-        console.log(filterSplits)
-        console.log(filterSplits.length)
-
-        for (let i = 0; i < filterSplits.length; i++) {
-
-            let inputSugg = document.getElementById('suggestions')
-            let liSearch = createTag('li')
-            let resFindSearch = createTag('a')
-            addClass(resFindSearch, 'lienSearch')
-            resFindSearch.setAttribute('href', filterSplits[i])
-            resFindSearch.innerHTML = filterSplits[i]
-            inputSugg.appendChild(liSearch)
-            liSearch.appendChild(resFindSearch)
-
-        }
-
-        //document.getElementById('suggestions').innerHTML = filterSplits
-
-    })
 
 }
