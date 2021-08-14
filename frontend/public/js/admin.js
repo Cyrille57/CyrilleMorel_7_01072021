@@ -372,9 +372,105 @@ function displayAll(getUser) {
             event.preventDefault();
             console.log(event)
 
+            // Cible l'id de vue utilisé:
+            let idEdit = parseInt(event.target.getAttribute('data-actionedit'))
+            console.log(idEdit)
+
+            // Sélectionne la ligne de l'user:
+            let getRowUser = document.getElementById("trRowUser_" + idEdit)
+            console.log(getRowUser)
+
+            //---------------------------------------------------------
+            // Cache le tableau pour afficher la card user:
+            table.style.display = 'none'
+
+            //---------------------------------------------------------
+            // Cadre de la card qui affiche l'user:
+
+            // Selectionne l'id parent:
+            let getDivCol = document.getElementById('divCol')
+
+            // Card:
+            let cardEditUser = createTag('div')
+            addClass(cardEditUser, ['cardEditUser'])
+
+            // Frame de la card:
+            let divReadCardEditUser = createTag('div')
+            addClass(divReadCardEditUser, ['display-frameCard__cardEditUser', 'shadow', 'rounded'])
+
+            // Div gauche:
+            let divLeftCardEditUser = createTag('div')
+            addClass(divLeftCardEditUser, ['divLeftCardUser'])
+
+            // Div droite:
+            let divRightCardEditUser = createTag('div')
+            addClass(divRightCardEditUser, ['divRightCardUser'])
+
+            // Injecte dans le html:
+            getDivCol.appendChild(cardEditUser)
+            cardEditUser.appendChild(divReadCardEditUser)
+            divReadCardEditUser.appendChild(divLeftCardEditUser)
+            divReadCardEditUser.appendChild(divRightCardEditUser)
+
+            //---------------------------------------------------------
+            // Intérieur de la card:
+
+            // Formulaire:
+            let formUpdateUser = createTag('form')
+            addClass(formUpdateUser, ['well', 'form-horizontal'])
+            formUpdateUser.setAttribute('id', 'formUpdateUser')
+
+            // Form-group:
+            let divFormGroup = createTag('div')
+            addClass(divFormGroup, ['form-group'])
+
+            // Injecte dans le html:
+            divLeftCardEditUser.appendChild(formUpdateUser)
+            formUpdateUser.appendChild(divFormGroup)
+
+            // Label Pseudo:
+            let divLabelUsername = createTag('label')
+            addClass(divLabelUsername, ['col-md-4', 'control-label'])
+            divLabelUsername.innerHTML = 'Useranme'
+
+            let inputGroupContainer = createTag('div')
+            addClass(inputGroupContainer, ['col-md-4', 'inputGroupContainer'])
+
+            let divInputGroup = createTag('div')
+            addClass(divInputGroup, ['input-group'])
+
+            let spanIcon = createTag('span')
+            addClass(spanIcon, ['input-group-addon'])
+
+            let iconPseudo = createTag('i')
+            addClass(iconPseudo, ['glyphicon', 'glyphicon-user'])
+
+            let inputPseudo = createTag('input')
+            addClass(inputPseudo, ['form-control'])
+            inputPseudo.setAttribute('name', 'pseudo')
+            inputPseudo.setAttribute('type', 'text')
+            inputPseudo.setAttribute('placeholder', 'pseudo')
+
+            // Injecte dans le html:
+            divFormGroup.appendChild(divLabelUsername)
+            divFormGroup.appendChild(inputGroupContainer)
+            inputGroupContainer.appendChild(divInputGroup)
+            divInputGroup.appendChild(spanIcon)
+            spanIcon.appendChild(iconPseudo)
+            divInputGroup.appendChild(inputPseudo)
+
+
+
+
+
+
+
+
+
+
             //---------------------------------------------------------
             // Préparation de l'url pour la modification du comment:
-
+        /*
             // Cible l'id du delete utilisé:
             let idEdit = event.target.getAttribute('data-actionEdit')
             console.log(idEdit)
@@ -386,10 +482,10 @@ function displayAll(getUser) {
             const url = 'http://localhost:3000/api/users/' +
                 idEdit
             console.log(url)
-
+        */
             //---------------------------------------------------------
             // Récupére la modification du comment:
-
+        /*
             function modifyFormData() {
                 /*
                 for (var i = 0; i < getUser.length; i++) {
@@ -405,12 +501,12 @@ function displayAll(getUser) {
                     console.log(formData)
                     return formData
                 }
-                */
-            }
 
+            }
+        */
             //---------------------------------------------------------
             // Envoie la modification du post:
-
+        /*
             var myInit = {
                 method: "PUT",
                 headers: new Headers({
@@ -420,14 +516,14 @@ function displayAll(getUser) {
                 mode: 'cors',
                 cache: 'default'
             };
-            /*
+
                 // Fetch à laquelle on donne en paramétres l'url et options:
                 fetch(url, myInit)
                 .then(response => response.json())
 
                 // Recharge la page:
                 //location.reload()
-                        */
+        */
         })
 
 
