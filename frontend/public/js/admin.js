@@ -1,103 +1,115 @@
+///////////////////////////////////////////////////////////
+// admin.js: ///////////////////////////////////////////
+///////////////////////////////////////////////////////////
 
 
-// 1) ////////////////////////////////////////////////////////
-// XMLHttpRequest se connecte et récupére les données:
+///////////////////////////////////////////////////////////
+// Connexion et récupération: valide
 
 
-const url = 'http://localhost:3000/api/users'
-// Création de la fonction qui se connecte:
-async function connect(url) {
+//---------------------------------------------------------
+// Users:
 
-    // Creer un nouvel objet Ajax de type XMLHttpRequest:
+
+// Url pour recupérer les users:
+const urlUser = 'http://localhost:3000/api/users'
+
+async function connectUser(urlUser) {
+
     let xhr = new XMLHttpRequest()
 
     xhr.onreadystatechange = function () {
-        // Détecte l'état de la requête:
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
 
-            // Envoie terminé, contenu récupéré et convertit en Json:
-            var result = JSON.parse(this.responseText)
-            console.log(result)
-            // Réponse: retourne le tableau avec les produits
-            displayAll(result)
+
+            var getUser = JSON.parse(this.responseText)
+            console.log(getUser)
+
+            displayAll(getUser)
 
         } else if (this.readyState == XMLHttpRequest.DONE && this.status == 500) {
-            // Si erreur 500 affiche dans console:
+
             console.log("Erreur 500")
         }
     }
-
-    // Ouvre la connexion en précisant la méthode:
-    xhr.open("GET", url, true)
-
-    // Envoie la requête:
+    xhr.open("GET", urlUser, true)
     xhr.send()
 }
-connect(url)
+connectUser(urlUser)
 
-function displayAll(result) {
-    console.log(result)
+///////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////
+// Affiche les users
+
+function displayAll(getUser) {
+    console.log(getUser)
     //Selectionne l'id parent:
     let main = document.querySelector('main')
     console.log(main)
-    //////////////////////////////////////////////////////////
+
+    //---------------------------------------------------------
     // Création des éléments de base enfants:
 
     // Container:
-    let divContainer = createTag('div') //
-    addClass(divContainer, 'container')
+    let divContainer = createTag('div')
+    addClass(divContainer, ['container'])
 
     // Row:
-    let divRow = createTag('div') //
-    addClass(divRow, 'row')
+    let divRow = createTag('div')
+    addClass(divRow, ['row'])
 
     // Col-12
-    let divCol = createTag('div') //
-    addClass(divCol, 'col-12')
+    let divCol = createTag('div')
+    addClass(divCol, ['col-12'])
+
+    //---------------------------------------------------------
+    // Création du tableau:
 
     // Tableau
-    let table = createTag('table') //
-    addClass(table, 'table')
-    addClass(table, 'table-dark')
-    addClass(table, 'table-hover')
-    addClass(table, 'table-bordered')
-    addClass(table, 'mt-5')
+    let table = createTag('table')
+    addClass(table, ['table', 'table-dark', 'table-hover', 'table-bordered', 'mt-5'])
 
-    // Entete du tableau:
-    let tHead = createTag('thead') //
+    //---------------------------------------------------------
+    // Entête du tableau:
+    let tHead = createTag('thead')
 
     // Ligne de l'entete;
-    let trHead = createTag('tr') //
-    addClass(trHead, 'table')
-    addClass(trHead, 'table-light')
-    addClass(trHead, 'text-center')
-    addClass(trHead, 'align-middle')
+    let trHead = createTag('tr')
+    addClass(trHead, ['table', 'table-light', 'text-center', 'align-middle'])
+
+    //---------------------------------------------------------
+    // Colonne:
 
     // Colonne de l'entete:
     let thHead1 = createTag('th')
-    addClass(thHead1, 'col-sm-3')
+    addClass(thHead1, ['col-sm-1'])
     thHead1.setAttribute('scope', 'col')
     thHead1.innerHTML = '#'
 
     let thHead2 = createTag('th')
-    addClass(thHead2, 'col-sm-3')
+    addClass(thHead2, ['col-sm-3'])
     thHead2.setAttribute('scope', 'col')
     thHead2.innerHTML = 'Pseudo'
 
     let thHead3 = createTag('th')
-    addClass(thHead3, 'col-sm-3')
+    addClass(thHead3, ['col-sm-3'])
     thHead3.setAttribute('scope', 'col')
     thHead3.innerHTML = 'Email'
 
     let thHead4 = createTag('th')
-    addClass(thHead4, 'col-sm-3')
+    addClass(thHead4, ['col-sm-6'])
     thHead4.setAttribute('scope', 'col')
     thHead4.innerHTML = 'Action'
 
+    //---------------------------------------------------------
     // Corps du tableau:
     let tBody = createTag('tbody')
 
-    // Ajout des élément de base:
+    //---------------------------------------------------------
+    // Injecte dans le html:
+
+    // Eléments de base enfants:
     main.appendChild(divContainer)
     divContainer.appendChild(divRow)
     divRow.appendChild(divCol)
@@ -118,93 +130,85 @@ function displayAll(result) {
     // Corps du tableau:
     table.appendChild(tBody)
 
-    //////////////////////////////////////////////////////////
-    // Boucle qui parcours result:
-    for (var i = 0; i < result.length; i++) {
+    //---------------------------------------------------------
+    // Boucle pour creer les lignes en foncion des users:
 
-        //////////////////////////////////////////////////////////
-        // Création des lignes du tableau à chaque tour du tableau:
-        //console.log(' Dans la boucle : logueur du tableau:')
-        //console.log(result.length)
+    for (var i = 0; i < getUser.length; i++) {
+
+        //---------------------------------------------------------
+        // Création des lignes du tableau:
 
         // Corp du tableau:
         let trBody = createTag('tr')
-        addClass(trBody, 'text-center')
-        addClass(trBody, 'table-striped')
-        addClass(trBody, 'align-middle')
-        addClass(trBody, 'text-white')
-        trBody.setAttribute("id", "trBody_" + result[i].id)
-
+        addClass(trBody, ['text-center', 'table-striped', 'align-middle', 'text-white'])
+        trBody.setAttribute("id", "trBody_" + getUser[i].id)
 
         // Entete de la ligne:
         let thRow = createTag('th')
         thRow.setAttribute('scope', 'row')
-        thRow.innerHTML = result[i].id
+        thRow.innerHTML = getUser[i].id
+
+        //---------------------------------------------------------
+        // Colonne:
 
         // Colonne pseudo:
         let tdBodyUsername = createTag('td')
-        tdBodyUsername.innerHTML = result[i].username
+        tdBodyUsername.innerHTML = getUser[i].username
 
         // Colonne email:
         let tdBodyMail = createTag('td')
-        tdBodyMail.innerHTML = result[i].email
+        tdBodyMail.innerHTML = getUser[i].email
 
         //Colonne Action:
         let tBodyAction = createTag('td')
-        addClass(tBodyAction, 'd-flex')
-        addClass(tBodyAction, 'justify-content-center')
+        addClass(tBodyAction, ['d-flex', 'justify-content-center'])
 
-        // Les boutons de la colonne action:
+        //---------------------------------------------------------
+        // Bouton:
+
         // Vue:
         let actionVue = createTag('a')
-        addClass(actionVue, 'btn')
-        addClass(actionVue, 'btn-light')
-        addClass(actionVue, 'btn-small')
-        //actionVue.setAttribute('href', 'http://localhost:3000/api/users/' + result[i].id)
+        addClass(actionVue, ['btn', 'btn-light', 'btn-small'])
+        //actionVue.setAttribute('href', 'http://localhost:3000/api/users/' + getUser[i].id)
         actionVue.setAttribute('href', '../html/vueProfil.html')
         actionVue.setAttribute('type', 'button')
-        actionVue.setAttribute("data-actionVue", result[i].id)
+        actionVue.setAttribute("data-actionVue", getUser[i].id)
         actionVue.innerHTML = 'Vue'
-        console.log('http://localhost:3000/api/users/' + result[i].id)
+        console.log('http://localhost:3000/api/users/' + getUser[i].id)
 
         // Icone de vue:
         let logoVue = createTag('i')
-        addClass(logoVue, 'bi')
-        addClass(logoVue, 'bi-eye')
-        logoVue.setAttribute("data-actionVue", result[i].id)
+        addClass(logoVue, ['bi', 'bi-eye'])
+        logoVue.setAttribute("data-actionVue", getUser[i].id)
 
         // Edit:
         let actionEdit = createTag('a')
-        addClass(actionEdit, 'btn')
-        addClass(actionEdit, 'btn-light')
-        addClass(actionEdit, 'btn-small')
-        addClass(actionEdit, 'mx-3')
+        addClass(actionEdit, ['btn', 'btn-light', 'btn-small', 'mx-3'])
         actionEdit.setAttribute('href', '#')
         actionEdit.setAttribute('type', 'button')
-        actionEdit.setAttribute("data-actionEdit", result[i].id)
+        actionEdit.setAttribute("data-actionEdit", getUser[i].id)
         actionEdit.innerHTML = 'Edit'
 
         // Icone de edit:
         let logoEdit = createTag('i')
-        addClass(logoEdit, 'bi')
-        addClass(logoEdit, 'bi-pencil-square')
-        logoEdit.setAttribute("data-actionEdit", result[i].id)
+        addClass(logoEdit, ['bi', 'bi-pencil-square'])
+        logoEdit.setAttribute("data-actionEdit", getUser[i].id)
 
         // Delete:
         let actionDelete = createTag('a')
-        addClass(actionDelete, 'btn')
-        addClass(actionDelete, 'btn-light')
-        addClass(actionDelete, 'btn-small')
+        addClass(actionDelete, ['btn', 'btn-light', 'btn-small'])
         actionDelete.setAttribute('href', '#')
         actionDelete.setAttribute('type', 'button')
-        actionDelete.setAttribute("data-actionDelete", result[i].id)
+        actionDelete.setAttribute("data-actionDelete", getUser[i].id)
         actionDelete.innerHTML = 'Delete'
 
         // Icone de delete:
         let logoDelete = createTag('i')
-        addClass(logoDelete, 'bi')
-        addClass(logoDelete, 'bi-x-square')
-        logoDelete.setAttribute("data-actionDelete", result[i].id)
+        addClass(logoDelete, ['bi', 'bi-x-square'])
+        logoDelete.setAttribute("data-actionDelete", getUser[i].id)
+
+        //---------------------------------------------------------
+        // Injecte dans le html:
 
         // Ajout corp du tableau:
         tBody.appendChild(trBody)
@@ -212,12 +216,15 @@ function displayAll(result) {
         // Entete de la ligne:
         trBody.appendChild(thRow)
 
+        //---------------------------------------------------------
         // Colonne:
         trBody.appendChild(tdBodyUsername)
         trBody.appendChild(tdBodyMail)
         trBody.appendChild(tBodyAction)
 
-        // Colonne Action:
+        //---------------------------------------------------------
+        // Bouton:
+
         //vue:
         tBodyAction.appendChild(actionVue)
         // Bouton vue:
@@ -233,21 +240,23 @@ function displayAll(result) {
         // Bouton delete:
         actionDelete.appendChild(logoDelete)
 
-        // Ecoue les évenement des bpoutons actions:
+        //---------------------------------------------------------
+        // Ecoute les évenement des bpoutons actions:
 
         //Vue:
         actionVue.addEventListener('click', (event) => {
+            event.preventDefault();
 
-            // Cible l'id du delete utilisé:
-            let idDelete = event.target.getAttribute('data-actionVue')
-            console.log(idDelete)
+            // Cible l'id de vue utilisé:
+            let idView = event.target.getAttribute('data-actionVue')
+            console.log(idView)
 
-            // Selectionne l'id  de la ligne
-            let getDelete = document.getElementById('trBody_' + idDelete)
-            console.log(getDelete)
+            // Selectionne l'id de la ligne:
+            //let getDelete = document.getElementById('trBody_' + idView)
+            //console.log(getDelete)
 
             // vas sur la page profil correspondant:
-            const url = 'http://localhost:3000/api/users/' + result.id
+            const url = 'http://localhost:3000/api/users/' + idView
 
             var myInit = {
                 method: "GET",
@@ -268,6 +277,7 @@ function displayAll(result) {
 
         })
 
+    
         // Edit:
         actionEdit.addEventListener('click', (event) => {
             event.preventDefault();
@@ -295,7 +305,7 @@ function displayAll(result) {
                 headers: new Headers({
                     "Content-Type": "application/json;charset=UTF-8"
                 }),
-                body: JSON.stringify(result),
+                body: JSON.stringify(getUser),
                 mode: 'cors',
                 cache: 'default'
             };
@@ -309,8 +319,9 @@ function displayAll(result) {
 
         })
 
+
         //Delete:
-        actionDelete.addEventListener('click', (event) => {
+    /*    actionDelete.addEventListener('click', (event) => {
 
             // Cible l'id du delete utilisé:
             let idDelete = event.target.getAttribute('data-actionDelete')
@@ -320,7 +331,7 @@ function displayAll(result) {
             // supprime la ligne:
             getDelete.remove(idDelete)
 
-            let getDataBdd = JSON.parse(result.getItem('result'))
+            let getDataBdd = JSON.parse(getUser.getItem('getUser'))
 
             let removeIndex = getDataBdd.map(function (item) {
                 return item.idDelete;
@@ -340,7 +351,7 @@ function displayAll(result) {
                 headers: new Headers({
                     "Content-Type": "application/json;charset=UTF-8"
                 }),
-                body: JSON.stringify(result),
+                body: JSON.stringify(getUser),
                 mode: 'cors',
                 cache: 'default'
             };
@@ -354,16 +365,16 @@ function displayAll(result) {
             //location.reload()
 
         })
-
+        */
     }
 
 
 
 }
 
-function findOne(result) {
+function findOne(getUser) {
     console.log('Fc FindOne:')
-    console.log('result:' + result)
+    console.log('getUser:' + getUser)
 
     var search = document.getElementById('search')
     console.log('SEARCH=' + search)
@@ -372,13 +383,13 @@ function findOne(result) {
         //event.preventDefault();
         const valueSearch = search.value
 
-        const resultFind = result.filter(
+        const getUserFind = getUser.filter(
             elt => elt.username.toLocaleLowerCase().includes(valueSearch.toLocaleLowerCase()))
 
         let sugg = ''
 
         if (valueSearch != '') {
-            resultFind.forEach(res =>
+            getUserFind.forEach(res =>
                 //sugg += '<a href="' + res.username +'"> '+ res.username +'  </a> ')
                 sugg += res.username + ',')
         }
