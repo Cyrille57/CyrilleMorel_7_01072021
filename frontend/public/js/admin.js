@@ -277,28 +277,51 @@ function displayAll(getUser) {
 
         })
 
-    
-        // Edit:
-        actionEdit.addEventListener('click', (event) => {
-            event.preventDefault();
-            //console.log(event)
-            // Cible l'id du less utilisé:
-            let idEdit = event.target.getAttribute('data-actionEdit')
-        })
 
         //Edit:
-        // Ecoue les évenement des bpoutons actions:
         actionEdit.addEventListener('click', (event) => {
+
+            event.preventDefault();
+            console.log(event)
+
+            //---------------------------------------------------------
+            // Préparation de l'url pour la modification du comment:
 
             // Cible l'id du delete utilisé:
             let idEdit = event.target.getAttribute('data-actionEdit')
             console.log(idEdit)
 
             // Selectionne l'id  de la ligne
-            let getDelete = document.getElementById('trBody_' + idEdit)
+            //let getDelete = document.getElementById('trBody_' + idEdit)
 
             // vas sur la page profil correspondant:
-            const url = 'http://localhost:3000/api/users/:id'
+            const url = 'http://localhost:3000/api/users/' +
+                idEdit
+            console.log(url)
+
+            //---------------------------------------------------------
+            // Récupére la modification du comment:
+
+            function modifyFormData() {
+                /*
+                for (var i = 0; i < getUser.length; i++) {
+
+                    let formData = {
+                        id: getIdModify,
+                        username: textareaModyfyPost.value
+                        email: ,
+                        password: ,
+                        bio: ,
+                        admin:
+                    }
+                    console.log(formData)
+                    return formData
+                }
+                */
+            }
+
+            //---------------------------------------------------------
+            // Envoie la modification du post:
 
             var myInit = {
                 method: "PUT",
@@ -309,63 +332,61 @@ function displayAll(getUser) {
                 mode: 'cors',
                 cache: 'default'
             };
-
-            // Fetch à laquelle on donne en paramétres l'url et options:
-            fetch(url, myInit)
+            /*
+                // Fetch à laquelle on donne en paramétres l'url et options:
+                fetch(url, myInit)
                 .then(response => response.json())
 
-            // Recharge la page:
-            //location.reload()
-
+                // Recharge la page:
+                //location.reload()
+                        */
         })
 
 
-        //Delete:
-    /*    actionDelete.addEventListener('click', (event) => {
+        //Delete: Valide
+        actionDelete.addEventListener('click', (event) => {
+
+            event.preventDefault();
+
+            //---------------------------------------------------------
+            // Récupére les id:
 
             // Cible l'id du delete utilisé:
             let idDelete = event.target.getAttribute('data-actionDelete')
             console.log(idDelete)
+
             // Cible l'id de la ligne correspondant:
             let getDelete = document.getElementById('trBody_' + idDelete)
-            // supprime la ligne:
+
+            //---------------------------------------------------------
+            // Supprime le post coté front:
             getDelete.remove(idDelete)
 
-            let getDataBdd = JSON.parse(getUser.getItem('getUser'))
+            //---------------------------------------------------------
+            // Supprime le post coté back:
 
-            let removeIndex = getDataBdd.map(function (item) {
-                return item.idDelete;
-            }).indexOf(idDelete);
+            // Prépare l'url pour supprimer sur le backend:
+            function getUrlDelete() {
 
-            getDataBdd.splice(removeIndex, 1)
-
-            if (getDataBdd.length == 0) {
-                // Va à la page:
-                //window.location = "panierEmpty.html"
+                for (var i = 0; i < getUser.length; i++) {
+                    const url = 'http://localhost:3000/api/users/' + idDelete
+                    return url
+                }
             }
+            getUrlDelete()
 
-            const url = 'http://localhost:3000/api/users/:id'
-
+            //---------------------------------------------------------
+            // Envoie la requête:
             var myInit = {
-                method: "DELETE",
-                headers: new Headers({
-                    "Content-Type": "application/json;charset=UTF-8"
-                }),
-                body: JSON.stringify(getUser),
-                mode: 'cors',
-                cache: 'default'
+                method: "DELETE"
             };
 
-            // Fetch à laquelle on donne en paramétres l'url et options:
-            fetch(url, myInit)
-                .then(response => response.json())
-            // Quand la promesse est tenue, elle est parsée au format Json
-
-            // Recharge la page:
-            //location.reload()
+            fetch(getUrlDelete(), myInit)
+                .then(res => res.text())
+                .then(res => console.log(res))
 
         })
-        */
+
     }
 
 
