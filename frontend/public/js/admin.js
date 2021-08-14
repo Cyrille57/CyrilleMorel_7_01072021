@@ -315,26 +315,39 @@ function displayAll(getUser) {
             // Email;
             let divEmailUser = createTag('p')
             addClass(divEmailUser, ['divEmailUser'])
-            divEmailUser.innerHTML = "Email: " + getEmail
+            divEmailUser.innerHTML = "Email: </br>" + getEmail
 
             // Rôles:
             let divInfoRole = createTag('p')
             addClass(divInfoRole, ['divInfoRole'])
             if (getRole == true) {
-                divInfoRole.innerHTML = "Rôles: " + "Cette personne est administrateur."
+                divInfoRole.innerHTML = "Rôles: </br>" + "Cette personne est administrateur."
             } else(
-                divInfoRole.innerHTML = "Rôles: " + "Cette personne n'est pas administrateur."
+                divInfoRole.innerHTML = "Rôles: </br>" + "Cette personne n'est pas administrateur."
             )
 
+            // Bio:
             let divBio = createTag('p')
             addClass(divBio, ['divBio'])
             console.log(getBio)
-            if (getBio === null){
+            if (getBio === null) {
                 divBio.innerHTML = "Bio: </br>" + "Cette personne n'a pas rempli sa biographie."
-            }else{
+            } else {
                 divBio.innerHTML = "Bio: </br>" + getBio
             }
 
+            //Retour:
+            let btnReturnAllUser = createTag('button')
+            addClass(btnReturnAllUser, ['btn--sendPostModify', 'shadow', 'shadow', 'rounded', 'my-3'])
+            btnReturnAllUser.setAttribute('id', 'btnReturnAllUser')
+            btnReturnAllUser.setAttribute('type', 'button')
+            btnReturnAllUser.innerHTML = 'Retour'
+
+            //---------------------------------------------------------
+            // Ecoute le bouton retour:
+            btnReturnAllUser.addEventListener('click', (event) => {
+                document.location.reload()
+            })
 
             //---------------------------------------------------------
             // Injecte dans le html:
@@ -348,6 +361,7 @@ function displayAll(getUser) {
             divDisplayUsername.appendChild(divInfoRole)
             // Bio:
             divRightCardUser.appendChild(divBio)
+            divRightCardUser.appendChild(btnReturnAllUser)
 
         })
 
@@ -430,7 +444,8 @@ function displayAll(getUser) {
             console.log(idDelete)
 
             // Cible l'id de la ligne correspondant:
-            let getDelete = document.getElementById('trBody_' + idDelete)
+            let getDelete = document.getElementById('trRowUser_' + idDelete)
+            console.log(getDelete)
 
             //---------------------------------------------------------
             // Supprime le post coté front:
