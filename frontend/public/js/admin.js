@@ -70,6 +70,7 @@ function displayAll(getUser) {
     // Tableau
     let table = createTag('table')
     addClass(table, ['table', 'table-dark', 'table-hover', 'table-bordered', 'mt-5'])
+    table.setAttribute('id', 'table')
 
     //---------------------------------------------------------
     // Entête du tableau:
@@ -398,43 +399,47 @@ function displayAll(getUser) {
             let divReadCardEditUser = createTag('div')
             addClass(divReadCardEditUser, ['display-frameCard__cardEditUser', 'shadow', 'rounded'])
 
-            // Div gauche:
-            let divLeftCardEditUser = createTag('div')
-            addClass(divLeftCardEditUser, ['divLeftCardUser'])
 
-            // Div droite:
-            let divRightCardEditUser = createTag('div')
-            addClass(divRightCardEditUser, ['divRightCardUser'])
 
             // Injecte dans le html:
             getDivCol.appendChild(cardEditUser)
             cardEditUser.appendChild(divReadCardEditUser)
-            divReadCardEditUser.appendChild(divLeftCardEditUser)
-            divReadCardEditUser.appendChild(divRightCardEditUser)
+
 
             //---------------------------------------------------------
             // Intérieur de la card:
+
+
+            //---------------------------------------------------------
+            // Base du formulaire:
 
             // Formulaire:
             let formUpdateUser = createTag('form')
             addClass(formUpdateUser, ['well', 'form-horizontal'])
             formUpdateUser.setAttribute('id', 'formUpdateUser')
 
+            //---------------------------------------------------------
+            // Groupe formulaire:
+
             // Form-group:
             let divFormGroup = createTag('div')
             addClass(divFormGroup, ['form-group'])
 
             // Injecte dans le html:
-            divLeftCardEditUser.appendChild(formUpdateUser)
+            divReadCardEditUser.appendChild(formUpdateUser)
             formUpdateUser.appendChild(divFormGroup)
+
+
+            //---------------------------------------------------------
+            // Input Pseudo:
 
             // Label Pseudo:
             let divLabelUsername = createTag('label')
-            addClass(divLabelUsername, ['col-md-4', 'control-label'])
-            divLabelUsername.innerHTML = 'Useranme'
+            addClass(divLabelUsername, ['sizeLabel', 'control-label'])
+            divLabelUsername.innerHTML = 'Pseudo:'
 
             let inputGroupContainer = createTag('div')
-            addClass(inputGroupContainer, ['col-md-4', 'inputGroupContainer'])
+            addClass(inputGroupContainer, ['sizeInput', 'inputGroupContainer'])
 
             let divInputGroup = createTag('div')
             addClass(divInputGroup, ['input-group'])
@@ -449,15 +454,137 @@ function displayAll(getUser) {
             addClass(inputPseudo, ['form-control'])
             inputPseudo.setAttribute('name', 'pseudo')
             inputPseudo.setAttribute('type', 'text')
-            inputPseudo.setAttribute('placeholder', 'pseudo')
+            inputPseudo.setAttribute('placeholder', 'Pseudo')
+
 
             // Injecte dans le html:
             divFormGroup.appendChild(divLabelUsername)
             divFormGroup.appendChild(inputGroupContainer)
             inputGroupContainer.appendChild(divInputGroup)
-            divInputGroup.appendChild(spanIcon)
-            spanIcon.appendChild(iconPseudo)
+            //divInputGroup.appendChild(spanIcon)
+            //spanIcon.appendChild(iconPseudo)
             divInputGroup.appendChild(inputPseudo)
+
+
+            //---------------------------------------------------------
+            // Groupe formulaire:
+
+            // Form-group:
+            let divFormGroup2 = createTag('div')
+            addClass(divFormGroup2, ['form-group'])
+
+            // Injecte dans le html:
+            formUpdateUser.appendChild(divFormGroup2)
+
+            //---------------------------------------------------------
+            // Input Email
+
+            // Label Email:
+            let divLabelEmail = createTag('label')
+            addClass(divLabelEmail, ['sizeLabel', 'control-label'])
+            divLabelEmail.innerHTML = 'Email'
+
+            let inputGroupContainer2 = createTag('div')
+            addClass(inputGroupContainer2, ['sizeInput', 'inputGroupContainer2'])
+
+            let divInputGroup2 = createTag('div')
+            addClass(divInputGroup2, ['input-group'])
+
+            let spanIcon2 = createTag('span')
+            addClass(spanIcon2, ['input-group-addon'])
+
+            let iconEmail = createTag('i')
+            addClass(iconEmail, ['glyphicon', 'glyphicon-envelope'])
+            iconEmail.setAttribute('id', 'iconEmail')
+
+            let inputMail = createTag('input')
+            addClass(inputMail, ['form-control'])
+            inputMail.setAttribute('name', 'email')
+            inputMail.setAttribute('type', 'text')
+            inputMail.setAttribute('placeholder', 'Email')
+
+
+            // Injecte dans le html:
+            divFormGroup2.appendChild(divLabelEmail)
+            divFormGroup2.appendChild(inputGroupContainer2)
+            inputGroupContainer2.appendChild(divInputGroup2)
+            //divInputGroup2.appendChild(spanIcon2)
+            //spanIcon2.appendChild(iconEmail)
+            divInputGroup2.appendChild(inputMail)
+
+            //---------------------------------------------------------
+            // Groupe formulaire:
+
+            // Form-group:
+            let divFormGroup3 = createTag('div')
+            addClass(divFormGroup3, ['form-group'])
+
+            // Injecte dans le html:
+            formUpdateUser.appendChild(divFormGroup3)
+
+            //---------------------------------------------------------
+            // Check Admin:
+
+            let divRow = createTag('div')
+            addClass(divRow, ['row'])
+
+            let legendRadio = createTag('legend')
+            addClass(legendRadio, ['col-form-label' ,'col-sm-2', 'pt-0'])
+            legendRadio.innerHTML = 'Administrateur: '
+
+            // Injecte dans le html:
+            divFormGroup3.appendChild(divRow)
+            divRow.appendChild(legendRadio)
+
+            // Non:
+            let divFomCheck = createTag('div')
+            addClass(divFomCheck, ['form-check', 'form-check-inline'])
+
+            let checkInput = createTag('input')
+            addClass(checkInput, ['form-check-input'])
+            checkInput.setAttribute('id', 'gridRadios1')
+            checkInput.setAttribute('name', 'gridRadios')
+            checkInput.setAttribute('type', 'radio')
+            checkInput.setAttribute('value', 'option1')
+            //checkInput.setAttribute('', 'checked')
+
+            let labelCheck = createTag('label')
+            addClass(labelCheck, ['form-check-label'])
+            labelCheck.setAttribute('for', 'gridRadios1')
+            labelCheck.innerHTML = 'Non'
+
+            legendRadio.appendChild(divFomCheck)
+            divFomCheck.appendChild(checkInput)
+            divFomCheck.appendChild(labelCheck)
+
+            // Oui:
+            let divFomCheck2 = createTag('div')
+            addClass(divFomCheck2, ['form-check', 'form-check-inline'])
+
+            let checkInput2 = createTag('input')
+            addClass(checkInput2, ['form-check-input'])
+            checkInput2.setAttribute('id', 'gridRadios2')
+            checkInput2.setAttribute('name', 'gridRadios')
+            checkInput2.setAttribute('type', 'radio')
+            checkInput2.setAttribute('value', 'option2')
+            //checkInput.setAttribute('', 'checked')
+
+            let labelCheck2 = createTag('label')
+            addClass(labelCheck2, ['form-check-label'])
+            labelCheck2.setAttribute('for', 'gridRadios2')
+            labelCheck2.innerHTML = 'Oui'
+
+            legendRadio.appendChild(divFomCheck2)
+            divFomCheck2.appendChild(checkInput2)
+            divFomCheck2.appendChild(labelCheck2)
+
+
+
+
+
+
+
+
 
 
 

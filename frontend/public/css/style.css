@@ -11228,6 +11228,55 @@ ul {
   justify-content: center;
 }
 
+.cardEditUser {
+  border: 1px solid black;
+}
+
+.form-group {
+  margin-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sizeLabel {
+  width: 80%;
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .sizeLabel {
+    width: 50%;
+  }
+}
+@media only screen and (min-width: 1024px) and (max-width: 1600px) {
+  .sizeLabel {
+    width: 50%;
+  }
+}
+@media only screen and (min-width: 1600px) {
+  .sizeLabel {
+    width: 30%;
+  }
+}
+
+.sizeInput {
+  width: 80%;
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .sizeInput {
+    width: 50%;
+  }
+}
+@media only screen and (min-width: 1024px) and (max-width: 1600px) {
+  .sizeInput {
+    width: 50%;
+  }
+}
+@media only screen and (min-width: 1600px) {
+  .sizeInput {
+    width: 30%;
+  }
+}
+
 .postAndComment {
   height: auto;
   margin-bottom: 10%;

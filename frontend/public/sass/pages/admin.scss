@@ -23,6 +23,8 @@ ul {
   list-style: none;
 }
 
+// ***************************************
+// Card qui apparais au clik de vue:
 .display-frameCard__cardUser {
 
   width: 100%;
@@ -80,4 +82,55 @@ ul {
 
   display: flex;
   justify-content: center;
+}
+
+// ***************************************
+// Card qui apparais au clik de edit:
+
+.cardEditUser {
+  border:1px solid black;
+}
+.form-group{
+  margin-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+.sizeLabel{
+
+  width: 80%;
+    // Media Queries: ***************************************
+    @include mobile-landscape-tablet { // 480 - 768
+
+    }
+    @include tablet-landscape {       // 768 - 1024
+      width: 50%;
+    }
+    @include pc {                     // 1024 - 1600
+      width: 50%;
+    }
+    @include pc-xl {                  // > 1600
+      width: 30%;
+    }
+
+}
+.sizeInput{
+
+  width: 80%;
+  //margin-left: 5%;
+    // Media Queries: ***************************************
+    @include mobile-landscape-tablet { // 480 - 768
+
+    }
+    @include tablet-landscape {       // 768 - 1024
+      width: 50%;
+    }
+    @include pc {                     // 1024 - 1600
+      width: 50%;
+    }
+    @include pc-xl {                  // > 1600
+      width: 30%;
+    }
+
 }
