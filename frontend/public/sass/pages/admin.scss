@@ -88,8 +88,10 @@ ul {
 // Card qui apparais au clik de edit:
 
 .cardEditUser {
+  margin-top: 20%;
   border:1px solid black;
 }
+// Formulaire:
 .form-group{
   margin-bottom: 5%;
   display: flex;
@@ -97,6 +99,7 @@ ul {
   align-items: center;
 
 }
+// Taille Label:
 .sizeLabel{
 
   width: 80%;
@@ -115,6 +118,7 @@ ul {
     }
 
 }
+// Taille input:
 .sizeInput{
 
   width: 80%;
@@ -133,4 +137,38 @@ ul {
       width: 30%;
     }
 
+}
+// divRow:
+#divRow{
+  width: 100%;
+  margin: 0%;
+  height:auto;
+  display: block;
+  //border: 1px solid red;
+  //display:flex;
+}
+// Cadre checkBox:
+.divFrameCheckBox{
+  width: 100%;
+  //border: 3px solid black;
+  margin: 0% !important;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+// legend:
+legend{
+  height:auto;
+  width: 100%;
+  //border: 1px solid black;
+  display:flex;
+  justify-content: center;
+
+}
+.divFrameButton{
+  width: 30%;
+  //border: 1px solid yellowgreen;
+  display: flex;
+  justify-content: space-around;
 }

@@ -364,6 +364,7 @@ function displayAll(getUser) {
             divRightCardUser.appendChild(divBio)
             divRightCardUser.appendChild(btnReturnAllUser)
 
+            return getRole
         })
 
 
@@ -527,27 +528,33 @@ function displayAll(getUser) {
 
             let divRow = createTag('div')
             addClass(divRow, ['row'])
+            divRow.setAttribute('id', 'divRow')
+
+            let divFrameCheckBox =createTag('div')
+            addClass(divFrameCheckBox, ['divFrameCheckBox'])
 
             let legendRadio = createTag('legend')
             addClass(legendRadio, ['col-form-label' ,'col-sm-2', 'pt-0'])
-            legendRadio.innerHTML = 'Administrateur: '
+            legendRadio.innerHTML = 'Administrateur: </br>'
 
             // Injecte dans le html:
             divFormGroup3.appendChild(divRow)
-            divRow.appendChild(legendRadio)
+            divRow.appendChild(divFrameCheckBox)
+            divFrameCheckBox.appendChild(legendRadio)
 
             // Non:
             let divFomCheck = createTag('div')
             addClass(divFomCheck, ['form-check', 'form-check-inline'])
 
+            // Input check non :
             let checkInput = createTag('input')
             addClass(checkInput, ['form-check-input'])
             checkInput.setAttribute('id', 'gridRadios1')
             checkInput.setAttribute('name', 'gridRadios')
             checkInput.setAttribute('type', 'radio')
             checkInput.setAttribute('value', 'option1')
-            //checkInput.setAttribute('', 'checked')
 
+            // Label check non :
             let labelCheck = createTag('label')
             addClass(labelCheck, ['form-check-label'])
             labelCheck.setAttribute('for', 'gridRadios1')
@@ -561,22 +568,77 @@ function displayAll(getUser) {
             let divFomCheck2 = createTag('div')
             addClass(divFomCheck2, ['form-check', 'form-check-inline'])
 
+            // Input check oui :
             let checkInput2 = createTag('input')
             addClass(checkInput2, ['form-check-input'])
             checkInput2.setAttribute('id', 'gridRadios2')
             checkInput2.setAttribute('name', 'gridRadios')
             checkInput2.setAttribute('type', 'radio')
-            checkInput2.setAttribute('value', 'option2')
+            checkInput2.setAttribute('value', 'option2')//
             //checkInput.setAttribute('', 'checked')
 
+            // Label check oui :
             let labelCheck2 = createTag('label')
             addClass(labelCheck2, ['form-check-label'])
             labelCheck2.setAttribute('for', 'gridRadios2')
             labelCheck2.innerHTML = 'Oui'
 
-            legendRadio.appendChild(divFomCheck2)
+            // Rôles:
+            const getRole = getUser.find(user => user.id === idEdit).admin
+            console.log(getRole)
+
+            if (getRole == true) {
+                checkInput2.checked = true
+                //checkInput.checked = false
+            } else{
+                //checkInput2.checked = false
+                checkInput.checked = true
+            }
+
+            // Cadre bouton:
+            let divFrameButton = createTag('div')
+            addClass(divFrameButton, ['divFrameButton'])
+
+            //Retour:
+            let btnReturnAllUser = createTag('button')
+            addClass(btnReturnAllUser, ['btn--sendPostModify', 'shadow', 'shadow', 'rounded', 'my-3'])
+            btnReturnAllUser.setAttribute('id', 'btnReturnAllUser')
+            btnReturnAllUser.setAttribute('type', 'button')
+            btnReturnAllUser.innerHTML = 'Retour'
+
+            //Validr:
+            let btnValidateUpdateUser = createTag('button')
+            addClass(btnValidateUpdateUser, ['btn--sendPostModify', 'shadow', 'shadow', 'rounded', 'my-3'])
+            btnValidateUpdateUser.setAttribute('id', 'btnReturnAllUser')
+            btnValidateUpdateUser.setAttribute('type', 'button')
+            btnValidateUpdateUser.innerHTML = 'Valider'
+
+            //---------------------------------------------------------
+            // Ecoute le bouton valider:
+            btnValidateUpdateUser.addEventListener('click', (event) => {
+                console.log(event)
+                console.log(idEdit)
+
+                
+            })
+
+
+            //---------------------------------------------------------
+            // Ecoute le bouton retour:
+            btnReturnAllUser.addEventListener('click', (event) => {
+                document.location.reload()
+            })
+
+
+            divFrameCheckBox.appendChild(divFomCheck)
+            divFrameCheckBox.appendChild(divFomCheck2)
             divFomCheck2.appendChild(checkInput2)
             divFomCheck2.appendChild(labelCheck2)
+            divFrameCheckBox.appendChild(divFrameButton)
+            divFrameButton.appendChild(btnValidateUpdateUser)
+            divFrameButton.appendChild(btnReturnAllUser)
+
+
 
 
 
