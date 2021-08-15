@@ -23,12 +23,17 @@ async function connectPost(urlPost) {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
       //xhr.setRequestHeader("Authorization", "Bearer {token}");
       var post = JSON.parse(this.responseText)
-      console.log(post)
+      //console.log(post)
 
       post.reverse()
 
       displayAllPosts(post)
       displayUsername(post)
+
+      for (var i = 0; i < post.length; i++){
+        var userId = post[i].userId
+      }
+      sessionStorage.setItem("userId", userId)
 
 
     } else if (this.readyState == XMLHttpRequest.DONE && this.status == 500) {
@@ -43,7 +48,7 @@ connectPost(urlPost)
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Affiche l'input et envoie les posts: valide
+// Affiche l'input et envoie les posts: valide --
 
 
 function displayFormPost() {
@@ -169,7 +174,7 @@ displayFormPost()
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Affiche tous les posts: valide
+// Affiche tous les posts: valide --
 
 
 function displayAllPosts(post) {
@@ -313,6 +318,7 @@ function displayAllPosts(post) {
     btnEditComment.setAttribute('type', 'button')
     btnEditComment.setAttribute('data-createComment', post[i].id)
     btnEditComment.innerHTML = 'Comment'
+
     createComment(post, divReadPost, btnEditComment, divDisplayPost, divFrameButton)
 
     // Icone dans le bouton edit:
@@ -442,7 +448,7 @@ function displayUsername(post) {
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Fonction modifie le post: valide
+// Fonction modifie le post: Valide --
 
 
 function modifyPost(divReadPost, divDisplayPost, iconModifyPost, getIdModify, divFrameButton) {
@@ -452,6 +458,8 @@ function modifyPost(divReadPost, divDisplayPost, iconModifyPost, getIdModify, di
 
   // Ecoute l'icone de modify post:
   iconModifyPost.addEventListener('click', (event) => {
+    event.preventDefault();
+
 
     //---------------------------------------------------------
     // Cache le post pour introduire le input pour update le post:
@@ -545,7 +553,7 @@ function modifyPost(divReadPost, divDisplayPost, iconModifyPost, getIdModify, di
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Return posts: Valide
+// Return posts: Valide --
 
 
 function returnModifyPost(frameTextereaModifyPost) {
@@ -570,7 +578,7 @@ function returnModifyPost(frameTextereaModifyPost) {
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Delete Post: Valide
+// Delete Post: Valide --
 
 
 function deletePost(iconDeletePost) {
@@ -635,7 +643,7 @@ function deletePost(iconDeletePost) {
 const urlComment = 'http://localhost:3000/api/comments'
 
 // Fonction qui récupére les comments: Valide
-async function connectComment() {
+async function connectComment(urlComment) {
 
   console.log(urlComment)
   let xhr = new XMLHttpRequest()
@@ -658,7 +666,7 @@ async function connectComment() {
   xhr.open("GET", urlComment, true)
   xhr.send()
 }
-connectComment()
+connectComment(urlComment)
 
 
 ///////////////////////////////////////////////////////////
@@ -811,20 +819,55 @@ function returnCreateComment(frameTextereaCreateComment) {
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Affiche tous les comments:
+// Affiche tous les comments du post:
 
 
-async function displayAllComments(comment) {
+ function displayAllComments(comment) {
 
+  // Sélectionne le bouton voir commentaires:
   let btnLookComment = document.getElementById('btnViewComment')
-  console.log(btnLookComment)
-  console.log(comment)
 
+  console.log(btnLookComment)
+
+  // Ecoute le bouton:
   btnLookComment.addEventListener('click', (event) => {
     console.log(event)
 
-    //let idViewComment = event.target.getAttribute('data-lookComment')
-    //console.log(idViewComment)
+    //---------------------------------------------------------
+    // Préparation de l'url pour l'affichage du comment:
+
+    // Cible l'id du post ou es attaché le bouton:
+    let idViewComment = event.target.getAttribute('data-lookComment')
+    console.log(idViewComment)
+
+    // Ajoute a l'url l'id du post:
+    const getAllCommentforOnePost = "http://localhost:3000/api/comments/" + idViewComment
+    console.log(getAllCommentforOnePost)
+
+    //---------------------------------------------------------
+    // Récupére les commentaires du post:
+
+    async function connectCommentforOnePost(getAllCommentforOnePost) {
+      // Recuperation du username de l'user:
+      let xhr = new XMLHttpRequest()
+
+      xhr.onreadystatechange = function () {
+
+        if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+
+          var getCommentForOnePost = JSON.parse(this.responseText)
+          console.log(getCommentForOnePost)
+
+        } else if (this.readyState == XMLHttpRequest.DONE && this.status == 500) {
+
+          console.log("Erreur 500")
+        }
+      }
+
+      xhr.open("GET", getAllCommentforOnePost, true)
+      xhr.send()
+    }
+    connectCommentforOnePost(getAllCommentforOnePost)
 
   })
 

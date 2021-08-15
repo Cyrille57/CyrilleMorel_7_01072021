@@ -430,7 +430,6 @@ function displayAll(getUser) {
             divReadCardEditUser.appendChild(formUpdateUser)
             formUpdateUser.appendChild(divFormGroup)
 
-
             //---------------------------------------------------------
             // Input Pseudo:
 
@@ -445,30 +444,20 @@ function displayAll(getUser) {
             let divInputGroup = createTag('div')
             addClass(divInputGroup, ['input-group'])
 
-            let spanIcon = createTag('span')
-            addClass(spanIcon, ['input-group-addon'])
-
-            let iconPseudo = createTag('i')
-            addClass(iconPseudo, ['glyphicon', 'glyphicon-user'])
-
             let inputPseudo = createTag('input')
             addClass(inputPseudo, ['form-control'])
             inputPseudo.setAttribute('name', 'pseudo')
             inputPseudo.setAttribute('type', 'text')
             inputPseudo.setAttribute('placeholder', 'Pseudo')
 
-
             // Injecte dans le html:
             divFormGroup.appendChild(divLabelUsername)
             divFormGroup.appendChild(inputGroupContainer)
             inputGroupContainer.appendChild(divInputGroup)
-            //divInputGroup.appendChild(spanIcon)
-            //spanIcon.appendChild(iconPseudo)
             divInputGroup.appendChild(inputPseudo)
 
-
             //---------------------------------------------------------
-            // Groupe formulaire:
+            // Groupe formulaire 2:
 
             // Form-group:
             let divFormGroup2 = createTag('div')
@@ -491,32 +480,22 @@ function displayAll(getUser) {
             let divInputGroup2 = createTag('div')
             addClass(divInputGroup2, ['input-group'])
 
-            let spanIcon2 = createTag('span')
-            addClass(spanIcon2, ['input-group-addon'])
-
-            let iconEmail = createTag('i')
-            addClass(iconEmail, ['glyphicon', 'glyphicon-envelope'])
-            iconEmail.setAttribute('id', 'iconEmail')
-
             let inputMail = createTag('input')
             addClass(inputMail, ['form-control'])
             inputMail.setAttribute('name', 'email')
             inputMail.setAttribute('type', 'text')
             inputMail.setAttribute('placeholder', 'Email')
 
-
             // Injecte dans le html:
             divFormGroup2.appendChild(divLabelEmail)
             divFormGroup2.appendChild(inputGroupContainer2)
             inputGroupContainer2.appendChild(divInputGroup2)
-            //divInputGroup2.appendChild(spanIcon2)
-            //spanIcon2.appendChild(iconEmail)
             divInputGroup2.appendChild(inputMail)
 
             //---------------------------------------------------------
             // Groupe formulaire:
 
-            // Form-group:
+            // Form-group 3:
             let divFormGroup3 = createTag('div')
             addClass(divFormGroup3, ['form-group'])
 
@@ -530,11 +509,11 @@ function displayAll(getUser) {
             addClass(divRow, ['row'])
             divRow.setAttribute('id', 'divRow')
 
-            let divFrameCheckBox =createTag('div')
+            let divFrameCheckBox = createTag('div')
             addClass(divFrameCheckBox, ['divFrameCheckBox'])
 
             let legendRadio = createTag('legend')
-            addClass(legendRadio, ['col-form-label' ,'col-sm-2', 'pt-0'])
+            addClass(legendRadio, ['col-form-label', 'col-sm-2', 'pt-0'])
             legendRadio.innerHTML = 'Administrateur: </br>'
 
             // Injecte dans le html:
@@ -574,7 +553,7 @@ function displayAll(getUser) {
             checkInput2.setAttribute('id', 'gridRadios2')
             checkInput2.setAttribute('name', 'gridRadios')
             checkInput2.setAttribute('type', 'radio')
-            checkInput2.setAttribute('value', 'option2')//
+            checkInput2.setAttribute('value', 'option2') //
             //checkInput.setAttribute('', 'checked')
 
             // Label check oui :
@@ -590,7 +569,7 @@ function displayAll(getUser) {
             if (getRole == true) {
                 checkInput2.checked = true
                 //checkInput.checked = false
-            } else{
+            } else {
                 //checkInput2.checked = false
                 checkInput.checked = true
             }
@@ -609,26 +588,9 @@ function displayAll(getUser) {
             //Validr:
             let btnValidateUpdateUser = createTag('button')
             addClass(btnValidateUpdateUser, ['btn--sendPostModify', 'shadow', 'shadow', 'rounded', 'my-3'])
-            btnValidateUpdateUser.setAttribute('id', 'btnReturnAllUser')
+            btnValidateUpdateUser.setAttribute('id', 'btnValidateUpdateUser')
             btnValidateUpdateUser.setAttribute('type', 'button')
             btnValidateUpdateUser.innerHTML = 'Valider'
-
-            //---------------------------------------------------------
-            // Ecoute le bouton valider:
-            btnValidateUpdateUser.addEventListener('click', (event) => {
-                console.log(event)
-                console.log(idEdit)
-
-                
-            })
-
-
-            //---------------------------------------------------------
-            // Ecoute le bouton retour:
-            btnReturnAllUser.addEventListener('click', (event) => {
-                document.location.reload()
-            })
-
 
             divFrameCheckBox.appendChild(divFomCheck)
             divFrameCheckBox.appendChild(divFomCheck2)
@@ -638,7 +600,82 @@ function displayAll(getUser) {
             divFrameButton.appendChild(btnValidateUpdateUser)
             divFrameButton.appendChild(btnReturnAllUser)
 
+            //---------------------------------------------------------
+            // Ecoute le bouton valider:
+            btnValidateUpdateUser.addEventListener('click', (event) => {
 
+                event.preventDefault
+
+                //---------------------------------------------------------
+                // Récupére la valeur du check non:
+
+                function yesOrNotThatIsTheQuestion() {
+
+                    let adminIsFalse = document.getElementById('gridRadios1')
+
+                    if (adminIsFalse.checked === true) {
+                        let noCkeck = "false"
+                        let bolleanCheck = JSON.parse(noCkeck)
+                        return noCkeck
+                    } else {
+                        let noCkeck = "true"
+                        let bolleanCheck = JSON.parse(noCkeck)
+                        return bolleanCheck
+                    }
+
+                }
+
+                //---------------------------------------------------------
+                // Ajoute a l'url l'id du user:
+
+                const urlUpdateUser = "http://localhost:3000/api/users" + idEdit
+
+                //---------------------------------------------------------
+                // Récupére la modification du post:
+
+                function modifyFormData() {
+
+                    for (var i = 0; i < getUser.length; i++) {
+
+                        let formData = {
+                            id: idEdit,
+                            username: inputPseudo.value,
+                            email: inputMail.value,
+                            admin: yesOrNotThatIsTheQuestion()
+                        }
+                        //console.log(getUser)
+                        //console.log(formData)
+                        return formData
+
+                    }
+                }
+                modifyFormData()
+
+                //---------------------------------------------------------
+                // Envoie la modification du post:
+
+                var myInit = {
+                    method: "PUT",
+                    headers: new Headers({
+                        "Content-Type": "application/json;charset=UTF-8"
+                    }),
+                    body: JSON.stringify(modifyFormData()),
+                    mode: 'cors',
+                    cache: 'default'
+                };
+
+                fetch(urlUpdateUser, myInit)
+                    .then(response => response.json())
+                    //.then(res => document.location.reload())
+                    .catch(err => console.log(err))
+            })
+
+
+            //---------------------------------------------------------
+            // Ecoute le bouton retour:
+            btnReturnAllUser.addEventListener('click', (event) => {
+                document.location.reload()
+            })
 
 
 
@@ -659,60 +696,60 @@ function displayAll(getUser) {
 
             //---------------------------------------------------------
             // Préparation de l'url pour la modification du comment:
-        /*
-            // Cible l'id du delete utilisé:
-            let idEdit = event.target.getAttribute('data-actionEdit')
-            console.log(idEdit)
+            /*
+                // Cible l'id du delete utilisé:
+                let idEdit = event.target.getAttribute('data-actionEdit')
+                console.log(idEdit)
 
-            // Selectionne l'id  de la ligne
-            //let getDelete = document.getElementById('trBody_' + idEdit)
+                // Selectionne l'id  de la ligne
+                //let getDelete = document.getElementById('trBody_' + idEdit)
 
-            // vas sur la page profil correspondant:
-            const url = 'http://localhost:3000/api/users/' +
-                idEdit
-            console.log(url)
-        */
+                // vas sur la page profil correspondant:
+                const url = 'http://localhost:3000/api/users/' +
+                    idEdit
+                console.log(url)
+            */
             //---------------------------------------------------------
             // Récupére la modification du comment:
-        /*
-            function modifyFormData() {
-                /*
-                for (var i = 0; i < getUser.length; i++) {
+            /*
+                function modifyFormData() {
+                    /*
+                    for (var i = 0; i < getUser.length; i++) {
 
-                    let formData = {
-                        id: getIdModify,
-                        username: textareaModyfyPost.value
-                        email: ,
-                        password: ,
-                        bio: ,
-                        admin:
+                        let formData = {
+                            id: getIdModify,
+                            username: textareaModyfyPost.value
+                            email: ,
+                            password: ,
+                            bio: ,
+                            admin:
+                        }
+                        console.log(formData)
+                        return formData
                     }
-                    console.log(formData)
-                    return formData
-                }
 
-            }
-        */
+                }
+            */
             //---------------------------------------------------------
             // Envoie la modification du post:
-        /*
-            var myInit = {
-                method: "PUT",
-                headers: new Headers({
-                    "Content-Type": "application/json;charset=UTF-8"
-                }),
-                body: JSON.stringify(getUser),
-                mode: 'cors',
-                cache: 'default'
-            };
+            /*
+                var myInit = {
+                    method: "PUT",
+                    headers: new Headers({
+                        "Content-Type": "application/json;charset=UTF-8"
+                    }),
+                    body: JSON.stringify(getUser),
+                    mode: 'cors',
+                    cache: 'default'
+                };
 
-                // Fetch à laquelle on donne en paramétres l'url et options:
-                fetch(url, myInit)
-                .then(response => response.json())
+                    // Fetch à laquelle on donne en paramétres l'url et options:
+                    fetch(url, myInit)
+                    .then(response => response.json())
 
-                // Recharge la page:
-                //location.reload()
-        */
+                    // Recharge la page:
+                    //location.reload()
+            */
         })
 
 

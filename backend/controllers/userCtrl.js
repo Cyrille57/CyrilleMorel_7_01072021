@@ -240,10 +240,11 @@ exports.modifyUser = (req, res) => {
     id,
     username,
     email,
-    password,
-    bio
+    admin
   } = req.body
 
+  console.log(req.body)
+  console.log(req.params)
   // *****************************************************************************************
   // Code modification:
   models

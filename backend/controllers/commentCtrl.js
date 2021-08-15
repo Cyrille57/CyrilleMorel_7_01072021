@@ -12,6 +12,9 @@ const Validator = require("fastest-validator");
 // Model:
 const Comment = require('../models/comment')
 
+// Model:
+const Post = require('../models/post')
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // CRUD:
@@ -23,7 +26,7 @@ exports.createComment = (req, res) => {
   // Déclarations:
   const comment = {
     userId: req.body.userId,
-    postId:  req.body.postId,//24,//req.params.postId,//15,//req.body.postId,
+    postId: req.body.postId, //24,//req.params.postId,//15,//req.body.postId,
     content: req.body.content,
   }
 
@@ -85,10 +88,10 @@ exports.modifyComment = (req, res) => {
   // Vakidation des saisies utilisateur:
   const schemaValidator = {
     content: {
-      type:     "string",
+      type: "string",
       optional: false,
-      min:      2,
-      max:      50
+      min: 2,
+      max: 50
     }
   }
 
@@ -130,7 +133,7 @@ exports.modifyComment = (req, res) => {
 exports.deleteComment = (req, res) => {
 
   Comment.findOne({
-     where: {
+      where: {
         id: req.params.id
       },
     })
@@ -161,32 +164,6 @@ exports.deleteComment = (req, res) => {
     )
 }
 
-// Récupére via l'id:
-exports.getOneComment = (req, res) => {
-
-  Comment.findOne({
-    where: {
-      id: req.params.id,
-    },
-  })
-    .then((comment) => {
-
-      if (comment) {
-        res.status(200).json(comment)
-      } else {
-        res.status(404).json({
-          message: 'Commentaire introuvable !',
-        })
-      }
-
-    })
-    .catch((error) => {
-      res.status(500).json({
-        error: error,
-      })
-    })
-}
-
 // Récupére tout:
 exports.getAllComments = (req, res) => {
 
@@ -200,4 +177,28 @@ exports.getAllComments = (req, res) => {
         error: error
       })
     })
+}
+
+// Récupére tous les commentaires par rapport à l'id du post:
+exports.getAllCommentforOnePost = (req, res) => {
+
+  Post.findOne({
+      where: {
+        id: req.params.id,
+      },
+    })
+    .then((post) => {
+      Comment.findAll()
+        .then((comment) => {
+          res.status(200).json(comment)
+        })
+        .catch((error) => {
+          res.status(400).json({
+            message: 'Désolés, les commentaires n\'ont pas pu être chargés',
+            error: error
+          })
+        })
+
+    })
+
 }

@@ -32,10 +32,13 @@ router.put('/:id', commentCtrl.modifyComment)
 router.delete('/:id',  commentCtrl.deleteComment)
 
 // Récupére via l'id:
-router.get('/:id', commentCtrl.getOneComment)
+//router.get('/:id', commentCtrl.getOneComment)
 
 // Récupére tout:
 router.get('/', commentCtrl.getAllComments)
+
+// Récupére les comment par rapport au post:
+router.get('/:id', commentCtrl.getAllCommentforOnePost)
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Exportation:
