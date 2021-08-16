@@ -104,9 +104,9 @@ exports.signup = (req, res) => {
   // Code inscription:
   models
     .findOne({
-      attributes: ['email', 'username'], // --> instead of ['email'] ['username']
+      attributes: ['email', 'username'],
       where: {
-        username: req.body.username, // -> If you are getting username from the request body
+        username: req.body.username,
         email: req.body.email
       }
     })
@@ -135,6 +135,7 @@ exports.signup = (req, res) => {
               .catch((err) => {
                 console.log(err)
                 res.status(500).json({
+                  err: err,
                   error: "Le pseudo existe déja",
                 })
               })
@@ -143,6 +144,7 @@ exports.signup = (req, res) => {
 
         } else {
           return res.status(409).json({
+            error: error,
             error: 'L\'email existe déjà',
           })
         }
@@ -191,6 +193,7 @@ exports.login = (req, res) => {
     .then(user => {
       if (user === null) {
         res.status(401).json({
+          error: error,
           message: 'Pseudo et/ou mot de passe incorrect !'
         })
       }
@@ -201,12 +204,14 @@ exports.login = (req, res) => {
           if (!valid) {
             // Retourne une erreur 401 Unauthorized
             return res.status(401).json({
+              error: error,
               error: 'Pseudo et/ou mot de passe incorrect !'
             });
           }
           res.status(200).json({
             //data: token,
             status: '201',
+            userId: user.id,
             message: 'Authentification reussie !',
             token: jwt.sign({
                 userId: user.id
@@ -277,8 +282,9 @@ exports.modifyUser = (req, res) => {
                 console.log('MISE A JOUR ERR:')
                 console.log(err)
                 res.status(500).json({
-
+                  error: error,
                   error: "Impossible de modifier votre profil",
+
                 })
               })
 
@@ -287,6 +293,7 @@ exports.modifyUser = (req, res) => {
         } else {
           res.status(404).json({
             message: 'Profil introuvable !',
+            error: error,
           })
         }
       })
@@ -323,7 +330,7 @@ exports.deleteUser = (req, res) => {
         )
         .catch((error) =>
           res.status(400).json({
-            error,
+            error: error,
           })
         )
 
