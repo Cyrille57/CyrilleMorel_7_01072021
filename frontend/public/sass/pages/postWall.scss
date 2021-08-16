@@ -42,7 +42,7 @@
     backdrop-filter: blur(10px);
 
     //border: 1px solid rgba(255, 255, 255, 0.5);
-    border: 2px solid black;
+    //border: 2px solid black;
     border-radius: 3%  !important;
 
     display: flex;
@@ -57,7 +57,7 @@
     font-size: 22px;
     font-weight: bold;
     color: black;
-    border: 1px solid red;
+    //border: 1px solid red;
   }
 
   // card dans la card qui affiche le post:
@@ -79,7 +79,7 @@
     backdrop-filter: blur(10px);
 
     //border: 1px solid rgba(255, 255, 255, 0.5);
-    border: 2px solid yellowgreen;
+    //border: 2px solid yellowgreen;
     border-radius: 3% 3% 3% 3% !important;
     border-right: none;
 
@@ -93,7 +93,7 @@
       word-wrap: break-word;
       text-align: left;
 
-      border:1px solid black;
+      //border:1px solid black;
       //padding: 12px;
       //border: 1px solid black;
     }
@@ -108,7 +108,7 @@
     flex-direction: column;
     justify-content: space-around;
 
-    border:1px solid red;
+    //border:1px solid red;
 
     >i {
       cursor: pointer;
@@ -123,7 +123,7 @@
     justify-content: space-around;
 
     align-items: center;
-    border:1px solid black;
+    //border:1px solid black;
 
     >p{
       margin-bottom: 0%;
@@ -140,14 +140,34 @@
 
     margin-bottom: 3%;
 
-    border: 1px solid orchid;
+    //border: 1px solid orchid;
 
-    > button {
+
+
+    > .button {
+      height: 30px;
+      width: 110px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      color: black;
+      text-decoration: none;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    > button{
       height: 30px;
       width: 110px;
       border: 1px solid rgba(255, 255, 255, 0.5);
       border-radius: 10px;
       background: rgba(255, 255, 255, 0.1);
+      color: black;
+      text-decoration: none;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
     }
 
   }
@@ -205,7 +225,7 @@
       word-wrap: break-word;
       text-align: right;
 
-      border:1px solid black;
+      //border:1px solid black;
     }
 
   }

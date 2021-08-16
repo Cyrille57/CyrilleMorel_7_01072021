@@ -40,16 +40,16 @@ router.post('/login', userCtrl.login)
 // Crud User:
 
 // Récupére via l'id:
-router.get('/:id',  userCtrl.getOneUser)
+router.get('/:id', auth,  userCtrl.getOneUser)
 
 // Récupére tout:
 router.get('/',  userCtrl.getAllUsers)
 
 // Modifie le user:
-router.put('/:id',  userCtrl.modifyUser);
+router.put('/:id', auth,  userCtrl.modifyUser);
 
 // Supprime le user:
-router.delete('/:id',  userCtrl.deleteUser);
+router.delete('/:id', auth,  userCtrl.deleteUser);
 
 // Admin:
 //router.get('/', userCtrl.getUserProfil);

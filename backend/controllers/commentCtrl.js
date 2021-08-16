@@ -164,6 +164,34 @@ exports.deleteComment = (req, res) => {
     )
 }
 
+// Récupére via l'id:
+exports.getOneComment = (req, res) => {
+console.log(req.params)
+  Comment.findOne({
+      where: {
+        id: req.params.id,
+        postId: req.params.postId
+      },
+    })
+    .then((comment) => {
+      console.log(' 176' + req.params)
+
+      if (comment) {
+        res.status(200).json(comment)
+      } else {
+        res.status(404).json({
+          message: 'Commentaire introuvable !',
+        })
+      }
+
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error: error,
+      })
+    })
+}
+
 // Récupére tout:
 exports.getAllComments = (req, res) => {
 
@@ -178,7 +206,7 @@ exports.getAllComments = (req, res) => {
       })
     })
 }
-
+/*
 // Récupére tous les commentaires par rapport à l'id du post:
 exports.getAllCommentforOnePost = (req, res) => {
 
@@ -202,3 +230,4 @@ exports.getAllCommentforOnePost = (req, res) => {
     })
 
 }
+*/

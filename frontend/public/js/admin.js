@@ -628,7 +628,7 @@ function displayAll(getUser) {
                 //---------------------------------------------------------
                 // Ajoute a l'url l'id du user:
 
-                const urlUpdateUser = "http://localhost:3000/api/users" + idEdit
+                const urlUpdateUser = "http://localhost:3000/api/users/" + idEdit
 
                 //---------------------------------------------------------
                 // Récupére la modification du post:

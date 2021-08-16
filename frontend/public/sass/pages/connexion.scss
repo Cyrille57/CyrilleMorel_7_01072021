@@ -29,7 +29,9 @@
 
 .wrapper {
     max-width: 500px;
-    margin: 100px auto
+    margin: 100px auto;
+    display: flex;
+    justify-content: center;
 }
 
 .wrapper .card {

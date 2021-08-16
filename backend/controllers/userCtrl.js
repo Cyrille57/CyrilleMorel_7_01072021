@@ -258,13 +258,14 @@ exports.modifyUser = (req, res) => {
       (user) => {
         if (user) {
 
-          bcrypt.hash(password, 10, function (err, bcryptPassword) {
+          //bcrypt.hash(password, 10, function (err, bcryptPassword) {
 
             user.update({
                 username: (username ? username : user.username),
                 email: (email ? email : user.email),
-                password: (bcryptPassword ? bcryptPassword : bcryptPassword),
-                bio: (bio ? bio : user.bio)
+                //password: (bcryptPassword ? bcryptPassword : bcryptPassword),
+                //bio: (bio ? bio : user.bio)
+                admin: (admin ? admin : user.admin)
               })
 
               .then(() => {
@@ -273,12 +274,15 @@ exports.modifyUser = (req, res) => {
                 })
               })
               .catch((err) => {
+                console.log('MISE A JOUR ERR:')
+                console.log(err)
                 res.status(500).json({
+
                   error: "Impossible de modifier votre profil",
                 })
               })
 
-          })
+          //})
 
         } else {
           res.status(404).json({
@@ -287,6 +291,8 @@ exports.modifyUser = (req, res) => {
         }
       })
     .catch((error) => {
+      console.log('MISE A JOUR ERR2:')
+      console.log(error)
       res.status(500).json({
         message: 'Impossible de vérifier ce profil',
         error: error,
