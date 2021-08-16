@@ -70,14 +70,12 @@ exports.signup = (req, res) => {
         message: 'Le nombre de caractére dépasse le nombre requis'
       })
     }
-
     if (username.length <= 2) {
       return res.json({
         status: 'error',
         message: 'Le nombre de caractére n\'as pas atteint le nombre requis'
       })
     }
-
     // email:
     if (!emailRegex.test(email)) {
       return res.json({
@@ -85,7 +83,6 @@ exports.signup = (req, res) => {
         message: 'Le mail n\'est pas valide'
       })
     }
-
     //  password:
     if (!passwordRegex.test(password)) {
       return res.json({
@@ -93,7 +90,6 @@ exports.signup = (req, res) => {
         message: 'Le mot de passe doit contenir une lettre majuscule, une lettre minuscule, un chiffre, un caractère spécial et au moins 8 caractères'
       })
     }
-
     // bio:
       if(!bioRegex.test(bio)){
         return res.status(400).json({
@@ -397,10 +393,8 @@ exports.getAllUsers = (req, res) => {
       console.log(req.body.admin)
 
       /*if (req.body.admin != false){
-
         console.log('Récupere USERCTRL tout dans le if:')
         console.log(req.body.admin)
-
         res.status(500)
         res.send('non autorisé')
       }*/

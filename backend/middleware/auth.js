@@ -19,18 +19,20 @@ module.exports = (req, res, next) => {
     const decodedToken = jwt.verify(token, process.env.TOKEN_LOGIN_USER);
     // Extrait l'ID user du token:
     const userId = decodedToken.userId;
+
     // Si la demande contient un ID user, compare à celui extrait du token:
-    if (req.body.userId && req.body.userId !== userId ) {
-      throw 'Invalid user ID';
+    if (req.body.userId && req.body.userId !== userId) {
+      throw 'Identifiant utilisateur invalide';
     } else {
-      req.body.userid = userId
+      req.userid = userId//req.body.userid = userId
       // L'user est authentifié:
       next();
     }
+
   } catch (err) {
     res.status(401).json({
       'message': 'Authentification non valide !',
-      'error' : err
+      'error': err
     });
   }
 };

@@ -37,9 +37,11 @@ exports.createPost = (req, res) => {
   const post = {
     content: req.body.content,
     attachment: req.body.attachment,
-    UserId: User.id,
+    UserId: req.body.id,
   }
 
+
+c
 
   const schemaValidator = {
     content: {
@@ -232,3 +234,80 @@ exports.getAllPosts = (req, res) => {
       })
     })
 }
+
+
+
+
+
+/////////////////////////////////////////////////////////
+//ESAIE
+
+/*
+
+exports.createPost = (req, res) => {
+
+  //console.log('postCtrl createdPost l23 res:')
+  //console.log(res)
+
+  const {
+    content,
+    //attachment: req.body.attachment,
+    UserId
+  } = req.body
+  //console.log('postCtrl createdPost l31 objet post:')
+  //console.log(post)
+
+
+console.log('postCtrl createdPost l35:')
+console.log('REQ.BODY:')
+console.log(req.body)
+console.log('REQ.BODY.USERID:')
+console.log(req.body.userId)
+//console.log('REQ:')
+//console.log(req.User.userId)
+//console.log('post:')
+//console.log(post)
+
+
+model.findByPk({
+  //attributes: ['id'],
+		where: {id: req.query.id},
+	})
+  .then((user) => {
+
+    console.log('postCtrl createdPost l121 user:')
+    console.log(user)
+
+    if (user !== null) {
+
+      Post.create(post)
+      .then((result) => {
+
+        console.log('postCtrl createdPost l64 result:')
+        console.log(result)
+
+        res.status(201).json({
+          message: 'Votre message a correctement été ajouter!',
+          post: result
+        })
+      })
+      .catch((error) => {
+
+        console.log('postCtrl createdPost l75 error:')
+        console.log(error)
+
+        res.status(500).json({
+          message: "Désolé, impossible d'ajouter votre message !",
+        })
+      })
+
+    }
+
+  })
+
+}
+*/
+
+
+
+/////////////////////////////////////////////////////////

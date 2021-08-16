@@ -353,25 +353,19 @@ function displayAllPosts(post) {
     /*
     //---------------------------------------------------------
     // Affiche les commentaires:
-
     // Cadre affichage du commentaires:
     let divFrameReadComment = createTag('div')
     addClass(divFrameReadComment, ['display-frameCard__readComment'])
-
     // Affichage du comment:
     let pComment = createTag('p')
-
     // Injecte dans le html:
     divReadPost.appendChild(divFrameReadComment)
     divFrameReadComment.appendChild(pComment)
-
     //---------------------------------------------------------
     // Emplacement des boutons:
-
     // Cadre des boutons:
     let divFrameButtonComment = createTag('div')
     addClass(divFrameButtonComment, ['display-frameCard__icon-Modify-Delete-Comment'])
-
     // Icon modify comment:
     let iconModifyComment = createTag('i')
     addClass(iconModifyComment, ['fas', 'fa-reply'])
@@ -379,7 +373,6 @@ function displayAllPosts(post) {
     iconModifyComment.setAttribute('data-bs-toggle', 'tooltip')
     iconModifyComment.setAttribute('data-bs-placement', 'right')
     iconModifyComment.setAttribute('title', 'Modifier')
-
     // Icon delete comment:
     let iconDeleteComment = createTag('i')
     addClass(iconDeleteComment, ['fas', 'fa-times-circle'])
@@ -387,25 +380,19 @@ function displayAllPosts(post) {
     iconDeleteComment.setAttribute('data-bs-toggle', 'tooltip')
     iconDeleteComment.setAttribute('data-bs-placement', 'right')
     iconDeleteComment.setAttribute('title', 'Supprimer')
-
     // Injecte dans le html:
     divFrameReadComment.appendChild(divFrameButtonComment)
     divFrameButtonComment.appendChild(iconModifyComment)
     divFrameButtonComment.appendChild(iconDeleteComment)
-
     //---------------------------------------------------------
     // Emplacement des boutons:
-
     // Cadre pour username et date:
     let divFrameInfoComment = createTag('div')
     addClass(divFrameInfoComment, ['display-frameCard__infoComment'])
-
     // Username du comment:
     let usernameComment = createTag('h2')
-
     // Date du comment:
     let dateComment = createTag('p')
-
     // Injecte dans le html:
     divFrameReadComment.appendChild(divFrameInfoComment)
     divFrameInfoComment.appendChild(usernameComment)

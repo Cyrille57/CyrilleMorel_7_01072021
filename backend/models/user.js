@@ -1,7 +1,12 @@
 'use strict'
-const { db } = require('../config/connexion')
+const {
+  db
+} = require('../config/connexion')
 
-const { Sequelize, DataTypes } = require('sequelize')
+const {
+  Sequelize,
+  DataTypes
+} = require('sequelize')
 
 
 const user = db.define('User', {
@@ -24,6 +29,19 @@ const user = db.define('User', {
   admin: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
+  }
+}, {
+  classMethods: {
+    associate: function (models) {
+      // Un user peut avoir plusieurs posts:
+      models.User.hasMany(models.Post, {
+        onDelete: 'cascade'
+      })
+      // Un user peut avoir plusieurs comments:
+      models.User.hasMany(models.Comment, {
+        onDelete: 'cascade'
+      })
+    }
   }
 })
 
