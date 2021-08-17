@@ -10,6 +10,11 @@
 //---------------------------------------------------------
 // Posts:
 
+//---------------------------------------------------------
+      // Récupére le token:
+      var tokenConnect = localStorage.getItem('infoUserToken')
+      console.log(tokenConnect)
+
 
 // Url pour recupérer les posts:
 const urlPost = 'http://localhost:3000/api/posts'
@@ -21,6 +26,9 @@ async function connectPost(urlPost) {
 
   xhr.onreadystatechange = function () {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+
+
+
       //xhr.setRequestHeader("Authorization", "Bearer {token}");
       var post = JSON.parse(this.responseText)
       //console.log(post)
@@ -30,7 +38,7 @@ async function connectPost(urlPost) {
       displayAllPosts(post)
       displayUsername(post)
 
-      for (var i = 0; i < post.length; i++){
+      for (var i = 0; i < post.length; i++) {
         var userId = post[i].userId
       }
       sessionStorage.setItem("userId", userId)
@@ -41,7 +49,9 @@ async function connectPost(urlPost) {
     }
   }
   xhr.open("GET", urlPost, true)
+  xhr.setRequestHeader("Authorization", "Bearer" + tokenConnect)
   xhr.send()
+  console.log(xhr.setRequestHeader("Authorization", "Bearer" + tokenConnect))
 }
 connectPost(urlPost)
 
@@ -140,7 +150,7 @@ function displayFormPost() {
   btnPost.addEventListener('click', (event) => {
     event.preventDefault();
 
-    let userId = sessionStorage.getItem('userId')
+    let userId = parseInt(sessionStorage.getItem('userId'))
     console.log(userId)
 
     const urlSendPost = "http://localhost:3000/api/posts"
@@ -163,7 +173,7 @@ function displayFormPost() {
 
     fetch(urlSendPost, myInit)
       .then(res => res.text()) // or res.json()
-      .then(res => window.location.reload())
+    //.then(res => window.location.reload())
 
   })
 
@@ -602,6 +612,12 @@ function deletePost(iconDeletePost) {
     getDelete.remove(idDelete)
 
     //---------------------------------------------------------
+    // Récupére le token:
+
+    var token = localStorage.getItem('infoUserToken')
+    console.log(token)
+
+    //---------------------------------------------------------
     // Supprime le post coté back:
 
     // Prépare l'url pour supprimer sur le backend:
@@ -619,8 +635,12 @@ function deletePost(iconDeletePost) {
 
     // Envoie la requête:
     var myInit = {
+      headers: {
+        'Authorization': 'Bearer'+ token
+      },
       method: "DELETE"
     };
+    console.log(myInit)
 
     // Envoie la requête cioté back:
     fetch(getUrlDelete(), myInit)
@@ -633,7 +653,3 @@ function deletePost(iconDeletePost) {
 
 
 ///////////////////////////////////////////////////////////
-
-
-
-

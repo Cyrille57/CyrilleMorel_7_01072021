@@ -15,6 +15,8 @@ module.exports = (req, res, next) => {
   try {
     // Extrait le token du header Authorization de la requête entrante:
     const token = req.headers.authorization.split(' ')[1];
+    console.log('Auth l19 req.headers.authorization:')
+    console.log(req.headers.authorization)
     // La fonction verify décode le token:
     const decodedToken = jwt.verify(token, process.env.TOKEN_LOGIN_USER);
     // Extrait l'ID user du token:

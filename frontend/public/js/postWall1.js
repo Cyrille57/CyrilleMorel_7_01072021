@@ -31,6 +31,7 @@ async function connect(url) {
     }
 
     xhr.open("GET", url, true)
+    xhr.setRequestHeader("Authorization", "Bearer {token}")
     xhr.send()
 }
 connect(url)

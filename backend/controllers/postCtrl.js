@@ -40,9 +40,6 @@ exports.createPost = (req, res) => {
     UserId: req.body.id,
   }
 
-
-c
-
   const schemaValidator = {
     content: {
       type: "string",
@@ -63,33 +60,22 @@ c
   }
 
 
-  User.findOne({
-      where: {
-        User: req.userId,
-      },
+  Post.create(post)
+    .then((result) => {
+      res.status(201).json({
+        message: 'Votre message a correctement été ajouter!',
+        post:     result
+      })
     })
-    .then((user) => {
-      if (user !== null) {
-
-        Post.create(post)
-          .then((result) => {
-            res.status(201).json({
-              message: 'Votre message a correctement été ajouter!',
-              post: result
-            })
-          })
-          .catch((error) => {
-            res.status(500).json({
-              message: "Désolé, impossible d'ajouter votre message !",
-              error: error
-            })
-          })
-
-      }
-
+    .catch((error) => {
+      res.status(500).json({
+        message: "Désolé, impossible d'ajouter votre message !",
+        error: error
+      })
     })
-
 }
+
+
 
 
 
