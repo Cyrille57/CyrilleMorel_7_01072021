@@ -200,7 +200,6 @@ exports.login = (req, res) => {
           if (!valid) {
             // Retourne une erreur 401 Unauthorized
             return res.status(401).json({
-              error: error,
               error: 'Pseudo et/ou mot de passe incorrect !'
             });
           }

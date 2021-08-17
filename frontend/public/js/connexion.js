@@ -36,12 +36,13 @@ loginForm.addEventListener('submit', function(event) {
   .then(response => response.json())
   .then(json_object => {
 
+
     let infoUserId = json_object.userId
     let infoUserToken = json_object.token
     console.log(json_object)
 
     localStorage.setItem('infoUserId', infoUserId)
-    localStorage.setItem('infoUserToken', JSON.stringify(infoUserToken));
+    localStorage.setItem('infoUserToken', JSON.stringify (infoUserToken));
 
     window.location = "/frontend/public/html/postWall.html"
 })

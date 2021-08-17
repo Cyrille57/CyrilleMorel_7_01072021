@@ -10,14 +10,17 @@
 //---------------------------------------------------------
 // Posts:
 
-//---------------------------------------------------------
-      // Récupére le token:
-      var tokenConnect = localStorage.getItem('infoUserToken')
-      console.log(tokenConnect)
-
-
 // Url pour recupérer les posts:
 const urlPost = 'http://localhost:3000/api/posts'
+
+// récupére l'id de l'user:
+var idUserConnect = parseInt(localStorage.getItem('infoUserId'))
+console.log('postWall l19 idUserConnect:')
+console.log(idUserConnect)
+
+// Récupére le token:
+var tokenConnect = localStorage.getItem('infoUserToken')
+console.log(tokenConnect)
 
 // Fonction qui récupére les posts:
 async function connectPost(urlPost) {
@@ -27,11 +30,9 @@ async function connectPost(urlPost) {
   xhr.onreadystatechange = function () {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
 
-
-
-      //xhr.setRequestHeader("Authorization", "Bearer {token}");
       var post = JSON.parse(this.responseText)
-      //console.log(post)
+      console.log('postWall l35 post:')
+      console.log(post)
 
       post.reverse()
 
@@ -39,10 +40,12 @@ async function connectPost(urlPost) {
       displayUsername(post)
 
       for (var i = 0; i < post.length; i++) {
-        var userId = post[i].userId
+        var userIdPost = post[i].userId
+        console.log('postWall l44 userIdPost:')
+        console.log(userIdPost)
       }
-      sessionStorage.setItem("userId", userId)
 
+      sessionStorage.setItem("userIdPost", userIdPost)
 
     } else if (this.readyState == XMLHttpRequest.DONE && this.status == 500) {
       console.log("Erreur 500")
@@ -51,9 +54,11 @@ async function connectPost(urlPost) {
   xhr.open("GET", urlPost, true)
   xhr.setRequestHeader("Authorization", "Bearer" + tokenConnect)
   xhr.send()
-  console.log(xhr.setRequestHeader("Authorization", "Bearer" + tokenConnect))
 }
 connectPost(urlPost)
+
+
+
 
 ///////////////////////////////////////////////////////////
 
@@ -62,7 +67,6 @@ connectPost(urlPost)
 
 
 function displayFormPost() {
-
   //---------------------------------------------------------
   // Création des éléments de base enfants:
 
@@ -144,19 +148,17 @@ function displayFormPost() {
   divBtnPost.appendChild(btnPost)
   btnPost.appendChild(iconPost)
 
+
   //---------------------------------------------------------
   // Envoie le Post:
 
   btnPost.addEventListener('click', (event) => {
     event.preventDefault();
 
-    let userId = parseInt(sessionStorage.getItem('userId'))
-    console.log(userId)
-
     const urlSendPost = "http://localhost:3000/api/posts"
 
     let formData = {
-      userId: userId,
+      userId: idUserConnect,
       content: document.getElementById('inputPost').value
     }
 
@@ -509,9 +511,12 @@ function modifyPost(divReadPost, divDisplayPost, iconModifyPost, getIdModify, di
 
       // Recupere l'id du post:
       let getModify = document.getElementById('postAndComment_' + getIdModify)
-
+      console.log('ModifyPost l512 getModify :')
+      console.log(getModify )
       // Ajoute a l'url l'id du post:
       const url = "http://localhost:3000/api/posts/" + getIdModify
+      console.log('ModifyPost l515 url:')
+      console.log(url)
 
       //---------------------------------------------------------
       // Récupére la modification du post:
@@ -546,7 +551,7 @@ function modifyPost(divReadPost, divDisplayPost, iconModifyPost, getIdModify, di
 
       fetch(url, myInit)
         .then(response => response.json())
-        .then(res => document.location.reload())
+        //.then(res => document.location.reload())
         .catch(err => console.log(err))
 
     })
@@ -601,10 +606,12 @@ function deletePost(iconDeletePost) {
 
     // Cible l'icone du post
     let idDelete = event.target.getAttribute('data-idDeletePost')
+    console.log('postWall.js delePost l610 idDelete:')
     console.log(idDelete)
 
     // Récupére l'id du post:
     let getDelete = document.getElementById('postAndComment_' + idDelete)
+    console.log('postWall.js delePost l615 getDelete:')
     console.log(getDelete)
 
     //---------------------------------------------------------
@@ -615,6 +622,7 @@ function deletePost(iconDeletePost) {
     // Récupére le token:
 
     var token = localStorage.getItem('infoUserToken')
+    console.log('postWall.js delePost l626 token:')
     console.log(token)
 
     //---------------------------------------------------------
@@ -636,15 +644,18 @@ function deletePost(iconDeletePost) {
     // Envoie la requête:
     var myInit = {
       headers: {
-        'Authorization': 'Bearer'+ token
-      },
+      'Authorization': 'Bearer '+ token
+       },
       method: "DELETE"
     };
     console.log(myInit)
 
     // Envoie la requête cioté back:
     fetch(getUrlDelete(), myInit)
-      .then(res => res.text())
+      .then(res => res.json())
+      .then(json_object => {
+        console.log(json_object)
+      })
       .then(res => console.log(res))
 
   })
