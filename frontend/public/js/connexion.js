@@ -42,7 +42,7 @@ loginForm.addEventListener('submit', function(event) {
     console.log(json_object)
 
     localStorage.setItem('infoUserId', infoUserId)
-    localStorage.setItem('infoUserToken', JSON.stringify (infoUserToken));
+    localStorage.setItem('infoUserToken', infoUserToken);
 
     window.location = "/frontend/public/html/postWall.html"
 })

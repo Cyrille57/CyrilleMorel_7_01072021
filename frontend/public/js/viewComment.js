@@ -10,6 +10,7 @@
 //---------------------------------------------------------
 // Récupére l'id dans l'url:
 const getIdUrl = window.location.search
+//console.log(getIdUrl)
 
 //---------------------------------------------------------
 // Purge getIdUrl de ?id= et recupere  l'id :
@@ -19,14 +20,25 @@ const getUrlParams = new URLSearchParams(getIdUrl);
 
 // retournera la première valeur associée au paramètre de recherche donné:
 const getId = getUrlParams.get('id')
+console.log(getId)
 
 //---------------------------------------------------------
 // Concaténe l'url de l'API avec l'id récupéré et filtré:
 
 const url = "http://localhost:3000/api/comments";
 const urlComment = url + "/" + getId;
-console.log(urlComment)
 
+//---------------------------------------------------------
+//token:
+
+// récupére l'id de l'user:
+var idUserConnect = parseInt(localStorage.getItem('infoUserId'))
+console.log('postWall l19 idUserConnect:')
+console.log(idUserConnect)
+
+// Récupére le token:
+var tokenConnect = localStorage.getItem('infoUserToken')
+console.log(tokenConnect)
 
 ///////////////////////////////////////////////////////////
 
@@ -45,18 +57,19 @@ async function connectComment(urlComment) {
       //xhr.setRequestHeader("Authorization", "Bearer {token}");
       var comment = JSON.parse(this.responseText)
       console.log(comment)
-      comment.reverse()
+      //comment.reverse()
 
     } else if (this.readyState == XMLHttpRequest.DONE && this.status == 500) {
       console.log("Erreur 500")
     }
   }
   xhr.open("GET", urlComment, true)
+  xhr.setRequestHeader("Authorization", "Bearer " + tokenConnect)
   xhr.send()
 }
 connectComment(urlComment)
 
-
+/*
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////

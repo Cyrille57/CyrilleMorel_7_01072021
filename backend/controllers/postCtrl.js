@@ -147,6 +147,14 @@ exports.modifyPost = (req, res) => {
     )
 }
 
+/*
+where: {
+      postId: req.params.id
+    },
+    include:[{ all: true, nested: true }]
+    ,
+
+*/
 
 // Supprime le post:
 exports.deletePost = (req, res) => {
@@ -157,6 +165,8 @@ exports.deletePost = (req, res) => {
       where: {
         id: req.params.id,
       },
+    include:[{ all: true, nested: true }]
+    ,
     })
     .then((post) => {
 

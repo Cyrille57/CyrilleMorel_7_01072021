@@ -15,6 +15,8 @@ const Comment = require('../models/comment')
 // Model:
 const Post = require('../models/post')
 
+const User = require('../models/user')
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // CRUD:
@@ -107,6 +109,7 @@ exports.modifyComment = (req, res) => {
 
   // *****************************************************************************************
   // Code update:
+  //if( )
   Comment.update({
       _id: req.params.id,
       ...commentObject
@@ -195,11 +198,18 @@ console.log(req.params)
 // Récupére tout:
 exports.getAllComments = (req, res) => {
 
-  Comment.findAll()
+  Comment.findAll({
+    where: {
+      postId: req.params.id
+    },
+    include:[{ all: true, nested: true }]
+    ,
+  })
     .then((comment) => {
       res.status(200).json(comment)
     })
     .catch((error) => {
+      console.log(error)
       res.status(400).json({
         message: 'Désolés, les commentaires n\'ont pas pu être chargés',
         error: error

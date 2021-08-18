@@ -62,8 +62,16 @@ header {
 }
 
 // ***************************************
-// Body comment:
-.comment-body{
+// Body editComment:
+.editComment-body{
+    width: 100%;
+    height: 100%;
+    background-color: #2152ab;
+}
+
+// ***************************************
+// Body viewComment:
+.viewComment-body{
     width: 100%;
     height: 100%;
     background-color: #2152ab;

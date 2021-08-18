@@ -37,7 +37,7 @@ async function connectPost(urlPost) {
       post.reverse()
 
       displayAllPosts(post)
-      displayUsername(post)
+      //displayUsername(post)
 
       for (var i = 0; i < post.length; i++) {
         var userIdPost = post[i].userId
@@ -52,7 +52,7 @@ async function connectPost(urlPost) {
     }
   }
   xhr.open("GET", urlPost, true)
-  xhr.setRequestHeader("Authorization", "Bearer" + tokenConnect)
+  xhr.setRequestHeader("Authorization", "Bearer " + tokenConnect)
   xhr.send()
 }
 connectPost(urlPost)
@@ -309,43 +309,30 @@ function displayAllPosts(post) {
 
     modifyPost(divReadPost, divDisplayPost, iconModifyPost, getIdModify, divFrameButton)
 
+    // Lien bouton voir commentaires:
     let linkView = createTag('a')
-    linkView.setAttribute("href", "../html/comment.html?id=" + post[i].id)
     addClass(linkView, ['button'])
+    linkView.setAttribute('id', 'btnViewComment')
+    linkView.setAttribute("href", "../html/viewComment.html?id=" + post[i].id)
+    linkView.setAttribute('data-viewComment', post[i].id)
     linkView.innerHTML = 'Comment'
 
-    // Bouton voir les commentaires:
-    let btnLookComment = createTag('button')
-    addClass(btnLookComment, ['display-frameCard__btn-lookComment', 'shadow', 'rounded'])
-    btnLookComment.setAttribute('id', 'btnViewComment')
-    btnLookComment.setAttribute('type', 'submit')
-    //btnLookComment.setAttribute('data-lookComment', post[i].id)
-    btnLookComment.setAttribute("href", "../html/comment.html?id=" + post[i].id)
-    btnLookComment.innerHTML = 'Comment'
-
-
-    const idViewComment = ('data-lookComment', post[i].id)
+    const idViewComment = ('data-viewComment', post[i].id)
     sessionStorage.setItem("idViewComment", idViewComment)
     const idView = ('data-lookComment', post[i].id)
     sessionStorage.setItem("idView", idView)
-    console.log(idView)
 
     // Icone dans le bouton vue:
     let iconeViewComment = createTag('i')
     addClass(iconeViewComment, ['far', 'fa-eye'])
 
-    //let linkView2 = createTag('a')
-    //linkView2.setAttribute("href", "../html/comment.html?id=" + post[i].id)
-    //addClass(linkView2, ['button'])
-    //linkView2.innerHTML = 'Comment'
-
-    // Bouton creer un commentaires:
-    let btnEditComment = createTag('button')
-    addClass(btnEditComment, ['display-frameCard__btn-sendComment', 'shadow', 'rounded'])
-    btnEditComment.setAttribute('id', 'createComment')
-    btnEditComment.setAttribute('type', 'button')
-    btnEditComment.setAttribute('data-createComment', post[i].id)
-    btnEditComment.innerHTML = 'Comment'
+    // Lien bouton editer commentaires:
+    let linkEdit = createTag('a')
+    addClass(linkEdit, ['button'])
+    linkEdit.setAttribute('id', 'btnEditComment')
+    linkEdit.setAttribute("href", "../html/editComment.html?id=" + post[i].id)
+    linkEdit.setAttribute('data-editComment', post[i].id)
+    linkEdit.innerHTML = 'Comment'
 
     //createComment(post, divReadPost, btnEditComment, divDisplayPost, divFrameButton)
 
@@ -355,12 +342,14 @@ function displayAllPosts(post) {
 
     // Injecte dans le html:
     divReadPost.appendChild(divFrameButton)
+
+    // Bouton voir commentaire:
     divFrameButton.appendChild(linkView)
     linkView.appendChild(iconeViewComment)
 
-    divFrameButton.appendChild(btnEditComment)
-    //divFrameButton.appendChild(linkView2)
-    btnEditComment.appendChild(iconeEditComment)
+    // Bouton editer commentaire:
+    divFrameButton.appendChild(linkEdit)
+    linkEdit.appendChild(iconeEditComment)
 
     /*
     //---------------------------------------------------------
@@ -419,7 +408,7 @@ function displayAllPosts(post) {
 ///////////////////////////////////////////////////////////
 // Affiche le username du post: a voir si valide quand auth en place
 
-
+/*
 function displayUsername(post) {
 
   //console.log(post)
@@ -458,7 +447,7 @@ function displayUsername(post) {
     xhr.send()
   }
 }
-
+*/
 
 ///////////////////////////////////////////////////////////
 
@@ -636,6 +625,8 @@ function deletePost(iconDeletePost) {
 
       for (var i = 0; i < postLength.length; i++) {
         const url = "http://localhost:3000/api/posts/" + idDelete
+        console.log('postWall.js delePost l640 url a suppr:')
+        console.log(url)
         return url
       }
     }
@@ -644,19 +635,19 @@ function deletePost(iconDeletePost) {
     // Envoie la requête:
     var myInit = {
       headers: {
-      'Authorization': 'Bearer '+ token
+        'Authorization': 'Bearer '+ token
        },
       method: "DELETE"
     };
+    console.log('postWall.js delePost l653 myInit:')
     console.log(myInit)
 
     // Envoie la requête cioté back:
     fetch(getUrlDelete(), myInit)
       .then(res => res.json())
-      .then(json_object => {
-        console.log(json_object)
-      })
       .then(res => console.log(res))
+
+
 
   })
 

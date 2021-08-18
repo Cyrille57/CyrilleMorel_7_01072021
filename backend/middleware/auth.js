@@ -12,13 +12,17 @@ const jwt = require('jsonwebtoken');
 
 
 module.exports = (req, res, next) => {
+  
   try {
     // Extrait le token du header Authorization de la requête entrante:
     const token = req.headers.authorization.split(' ')[1];
+    console.log('Auth.js token:')
     console.log(token)
 
     // La fonction verify décode le token:
     const decodedToken = jwt.verify(token, process.env.TOKEN_LOGIN_USER);
+    console.log("process.env.TOKEN_LOGIN_USER:")
+    console.log(process.env.TOKEN_LOGIN_USER)
     // Extrait l'ID user du token:
     const userId = decodedToken.userId;
     console.log('Auth.js userId:')

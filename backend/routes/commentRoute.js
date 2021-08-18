@@ -23,19 +23,19 @@ const auth = require('../middleware/auth')
 // Routes:
 
 // Créer un comment:
-router.post('/',  commentCtrl.createComment)
+router.post('/', commentCtrl.createComment)
 
 // Modifie le comment:
 router.put('/:id', auth, commentCtrl.modifyComment)
 
 // Supprime le comment:
-router.delete('/:id', auth,  commentCtrl.deleteComment)
+router.delete('/:id', auth, commentCtrl.deleteComment)
 
 // Récupére via l'id:
 router.get('/:id', commentCtrl.getOneComment)
 
 // Récupére tout:
-router.get('/', commentCtrl.getAllComments)
+router.get('/post/:id', commentCtrl.getAllComments)
 
 // Récupére les comment par rapport au post:
 //router.get('/:id', commentCtrl.getAllCommentforOnePost)
