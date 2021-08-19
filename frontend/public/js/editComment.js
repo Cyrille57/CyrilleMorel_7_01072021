@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////
-// Comment.js: ///////////////////////////////////////////
+// editComment.js: ////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 
 
@@ -333,7 +333,7 @@ function displayAllCommentOfPost(comment) {
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Affiche le username du comment: a voir si valide quand auth en place
+// Affiche le username du comment: OK
 
 
 function displayUsername(comment) {
@@ -349,30 +349,14 @@ function displayUsername(comment) {
     // Récupe l'userId et l'ajoute a l'url des user:
     let findUrlUser = 'http://localhost:3000/api/users/' + comment[i].userId
     console.log(findUrlUser)
-    // Sélectionne la ligne html ou username dois s'afficher:
-    //let username = document.getElementById("username_" + comment[i].id)
-    //console.log(username)
 
     fetch(findUrlUser)
       .then(response => response.json())
       .then(data => {
 
-
-
-
+        hUsername.innerHTML = data.username
 
       })
-
-
-    /*
-        for (let i = 0; i < getUser.length; i++) {
-          console.log(getUser.length)
-          let username = getUser[i].username
-          hUsername.innerHTML = username
-        }
-    */
-
-
 
   }
 
@@ -383,7 +367,7 @@ displayUsername()
 
 
 ///////////////////////////////////////////////////////////
-// Fonction modifie le COMMENT: OK
+// Fonction modifie le comment: OK
 
 
 function modifyComment(comment) {
@@ -571,7 +555,7 @@ function deleteComment(comment) {
 
     // Sélectionne l'icone delete du post correspondant:
     let getDelete = document.getElementById('deleteComment_' + comment[i].id)
-    //console.log(getDelete)
+    console.log(getDelete)
 
     // Ecoute l'icone delete:
     getDelete.addEventListener('click', (event) => {

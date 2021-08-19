@@ -7,20 +7,25 @@
 // Connexion et récupération: valide
 
 
+
 //---------------------------------------------------------
 // Posts:
 
-// Url pour recupérer les posts:
-const urlPost = 'http://localhost:3000/api/posts'
+
+//---------------------------------------------------------
+//token:
 
 // récupére l'id de l'user:
 var idUserConnect = parseInt(localStorage.getItem('infoUserId'))
-console.log('postWall l19 idUserConnect:')
+console.log('idUserConnect:')
 console.log(idUserConnect)
 
 // Récupére le token:
 var tokenConnect = localStorage.getItem('infoUserToken')
 console.log(tokenConnect)
+
+// Url pour recupérer les posts:
+const urlPost = 'http://localhost:3000/api/posts'
 
 // Fonction qui récupére les posts:
 async function connectPost(urlPost) {
@@ -31,17 +36,20 @@ async function connectPost(urlPost) {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
 
       var post = JSON.parse(this.responseText)
-      console.log('postWall l35 post:')
-      console.log(post)
+      //console.log('postWall l35 post:')
+      //console.log(post)
 
       post.reverse()
 
       displayAllPosts(post)
-      //displayUsername(post)
+      modifyPost(post)
+      deletePost(post)
+      displayUsername(post)
+
 
       for (var i = 0; i < post.length; i++) {
         var userIdPost = post[i].userId
-        console.log('postWall l44 userIdPost:')
+        //console.log('postWall l44 userIdPost:')
         console.log(userIdPost)
       }
 
@@ -58,12 +66,105 @@ async function connectPost(urlPost) {
 connectPost(urlPost)
 
 
-
-
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Affiche l'input et envoie les posts: valide --
+// NavBar:
+
+function displayNavBar() {
+
+  //Selectionne l'id parent:
+   // header:
+  let header = document.getElementById('header')
+  console.log(header)
+
+  // frame de la navbar:
+  let frameNavBar = createTag('nav')
+  addClass(frameNavBar, ['navbar', 'postWall-navbar'])
+
+  // container de la navbar:
+  let containerNavBar = createTag('div')
+  addClass(containerNavBar, ['container', 'postWall-container'])
+
+  // Injecte dans le html:
+  header.appendChild(frameNavBar)
+  frameNavBar.appendChild(containerNavBar)
+
+  // frame logo:
+  let frameLogo = createTag('div')
+  addClass(frameLogo, ['postWall-frame-logo'])
+
+  // lien du lmogo:
+  let linkLogo = createTag('a')
+  //addClass(linkLogo, [''])
+  linkLogo.setAttribute('href', '../html/postWall.html')
+
+  // image du logo:
+  let logo = createTag('img')
+  addClass(logo, ['postWall-logo-site'])
+  logo.setAttribute('src', '../images/Logo Groupomania/icon-left-font-monochrome-black.png')
+  logo.setAttribute('width', '35')
+  logo.setAttribute('height', '35')
+  logo.setAttribute('alt', 'Logo de Groupomania')
+
+  // Injecte dans le html:
+  containerNavBar.appendChild(frameLogo)
+  frameLogo.appendChild(linkLogo)
+  linkLogo.appendChild(logo)
+
+  // frame ul:
+  let frameUl = createTag('div')
+  addClass(frameUl, ['postWall-frameUlNav'])
+
+  // ul
+  let ulNav = createTag('ul')
+  addClass(ulNav, ['postWall-frameUlNav__ul'])
+
+  // Injecte dans le html:
+  containerNavBar.appendChild(frameUl)
+  frameUl.appendChild(ulNav)
+
+  // li vue profil:
+  let liViewProfil = createTag('li')
+  addClass(liViewProfil, ['postWall-linkProfil'])
+
+  // lien de viewProfil:
+  let linkViewProfil = createTag('a')
+  linkViewProfil.setAttribute("href", "../html/vueProfil.html?id=" + idUserConnect)
+
+
+
+  // icone vue profil:
+  let iconeViewProfil = createTag('i')
+  addClass(iconeViewProfil, ['fas', 'fa-user-circle', 'fa', 'postWall-linkProfil__icon'])
+
+  // Injecte dans le html:
+  ulNav.appendChild(liViewProfil)
+  liViewProfil.appendChild(linkViewProfil)
+  linkViewProfil.appendChild(iconeViewProfil)
+
+  // li logout:
+  let liLogOut = createTag('li')
+  addClass(liLogOut, ['postWall-linkDeconnect'])
+
+  // lien de logout:
+  let linkLogout = createTag('a')
+  linkLogout.setAttribute('href', '../../index.html')
+
+  // icone logOut:
+  let iconeLogOut = createTag('i')
+  addClass(iconeLogOut, ['fas', 'fa-sign-out-alt', 'fa', 'postWall-linkDeconnect__icon'])
+
+  // Injecte dans le html:
+  ulNav.appendChild(liLogOut)
+  liLogOut.appendChild(linkLogout)
+  linkLogout.appendChild(iconeLogOut)
+
+}
+displayNavBar()
+
+///////////////////////////////////////////////////////////
+// Affiche l'input et envoie les posts: OK
 
 
 function displayFormPost() {
@@ -72,7 +173,7 @@ function displayFormPost() {
 
   //Selectionne l'id parent:
   let main = document.querySelector('main')
-
+  console.log(main)
   // Container:
   let divContainer = createTag('div') //
   addClass(divContainer, ['container'])
@@ -186,7 +287,7 @@ displayFormPost()
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Affiche tous les posts: valide --
+// Affiche tous les posts: OK
 
 
 function displayAllPosts(post) {
@@ -234,7 +335,7 @@ function displayAllPosts(post) {
     // Cadre du displayPost:
     let divDisplayPost = createTag('div')
     addClass(divDisplayPost, ['display-frameCard__displayPost', 'shadow', 'rounded'])
-    divDisplayPost.setAttribute('id', 'postComment_' + post[i].id)
+    divDisplayPost.setAttribute('id', 'displayPost_' + post[i].id)
 
     // Affichage du post:
     let divPost = createTag('p')
@@ -256,7 +357,7 @@ function displayAllPosts(post) {
     // Icone modifier post:
     let iconModifyPost = createTag('i') //
     addClass(iconModifyPost, ['fas', 'fa-reply']) //
-    iconModifyPost.setAttribute('id', 'modifyPost') //
+    iconModifyPost.setAttribute('id', 'modifyPost_'+ post[i].id) //
     iconModifyPost.setAttribute('data-bs-toggle', 'tooltip')
     iconModifyPost.setAttribute('data-bs-placement', 'right')
     iconModifyPost.setAttribute('title', 'Modifier')
@@ -268,14 +369,14 @@ function displayAllPosts(post) {
     // Icone supprimer le post:
     let iconDeletePost = createTag('i')
     addClass(iconDeletePost, ['fas', 'fa-times-circle'])
-    iconDeletePost.setAttribute('id', 'iconDeletePost')
+    iconDeletePost.setAttribute('id', 'deleteComment_' + post[i].id)
     iconDeletePost.setAttribute('data-bs-toggle', 'tooltip')
     iconDeletePost.setAttribute('data-bs-placement', 'right')
     iconDeletePost.setAttribute('title', 'Supprimer')
     iconDeletePost.setAttribute('data-idDeletePost', post[i].id)
 
     // Récupére l'id du post a supprimer:
-    deletePost(iconDeletePost)
+    //deletePost(iconDeletePost)
 
     // Injecte dans le html:
     divDisplayPost.appendChild(divPlaceIcon)
@@ -295,7 +396,10 @@ function displayAllPosts(post) {
 
     // Date de publication:
     let pDate = createTag('p')
+    pDate.setAttribute('id', 'pDate_' + post[i].id)
+    pDate.setAttribute('data-pDate', post[i].id)
     pDate.innerHTML = dateFormat
+
     // Injecte dans le html:
     divReadPost.appendChild(divInfoDate)
     divInfoDate.appendChild(pDate)
@@ -306,6 +410,7 @@ function displayAllPosts(post) {
     // Cadre des boutons:
     let divFrameButton = createTag('div')
     addClass(divFrameButton, ['display-frameCard__option'])
+    divFrameButton.setAttribute('id', 'frameOption_' + post[i].id)
 
     modifyPost(divReadPost, divDisplayPost, iconModifyPost, getIdModify, divFrameButton)
 
@@ -406,57 +511,213 @@ function displayAllPosts(post) {
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Affiche le username du post: a voir si valide quand auth en place
+// Affiche le username du post: OK
 
-/*
+
 function displayUsername(post) {
-
   //console.log(post)
 
-  //let postLength = sessionStorage.getItem("postLength")
-  //console.log(postLength)
-
   for (let i = 0; i < post.length; i++) {
+
+    //Sélectionne le h2 du comment correspondant:
+    let hUsername = document.getElementById('username_' + post[i].id)
+    //console.log(hUsername)
 
     // Récupe l'userId et l'ajoute a l'url des user:
     let findUrlUser = 'http://localhost:3000/api/users/' + post[i].userId
     //console.log(findUrlUser)
-    // Sélectionne la ligne html ou username dois s'afficher:
-    let username = document.getElementById("username_" + post[i].id)
 
-    // Recuperation du username de l'user:
-    let xhr = new XMLHttpRequest()
+    fetch(findUrlUser)
+      .then(response => response.json())
+      .then(data => {
 
-    xhr.onreadystatechange = function () {
+        hUsername.innerHTML = data.username
 
-      if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+      })
 
-        var getUser = JSON.parse(this.responseText)
+  }
 
-        // Injecte le username dans le html:
-        username.innerHTML = getUser.username
+}
+displayUsername()
 
-      } else if (this.readyState == XMLHttpRequest.DONE && this.status == 500) {
 
-        console.log("Erreur 500")
+///////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////
+// Fonction modifie le post: --
+
+
+function modifyPost(post) {
+
+  for (let i = 0; i < post.length; i++) {
+
+    // Sélectionne l'icone modify du post correspondant:
+    let iconmodifyPost = document.getElementById('modifyPost_' + post[i].id)
+    console.log(iconmodifyPost)
+
+    iconmodifyPost.addEventListener('click', (event) => {
+      event.preventDefault();
+      console.log(iconmodifyPost)
+
+      //---------------------------------------------------------
+      // Autorisation:
+
+      // Sélectionne l'auteur du post:
+      let getIdAuthor = post[i].userId
+      console.log(getIdAuthor)
+
+      // Si auteur autorisé sinon non:
+      if (idUserConnect != getIdAuthor) {
+        console.log('désolé')
+      } else {
+
+        //---------------------------------------------------------
+        // Sélectionne:
+
+        // le post:
+        let displayPost = document.getElementById('displayPost_' + post[i].id)
+        console.log(displayPost)
+
+        // info date:
+        let pDate = document.getElementById('pDate_' + post[i].id)
+        console.log(pDate)
+
+        let readComment = document.getElementById('divReadPost_' + post[i].id)
+        console.log(readComment)
+
+        let frameOption = document.getElementById('frameOption_' + post[i].id)
+        console.log(frameOption)
+
+        let postAndComment = document.getElementById('postAndComment_' + post[i].id)
+        console.log(postAndComment)
+
+        // Récuoere l'id du post a modifier:
+        const getIdModify = ('data-idModifyPost', post[i].id)
+
+        //---------------------------------------------------------
+        // Cache le post pour introduire le input pour update le post:
+        displayPost.style.display = 'none'
+        pDate.style.display = 'none'
+        frameOption.style.display = 'none'
+
+        let formModify = createTag('form')
+        addClass(formModify, ['d-flex', 'flex-column', 'justify-content-around', 'postForm'])
+
+        let frameTextereaModifyComment = createTag('div')
+        addClass(frameTextereaModifyComment, ['frameTextereaModifyPost', 'input-field'])
+        //returnModifyComment(frameTextereaModifyComment)
+
+        let textareaModyfyPost = createTag('textarea')
+        addClass(textareaModyfyPost, ['form-control', 'input-lg', 'p-text-area', 'shadow', 'rounded'])
+        textareaModyfyPost.setAttribute('id', 'modifyPost')
+        textareaModyfyPost.setAttribute('name', 'post')
+        textareaModyfyPost.setAttribute('type', 'text')
+        textareaModyfyPost.setAttribute('rows', '2')
+        textareaModyfyPost.setAttribute('placeholder', 'On efface et on recommence ?')
+
+        readComment.appendChild(formModify)
+        formModify.appendChild(frameTextereaModifyComment)
+        frameTextereaModifyComment.appendChild(textareaModyfyPost)
+
+        // Btn:
+        let divBtnSendPostModify = createTag('button')
+        addClass(divBtnSendPostModify, ['btn--sendPostModify', 'shadow', 'rounded', 'mt-3'])
+        divBtnSendPostModify.setAttribute('id', 'btnSendPostModify')
+        divBtnSendPostModify.setAttribute('type', 'button')
+        divBtnSendPostModify.innerHTML = 'Mettre à jour'
+
+        // Ecoute le bouton mettre à jour:
+        divBtnSendPostModify.addEventListener('click', (event) => {
+
+           //---------------------------------------------------------
+          // Préparation de l'url pour la modification du comment:
+
+          // Recupere l'id du post:
+          let getModify = document.getElementById('postAndComment_' + getIdModify)
+          console.log('ModifyPost l512 getModify :')
+          console.log(getModify)
+          // Ajoute a l'url l'id du post:
+          const url = "http://localhost:3000/api/posts/" + getIdModify
+          console.log('ModifyPost l515 url:')
+          console.log(url)
+
+          //---------------------------------------------------------
+          // Récupére la modification du post:
+
+          function modifyFormData() {
+
+            for (var i = 0; i < post.length; i++) {
+
+              let formData = {
+                id: getIdModify,
+                userId: idUserConnect,
+                content: textareaModyfyPost.value
+              }
+              console.log(formData)
+              return formData
+            }
+          }
+          modifyFormData()
+
+          //---------------------------------------------------------
+          // Envoie la modification du post:
+
+          var myInit = {
+            method: "PUT",
+            headers: new Headers({
+              "Content-Type": "application/json;charset=UTF-8",
+              "Authorization": 'Bearer ' + tokenConnect
+            }),
+            body: JSON.stringify(modifyFormData()),
+            mode: 'cors',
+            cache: 'default'
+          };
+
+          fetch(url, myInit)
+            .then(response => response.json())
+            //.then(res => document.location.reload())
+            .catch(err => console.log(err))
+
+
+        })
+
+        // Injecte dans le html:
+        readComment.appendChild(formModify)
+        formModify.appendChild(frameTextereaModifyComment)
+        frameTextereaModifyComment.appendChild(textareaModyfyPost)
+        frameTextereaModifyComment.appendChild(divBtnSendPostModify)
+        //frameTextereaModifyComment.appendChild(btnReturnReadPost)
+
+
+
+
+
+
+
+
       }
-    }
 
-    xhr.open("GET", findUrlUser, true)
 
-    xhr.send()
+
+    })
+
+
+
+
+
+
+
+
+
+
+
   }
 }
-*/
-
-///////////////////////////////////////////////////////////
-
-///////////////////////////////////////////////////////////
-// Fonction modifie le post: Valide --
+modifyPost()
 
 
-function modifyPost(divReadPost, divDisplayPost, iconModifyPost, getIdModify, divFrameButton) {
 
+/*
   //Sélectionne l'icone modifier du post à modifier:
   //let getIconModifyPost = document.getElementById('modifyPost')
 
@@ -501,7 +762,7 @@ function modifyPost(divReadPost, divDisplayPost, iconModifyPost, getIdModify, di
       // Recupere l'id du post:
       let getModify = document.getElementById('postAndComment_' + getIdModify)
       console.log('ModifyPost l512 getModify :')
-      console.log(getModify )
+      console.log(getModify)
       // Ajoute a l'url l'id du post:
       const url = "http://localhost:3000/api/posts/" + getIdModify
       console.log('ModifyPost l515 url:')
@@ -553,14 +814,14 @@ function modifyPost(divReadPost, divDisplayPost, iconModifyPost, getIdModify, di
     //frameTextereaModifyPost.appendChild(btnReturnReadPost)
 
   })
+*/
 
-}
 
-
-///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Return posts: Valide --
+
+///////////////////////////////////////////////////////////
+// Return posts:
 
 
 function returnModifyPost(frameTextereaModifyPost) {
@@ -583,75 +844,85 @@ function returnModifyPost(frameTextereaModifyPost) {
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Delete Post: Valide --
+// Delete Post: OK
 
 
-function deletePost(iconDeletePost) {
+function deletePost(post) {
 
-  // Ecoute l'icone delete:
-  iconDeletePost.addEventListener('click', (event) => {
+  for (let i = 0; i < post.length; i++) {
 
-    event.preventDefault();
+    // Sélectionne l'icone delete du post correspondant:
+    let getDelete = document.getElementById('deleteComment_' + post[i].id)
+    //console.log(getDelete)
 
-    // Cible l'icone du post
-    let idDelete = event.target.getAttribute('data-idDeletePost')
-    console.log('postWall.js delePost l610 idDelete:')
-    console.log(idDelete)
+    // Ecoute l'icone delete:
+    getDelete.addEventListener('click', (event) => {
+      //console.log(post)
+      event.preventDefault();
 
-    // Récupére l'id du post:
-    let getDelete = document.getElementById('postAndComment_' + idDelete)
-    console.log('postWall.js delePost l615 getDelete:')
-    console.log(getDelete)
+      // Cible l'icone du comment:
+      let getIdDelete = event.target.getAttribute('data-idDeletePost')
+      //console.log(getIdDelete)
 
-    //---------------------------------------------------------
-    // Supprime le post coté front:
-    getDelete.remove(idDelete)
+      // Sélectionne l'id du post:
+      let getIdPost = document.getElementById('postAndComment_' + post[i].id)
+      //console.log(getIdPost)
 
-    //---------------------------------------------------------
-    // Récupére le token:
+      //---------------------------------------------------------
+      // Autorisation:
 
-    var token = localStorage.getItem('infoUserToken')
-    console.log('postWall.js delePost l626 token:')
-    console.log(token)
+      // Sélectionne l'auteur du post:
+      let getIdAuthor = post[i].userId
+      //console.log(getIdAuthor)
 
-    //---------------------------------------------------------
-    // Supprime le post coté back:
+      // Si auteur autorisé sinon non:
+      if (idUserConnect != getIdAuthor) {
+        //console.log('désolé')
+      } else {
+        //console.log('ok')
 
-    // Prépare l'url pour supprimer sur le backend:
-    function getUrlDelete() {
+        //---------------------------------------------------------
+        // Supprime le post coté front:
+        getIdPost.remove(getIdDelete)
 
-      // Récupére la taille de post:
-      let postLength = sessionStorage.getItem('postLength')
+        //---------------------------------------------------------
+        // Supprime le post coté back:
 
-      for (var i = 0; i < postLength.length; i++) {
-        const url = "http://localhost:3000/api/posts/" + idDelete
-        console.log('postWall.js delePost l640 url a suppr:')
-        console.log(url)
-        return url
+        // Prépare l'url pour supprimer sur le backend:
+        function getUrlDelete() {
+
+          for (var i = 0; i < post.length; i++) {
+            const url = "http://localhost:3000/api/posts/" + getIdDelete
+            //console.log('postWall.js delePost l640 url a suppr:')
+            //console.log(url)
+            return url
+          }
+        }
+        getUrlDelete()
+
+        // Envoie la requête:
+        var myInit = {
+          headers: {
+            'Authorization': 'Bearer ' + tokenConnect
+          },
+          method: "DELETE"
+        };
+        //console.log('postWall.js delePost l653 myInit:')
+        //console.log(myInit)
+
+        // Envoie la requête cioté back:
+        fetch(getUrlDelete(), myInit)
+          .then(res => res.json())
+          .then(res => console.log(res))
       }
-    }
-    getUrlDelete()
 
-    // Envoie la requête:
-    var myInit = {
-      headers: {
-        'Authorization': 'Bearer '+ token
-       },
-      method: "DELETE"
-    };
-    console.log('postWall.js delePost l653 myInit:')
-    console.log(myInit)
+    })
 
-    // Envoie la requête cioté back:
-    fetch(getUrlDelete(), myInit)
-      .then(res => res.json())
-      .then(res => console.log(res))
-
-
-
-  })
-
+  }
 }
+getUrlDelete()
+
+
 
 
 ///////////////////////////////////////////////////////////

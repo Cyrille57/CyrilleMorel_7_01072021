@@ -1,79 +1,172 @@
 ///////////////////////////////////////////////////////////
-// vueProfil.js: ///////////////////////////////////////////
+// vueProfil.js: ////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 
 
-// 1) ////////////////////////////////////////////////////////
-// Récupére l'id de l'url avec la propriété .search de window.location:
-const getIdUrl = window.location.search;
-console.log(getIdUrl)
-// réponse : ?id=XXXXXXXX
-
-
-// 2) /////////////////////////////////////////////////////////
-// Purge getIdUrl de ?id= et recupere uniquement l'id avec la méthode getUrlParams:
-
-// Analyser les paramètres de la chaîne de requête:
-//const getUrlParams = new URLSearchParams(getIdUrl);
-
-// retournera la première valeur associée au paramètre de recherche donné:
-//const getId = getUrlParams.get('id')
-//console.log(getId)
-// réponse : xxxxxxxxx
-
-
-// 3) /////////////////////////////////////////////////////////
-// Fonction qui concaténe l'url de l'API avec l'id récupéré et filtré
-//function assemblyId(getId) {
-    //console.log(getId);
-    //réponse : 5beaaa8f1c9d440000a57d95
-
-    // Déclaration des variables:
-    //const url = "http://localhost:3000/api/teddies";
-    //const urlProduct = url + "/" + getId;
-    //console.log(urlProduct)
-    // reponse http://localhost:3000/api/teddies/5beaaa8f1c9d440000a57d95
-
-    //connect2(urlProduct);
-//}
-//assemblyId(getId);
 ///////////////////////////////////////////////////////////
-// Connexion et récupération:
+// Récuére l'id et la concaténe avec l'ulr comment;
 
 
 //---------------------------------------------------------
-// Users:
+// Récupére l'id dans l'url:
+const getIdUserUrl = window.location.search
 
-// Url pour recupérer les posts:
-const urlUser = 'http://localhost:3000/api/users'
+//---------------------------------------------------------
+// Purge getIdUrl de ?id= et recupere  l'id :
 
-// Fonction qui récupére les posts:
+// Analyser les paramètres de la chaîne de requête:
+const getUrlParams = new URLSearchParams(getIdUserUrl);
+//console.log(getUrlParams)
+
+// Recupére l'id du post:
+const getIdUser = parseInt(getUrlParams.get('id'))
+console.log('id du user:')
+console.log(getIdUser)
+
+//---------------------------------------------------------
+// Url de comments:
+
+const urlUser = "http://localhost:3000/api/users/" + getIdUser;
+console.log(urlUser)
+
+//---------------------------------------------------------
+//token:
+
+// récupére l'id de l'user:
+var idUserConnect = parseInt(localStorage.getItem('infoUserId'))
+console.log('idUserConnect:')
+console.log(idUserConnect)
+
+// Récupére le token:
+var tokenConnect = localStorage.getItem('infoUserToken')
+//console.log(tokenConnect)
+
+///////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////
+// Connexion: OK
+
+
+// Fonction qui récupére le comments:
+
 async function connectUser(urlUser) {
 
+  //console.log(urlComment)
   let xhr = new XMLHttpRequest()
+  //console.log(xhr)
 
   xhr.onreadystatechange = function () {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-      //xhr.setRequestHeader("Authorization", "Bearer {token}");
+
       var user = JSON.parse(this.responseText)
-      //console.log(post)
-
+      //console.log('comment l35 comment:')
+      console.log(user)
+      displayNavBar(user)
       displayUser(user)
-
-      /*for (var i = 0; i < post.length; i++){
-        var userId = post[i].userId
-      }
-      sessionStorage.setItem("userId", userId)*/
-
 
     } else if (this.readyState == XMLHttpRequest.DONE && this.status == 500) {
       console.log("Erreur 500")
     }
   }
   xhr.open("GET", urlUser, true)
+  xhr.setRequestHeader("Authorization", "Bearer " + tokenConnect)
   xhr.send()
 }
 connectUser(urlUser)
+
+///////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////
+// NavBar:
+
+function displayNavBar() {
+
+  //Selectionne l'id parent:
+   // header:
+  let header = document.getElementById('header')
+  console.log(header)
+
+  // frame de la navbar:
+  let frameNavBar = createTag('nav')
+  addClass(frameNavBar, ['navbar', 'postWall-navbar'])
+
+  // container de la navbar:
+  let containerNavBar = createTag('div')
+  addClass(containerNavBar, ['container', 'postWall-container'])
+
+  // Injecte dans le html:
+  header.appendChild(frameNavBar)
+  frameNavBar.appendChild(containerNavBar)
+
+  // frame logo:
+  let frameLogo = createTag('div')
+  addClass(frameLogo, ['postWall-frame-logo'])
+
+  // lien du lmogo:
+  let linkLogo = createTag('a')
+  //addClass(linkLogo, [''])
+  linkLogo.setAttribute('href', '../html/postWall.html')
+
+  // image du logo:
+  let logo = createTag('img')
+  addClass(logo, ['postWall-logo-site'])
+  logo.setAttribute('src', '../images/Logo Groupomania/icon-left-font-monochrome-black.png')
+  logo.setAttribute('width', '35')
+  logo.setAttribute('height', '35')
+  logo.setAttribute('alt', 'Logo de Groupomania')
+
+  // Injecte dans le html:
+  containerNavBar.appendChild(frameLogo)
+  frameLogo.appendChild(linkLogo)
+  linkLogo.appendChild(logo)
+
+  // frame ul:
+  let frameUl = createTag('div')
+  addClass(frameUl, ['postWall-frameUlNav'])
+
+  // ul
+  let ulNav = createTag('ul')
+  addClass(ulNav, ['postWall-frameUlNav__ul'])
+
+  // Injecte dans le html:
+  containerNavBar.appendChild(frameUl)
+  frameUl.appendChild(ulNav)
+
+  // li vue profil:
+  let liViewProfil = createTag('li')
+  addClass(liViewProfil, ['postWall-linkProfil'])
+
+  // lien de viewProfil:
+  let linkViewProfil = createTag('a')
+  linkViewProfil.setAttribute("href", "../html/vueProfil.html?id=" + idUserConnect)
+
+  // icone vue profil:
+  let iconeViewProfil = createTag('i')
+  addClass(iconeViewProfil, ['fas', 'fa-user-circle', 'fa', 'postWall-linkProfil__icon'])
+
+  // Injecte dans le html:
+  ulNav.appendChild(liViewProfil)
+  liViewProfil.appendChild(linkViewProfil)
+  linkViewProfil.appendChild(iconeViewProfil)
+
+  // li logout:
+  let liLogOut = createTag('li')
+  addClass(liLogOut, ['postWall-linkDeconnect'])
+
+  // lien de logout:
+  let linkLogout = createTag('a')
+  linkLogout.setAttribute('href', '../../index.html')
+
+  // icone logOut:
+  let iconeLogOut = createTag('i')
+  addClass(iconeLogOut, ['fas', 'fa-sign-out-alt', 'fa', 'postWall-linkDeconnect__icon'])
+
+  // Injecte dans le html:
+  ulNav.appendChild(liLogOut)
+  liLogOut.appendChild(linkLogout)
+  linkLogout.appendChild(iconeLogOut)
+
+}
 
 ///////////////////////////////////////////////////////////
 
@@ -82,7 +175,6 @@ connectUser(urlUser)
 
 function displayUser(user) {
 
-
   //---------------------------------------------------------
   // Création des éléments de base enfants:
 
@@ -90,7 +182,7 @@ function displayUser(user) {
   let main = document.querySelector('main')
 
   // Container:
-  let divContainerUser = createTag('div') //
+  let divContainerUser = createTag('div')
   addClass(divContainerUser, ['container'])
 
   // Row:
@@ -148,24 +240,25 @@ function displayUser(user) {
   // Username:
   let usernameUser = createTag('h2')
   addClass(usernameUser, ['usernameUser'])
-  usernameUser.innerHTML = //user.username
+  usernameUser.innerHTML = user.username
 
   console.log(user)
-  //const getUsename= user.find(user => user.id === 0/*idView*/).username
+
+  /*const getUsename= user.find(user => user.id === 0/*idView*).username*/
   //console.log(getUsename)
 
   // Injecte dans le html:
   // Username:
-  frameUsernameUser.appendChild(usernameUser)
+ frameUsernameUser.appendChild(usernameUser)
 
   // Infos user:
   let emailUser = createTag('p')
   addClass(emailUser, ['emailUser'])
-  emailUser.innerHTML = 'Adresse mail : </br>'//user.email
+  emailUser.innerHTML = 'Adresse mail : </br>' + user.email
 
   let bioUser = createTag('p')
   addClass(bioUser, ['bioUser', 'text-white'])
-  bioUser.innerHTML = //user.bio
+  bioUser.innerHTML = user.bio
 
   // Injecte dans le html:
   // Infos user:
@@ -230,3 +323,4 @@ function displayUser(user) {
 
 
 }
+
