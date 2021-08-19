@@ -4,8 +4,7 @@
 
 
 ///////////////////////////////////////////////////////////
-// Récuére l'id et la concaténe avec l'ulr comment;
-
+// Récupére l'id et la concaténe avec l'ulr comment;
 
 //---------------------------------------------------------
 // Récupére l'id dans l'url:
@@ -270,26 +269,28 @@ function displayUser(user) {
   // Button:
 
   // Bouton modifier le user:
-  let btnModifyUser = createTag('button')
-  addClass(btnModifyUser, ['display-frameCard__btnModifyUser', 'shadow', 'rounded'])
-  btnModifyUser.setAttribute('id', 'btnModifyUser')
-  btnModifyUser.setAttribute('type', 'button')
-  //btnModifyUser.setAttribute('data-lookComment', post[i].id)
-  //btnModifyUser.setAttribute("href", "../html/comment.html?id=" + post[i].id)
-  btnModifyUser.innerHTML = 'Modifier'
+  let linkEditUser = createTag('a')
+    addClass(linkEditUser, ['button'])
+    linkEditUser.setAttribute('id', 'linkEditUser_' + user.id)
+    linkEditUser.setAttribute('type', 'button')
+    linkEditUser.setAttribute("href", "../html/editProfil.html?id=" + user.id)
+    linkEditUser.setAttribute('data-editComment', user.id)
+    linkEditUser.innerHTML = 'Modifier'
 
   // Icone du le bouton modifier:
   let iconeModifyUser = createTag('i')
   addClass(iconeModifyUser, ['far', 'fa-edit'])
 
   // Bouton retour:
-  let btnReturnUser = createTag('button')
-  addClass(btnReturnUser, ['display-frameCard__btnReturnUser', 'shadow', 'rounded'])
-  btnReturnUser.setAttribute('id', 'btnReturnUser')
-  btnReturnUser.setAttribute('type', 'button')
-  //btnReturnUser.setAttribute('data-lookComment', post[i].id)
-  //btnReturnUser.setAttribute("href", "../html/comment.html?id=" + post[i].id)
-  btnReturnUser.innerHTML = 'Retour'
+  let linkReturnUser = createTag('a')
+  addClass(linkReturnUser, ['button'])
+  linkReturnUser.setAttribute('id', 'linkReturnUser')
+  linkReturnUser.setAttribute('type', 'button')
+  linkReturnUser.setAttribute("href", "../html/postWall.html")
+
+  //linkReturnUser.setAttribute('data-lookComment', post[i].id)
+  //linkReturnUser.setAttribute("href", "../html/comment.html?id=" + post[i].id)
+  linkReturnUser.innerHTML = 'Retour'
 
   // Icone du bouton retour:
   let iconeReturnUser = createTag('i')
@@ -298,29 +299,17 @@ function displayUser(user) {
   // Injecte dans le html:
 
   // Bouton modifier le user::
-  frameButton.appendChild(btnModifyUser)
-  btnModifyUser.appendChild(iconeModifyUser)
+  frameButton.appendChild(linkEditUser)
+  linkEditUser.appendChild(iconeModifyUser)
 
   // Bouton retour:
-  frameButton.appendChild(btnReturnUser)
-  btnReturnUser.appendChild(iconeReturnUser)
+  frameButton.appendChild(linkReturnUser)
+  linkReturnUser.appendChild(iconeReturnUser)
 
-  //---------------------------------------------------------
-  // fonction des boutonss:
-
-  //---------------------------------------------------------
-  // Modifier:
-  btnModifyUser.addEventListener('click', (event) => {
-    console.log(event)
-  })
-
-  //---------------------------------------------------------
-  // Retour:
-  btnReturnUser.addEventListener('click', (event) => {
-    window.location =  '../html/postWall.html'
-  })
 
 
 
 }
+
+///////////////////////////////////////////////////////////
 

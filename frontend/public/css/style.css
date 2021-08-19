@@ -11550,7 +11550,7 @@ legend {
   display: flex;
   justify-content: space-around;
 }
-.frameButton #btnModifyUser, .frameButton #btnReturnUser {
+.frameButton > .button {
   height: 30px;
   width: 110px;
   border: 1px solid rgba(255, 255, 255, 0.5);
