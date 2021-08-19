@@ -26,6 +26,7 @@ async function connectUser(urlUser) {
             //console.log(getUser)
 
             displayAll(getUser)
+            displayNavBar(getUser)
 
         } else if (this.readyState == XMLHttpRequest.DONE && this.status == 500) {
 
@@ -36,6 +37,10 @@ async function connectUser(urlUser) {
     xhr.send()
 }
 connectUser(urlUser)
+
+
+
+
 
 ///////////////////////////////////////////////////////////
 

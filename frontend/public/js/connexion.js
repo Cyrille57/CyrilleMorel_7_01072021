@@ -36,6 +36,10 @@ loginForm.addEventListener('submit', function(event) {
   .then(response => response.json())
   .then(json_object => {
 
+    if(json_object.status == 201){
+      console.log(' je suis dans le 201 !!!')
+      location.href  = "/frontend/public/html/postWall.html"
+    } 
 
     let infoUserId = json_object.userId
     let infoUserToken = json_object.token
@@ -44,11 +48,13 @@ loginForm.addEventListener('submit', function(event) {
     localStorage.setItem('infoUserId', infoUserId)
     localStorage.setItem('infoUserToken', infoUserToken);
 
-    window.location = "/frontend/public/html/postWall.html"
+    //window.location = "/frontend/public/html/postWall.html"
 })
   .catch((error) => {
     console.log(error)
   })
+
+
 
 })
 

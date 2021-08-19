@@ -65,12 +65,12 @@ async function connectPost(urlPost) {
 }
 connectPost(urlPost)
 
-
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
 // NavBar:
 
+/*
 function displayNavBar() {
 
   //Selectionne l'id parent:
@@ -132,8 +132,6 @@ function displayNavBar() {
   let linkViewProfil = createTag('a')
   linkViewProfil.setAttribute("href", "../html/vueProfil.html?id=" + idUserConnect)
 
-
-
   // icone vue profil:
   let iconeViewProfil = createTag('i')
   addClass(iconeViewProfil, ['fas', 'fa-user-circle', 'fa', 'postWall-linkProfil__icon'])
@@ -149,7 +147,8 @@ function displayNavBar() {
 
   // lien de logout:
   let linkLogout = createTag('a')
-  linkLogout.setAttribute('href', '../../index.html')
+  //linkLogout.setAttribute('href', '../../index.html')
+  linkLogout.setAttribute('id', 'logOut')
 
   // icone logOut:
   let iconeLogOut = createTag('i')
@@ -160,8 +159,26 @@ function displayNavBar() {
   liLogOut.appendChild(linkLogout)
   linkLogout.appendChild(iconeLogOut)
 
+  //---------------------------------------------------------
+  // LogOut:
+
+  // Sélectionne l'icone:
+  let getLinkLogout = document.getElementById('logOut')
+  console.log(getLinkLogout)
+
+  // Ecoute le lien:
+  getLinkLogout.addEventListener('click', (event) => {
+
+    localStorage.removeItem('infoUserToken')
+    localStorage.removeItem('infoUserId')
+    location.href =  '../../index.html'
+  })
+
 }
 displayNavBar()
+*/
+
+///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
 // Affiche l'input et envoie les posts: OK
@@ -716,108 +733,6 @@ function modifyPost(post) {
 modifyPost()
 
 
-
-/*
-  //Sélectionne l'icone modifier du post à modifier:
-  //let getIconModifyPost = document.getElementById('modifyPost')
-
-  // Ecoute l'icone de modify post:
-  iconModifyPost.addEventListener('click', (event) => {
-    event.preventDefault();
-
-
-    //---------------------------------------------------------
-    // Cache le post pour introduire le input pour update le post:
-    divDisplayPost.style.display = 'none'
-    divFrameButton.style.display = 'none'
-
-    let formModify = createTag('form')
-    addClass(formModify, ['d-flex', 'flex-column', 'justify-content-around', 'postForm'])
-
-    let frameTextereaModifyPost = createTag('div')
-    addClass(frameTextereaModifyPost, ['frameTextereaModifyPost', 'input-field'])
-    returnModifyPost(frameTextereaModifyPost)
-
-    let textareaModyfyPost = createTag('textarea')
-    addClass(textareaModyfyPost, ['form-control', 'input-lg', 'p-text-area', 'shadow', 'rounded'])
-    textareaModyfyPost.setAttribute('id', 'modifyPost')
-    textareaModyfyPost.setAttribute('name', 'post')
-    textareaModyfyPost.setAttribute('type', 'text')
-    textareaModyfyPost.setAttribute('rows', '2')
-    textareaModyfyPost.setAttribute('placeholder', 'On efface et on recommence ?')
-
-    // Btn:
-    let divBtnSendPostModify = createTag('button')
-    addClass(divBtnSendPostModify, ['btn--sendPostModify', 'shadow', 'rounded', 'mt-3'])
-    divBtnSendPostModify.setAttribute('id', 'btnSendPostModify')
-    divBtnSendPostModify.setAttribute('type', 'button')
-    divBtnSendPostModify.innerHTML = 'Mettre à jour'
-
-    // Ecoute le bouton mettre à jour:
-    divBtnSendPostModify.addEventListener('click', (event) => {
-
-      //---------------------------------------------------------
-      // Préparation de l'url pour la modification du post:
-
-      // Recupere l'id du post:
-      let getModify = document.getElementById('postAndComment_' + getIdModify)
-      console.log('ModifyPost l512 getModify :')
-      console.log(getModify)
-      // Ajoute a l'url l'id du post:
-      const url = "http://localhost:3000/api/posts/" + getIdModify
-      console.log('ModifyPost l515 url:')
-      console.log(url)
-
-      //---------------------------------------------------------
-      // Récupére la modification du post:
-
-      function modifyFormData() {
-
-        let postLength = sessionStorage.getItem("postLength")
-
-        for (var i = 0; i < postLength.length; i++) {
-
-          let formData = {
-            id: getIdModify,
-            content: textareaModyfyPost.value
-          }
-          console.log(formData)
-          return formData
-        }
-      }
-
-      //---------------------------------------------------------
-      // Envoie la modification du post:
-
-      var myInit = {
-        method: "PUT",
-        headers: new Headers({
-          "Content-Type": "application/json;charset=UTF-8"
-        }),
-        body: JSON.stringify(modifyFormData()),
-        mode: 'cors',
-        cache: 'default'
-      };
-
-      fetch(url, myInit)
-        .then(response => response.json())
-        //.then(res => document.location.reload())
-        .catch(err => console.log(err))
-
-    })
-
-    // Injecte dans le html:
-    divReadPost.appendChild(formModify)
-    formModify.appendChild(frameTextereaModifyPost)
-    frameTextereaModifyPost.appendChild(textareaModyfyPost)
-    frameTextereaModifyPost.appendChild(divBtnSendPostModify)
-    //frameTextereaModifyPost.appendChild(btnReturnReadPost)
-
-  })
-*/
-
-
-
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
@@ -921,8 +836,6 @@ function deletePost(post) {
   }
 }
 getUrlDelete()
-
-
 
 
 ///////////////////////////////////////////////////////////

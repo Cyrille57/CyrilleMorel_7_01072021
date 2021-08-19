@@ -189,36 +189,55 @@ exports.login = (req, res) => {
     .then(user => {
       if (user === null) {
         res.status(401).json({
-          error: error,
           message: 'Pseudo et/ou mot de passe incorrect !'
         })
+      } else {
+
+        console.log('Connexion password:')
+        console.log(password)
+        console.log('Connexion user.password:')
+        console.log(user.password)
+
+        bcrypt.compare(password, user.password)
+          .then(valid => {
+
+            console.log('Connexion password:')
+            console.log(password)
+            console.log('Connexion user.password:')
+            console.log(user.password)
+
+            if (!valid) {
+              // Retourne une erreur 401 Unauthorized
+              return res.status(401).json({
+                error: 'Pseudo et/ou mot de passe incorrect !'
+              });
+            } else {
+
+              res.status(200).json({
+                //data: token,
+                status: '201',
+                userId: user.id,
+                message: 'Authentification reussie !',
+                token: jwt.sign({
+                    userId: user.id
+                  },
+                  process.env.TOKEN_LOGIN_USER, {
+                    expiresIn: '24h'
+                  }
+                )
+
+
+              })
+
+            }
+
+          })
+
       }
 
-      bcrypt.compare(password, user.password)
-        .then(valid => {
 
-          if (!valid) {
-            // Retourne une erreur 401 Unauthorized
-            return res.status(401).json({
-              error: 'Pseudo et/ou mot de passe incorrect !'
-            });
-          }
-          res.status(200).json({
-            //data: token,
-            status: '201',
-            userId: user.id,
-            message: 'Authentification reussie !',
-            token: jwt.sign({
-                userId: user.id
-              },
-              process.env.TOKEN_LOGIN_USER, {
-                expiresIn: '24h'
-              }
-            )
 
-          });
 
-        })
     })
 
 }
@@ -231,7 +250,7 @@ exports.logout = (req, res) => [
 // *****************************************************************************************
 // Crud:
 
-// Modifie le user:
+// Modifie du user via l'admin:
 exports.modifyUser = (req, res) => {
 
   // *****************************************************************************************
@@ -260,12 +279,85 @@ exports.modifyUser = (req, res) => {
 
           //bcrypt.hash(password, 10, function (err, bcryptPassword) {
 
+          user.update({
+              username: (username ? username : user.username),
+              email: (email ? email : user.email),
+              //password: (bcryptPassword ? bcryptPassword : bcryptPassword),
+              //bio: (bio ? bio : user.bio)
+              admin: (admin ? admin : user.admin)
+            })
+
+            .then(() => {
+              res.status(201).json({
+                message: 'Votre profil a correctement été modifié !'
+              })
+            })
+            .catch((err) => {
+              console.log('MISE A JOUR ERR:')
+              console.log(err)
+              res.status(500).json({
+                error: error,
+                error: "Impossible de modifier votre profil",
+
+              })
+            })
+
+          //})
+
+        } else {
+          res.status(404).json({
+            message: 'Profil introuvable !',
+            error: error,
+          })
+        }
+      })
+    .catch((error) => {
+      console.log('MISE A JOUR ERR2:')
+      console.log(error)
+      res.status(500).json({
+        message: 'Impossible de vérifier ce profil',
+        error: error,
+      })
+    })
+
+}
+
+// Modifie du user via l'user:
+exports.modifyOfUserByUser = (req, res) => {
+
+  // *****************************************************************************************
+  // Déclarations:
+  const {
+    id,
+    username,
+    email,
+    password,
+    bio
+  } = req.body
+
+  console.log(req.body)
+  console.log(req.params)
+  // *****************************************************************************************
+  // Code modification:
+  models
+    .findOne({
+      attributes: ['id', 'username', 'email', 'password', 'bio'],
+      where: {
+        id: req.params.id,
+      },
+    })
+    .then(
+      (user) => {
+        if (user) {
+
+          bcrypt.hash(password, 10, function (err, bcryptPassword) {
+
             user.update({
                 username: (username ? username : user.username),
                 email: (email ? email : user.email),
-                //password: (bcryptPassword ? bcryptPassword : bcryptPassword),
-                //bio: (bio ? bio : user.bio)
-                admin: (admin ? admin : user.admin)
+                password: (bcryptPassword ? bcryptPassword : bcryptPassword),
+                bio: (bio ? bio : user.bio)
+                //admin: (admin ? admin : user.admin)
               })
 
               .then(() => {
@@ -283,7 +375,7 @@ exports.modifyUser = (req, res) => {
                 })
               })
 
-          //})
+          })
 
         } else {
           res.status(404).json({

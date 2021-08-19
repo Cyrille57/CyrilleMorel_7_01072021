@@ -45,8 +45,11 @@ router.get('/:id', userCtrl.getOneUser)
 // Récupére tout:
 router.get('/', userCtrl.getAllUsers)
 
-// Modifie le user:
+// Modifie le user via l'admin:
 router.put('/:id', auth, userCtrl.modifyUser);
+
+// Modifie du user via l'user:
+router.put('/user/:id', auth, userCtrl.modifyOfUserByUser);
 
 // Supprime le user:
 router.delete('/:id', auth, userCtrl.deleteUser);

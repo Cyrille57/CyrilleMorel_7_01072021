@@ -63,7 +63,8 @@ async function connectUser(urlUser) {
       console.log(user)
 
       displayNavBar(user)
-      editProfil(user)
+      displayEditProfil(user)
+      sendModifyProfil(user)
 
     } else if (this.readyState == XMLHttpRequest.DONE && this.status == 500) {
       console.log("Erreur 500")
@@ -172,9 +173,9 @@ function displayNavBar(user) {
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Edition:
+// Formulaire:
 
-function editProfil(user) {
+function displayEditProfil(user) {
 
   //---------------------------------------------------------
   // Création des éléments de base enfants:
@@ -223,18 +224,26 @@ function editProfil(user) {
 
   // Formulaire:
   let formUpdateUser = createTag('form')
-  addClass(formUpdateUser, ['well', 'form-horizontal'])
+  addClass(formUpdateUser, ['well', 'form-horizontal', 'formUpdate'])
   formUpdateUser.setAttribute('id', 'formUpdateUser')
+  formUpdateUser.setAttribute('id', 'formUpdateUser_' + user.id)
+
+  //---------------------------------------------------------
+  // Titre du formulaire:
+  let titleForm = createTag('h1')
+  titleForm.innerHTML = "Modification de votre profil:"
+  addClass(titleForm, ['titleForm'])
 
   //---------------------------------------------------------
   // Groupe formulaire:
 
   // Form-group:
   let divFormGroup = createTag('div')
-  addClass(divFormGroup, ['form-group'])
+  addClass(divFormGroup, ['form-group', 'form-group-username'])
 
   // Injecte dans le html:
   divDisplayUser.appendChild(formUpdateUser)
+  formUpdateUser.appendChild(titleForm)
   formUpdateUser.appendChild(divFormGroup)
 
   //---------------------------------------------------------
@@ -256,6 +265,8 @@ function editProfil(user) {
   inputPseudo.setAttribute('name', 'pseudo')
   inputPseudo.setAttribute('type', 'text')
   inputPseudo.setAttribute('placeholder', 'Pseudo')
+  inputPseudo.setAttribute('id', 'inputPseudo_' + user.id)
+  inputPseudo.setAttribute('data-inputPseudo', user.id)
 
   // Injecte dans le html:
   divFormGroup.appendChild(divLabelUsername)
@@ -292,6 +303,8 @@ function editProfil(user) {
   inputMail.setAttribute('name', 'email')
   inputMail.setAttribute('type', 'text')
   inputMail.setAttribute('placeholder', 'Email')
+  inputMail.setAttribute('id', 'inputMail_' + user.id)
+  inputMail.setAttribute('data-inputMail', user.id)
 
   // Injecte dans le html:
   divFormGroup2.appendChild(divLabelEmail)
@@ -306,7 +319,7 @@ function editProfil(user) {
   let divFormGroup3 = createTag('div')
   addClass(divFormGroup3, ['form-group'])
 
-  // Injecte dans le html:
+  //Injecte dans le html:
   formUpdateUser.appendChild(divFormGroup3)
 
   //---------------------------------------------------------
@@ -315,7 +328,7 @@ function editProfil(user) {
   // Label Password:
   let divLabelPassword = createTag('label')
   addClass(divLabelPassword, ['sizeLabel', 'control-label'])
-  divLabelPassword.innerHTML = 'Password'
+  divLabelPassword.innerHTML = 'Mot de passe'
 
   let inputGroupContainer3 = createTag('div')
   addClass(inputGroupContainer3, ['sizeInput', 'inputGroupContainer'])
@@ -328,6 +341,8 @@ function editProfil(user) {
   inputPassword.setAttribute('name', 'password')
   inputPassword.setAttribute('type', 'password')
   inputPassword.setAttribute('placeholder', 'Mot de passse')
+  inputPassword.setAttribute('id', 'inputPassword_' + user.id)
+  inputPassword.setAttribute('data-inputPassword', user.id)
 
   // Injecte dans le html:
   divFormGroup3.appendChild(divLabelPassword)
@@ -346,12 +361,12 @@ function editProfil(user) {
   formUpdateUser.appendChild(divFormGroup4)
 
   //---------------------------------------------------------
-  // Input Password
+  // Input Confirmation Password:
 
   // Label Password:
   let divLabelPassword2 = createTag('label')
   addClass(divLabelPassword2, ['sizeLabel', 'control-label'])
-  divLabelPassword.innerHTML = 'Password'
+  divLabelPassword2.innerHTML = 'Confirmation'
 
   let inputGroupContainer4 = createTag('div')
   addClass(inputGroupContainer4, ['sizeInput', 'inputGroupContainer'])
@@ -364,6 +379,8 @@ function editProfil(user) {
   inputPassword2.setAttribute('name', 'password')
   inputPassword2.setAttribute('type', 'password')
   inputPassword2.setAttribute('placeholder', 'Confirmation Mot de passse')
+  inputPassword2.setAttribute('id', 'inputConfirmPassword_' + user.id)
+  inputPassword2.setAttribute('data-inputConfirmPassword', user.id)
 
   // Injecte dans le html:
   divFormGroup4.appendChild(divLabelPassword2)
@@ -376,13 +393,13 @@ function editProfil(user) {
 
   // Form-group:
   let divFormGroup5 = createTag('div')
-  addClass(divFormGroup5, ['form-group'])
+  addClass(divFormGroup5, ['form-group', 'form-group-bio'])
 
   // Injecte dans le html:
-  formUpdateUser.appendChild(divFormGroup4)
+  formUpdateUser.appendChild(divFormGroup5)
 
   //---------------------------------------------------------
-  // Input Password
+  // Bio:
 
   // Label Password:
   let divLabelBio = createTag('label')
@@ -395,51 +412,191 @@ function editProfil(user) {
   let divInputGroup5 = createTag('div')
   addClass(divInputGroup5, ['input-group'])
 
-  let inputBio = createTag('input')
+  let inputBio = createTag('textarea')
   addClass(inputBio, ['form-control'])
   inputBio.setAttribute('name', 'bio')
   inputBio.setAttribute('type', 'text')
   inputBio.setAttribute('placeholder', 'Bio')
+  inputBio.setAttribute('id', 'inputBio_' + user.id)
+  inputBio.setAttribute('data-inputBio', user.id)
 
   // Injecte dans le html:
-  divFormGroup4.appendChild(divLabelBio)
-  divFormGroup4.appendChild(inputGroupContainer5)
+  divFormGroup5.appendChild(divLabelBio)
+  divFormGroup5.appendChild(inputGroupContainer5)
   inputGroupContainer5.appendChild(divInputGroup5)
   divInputGroup5.appendChild(inputBio)
 
-
   //---------------------------------------------------------
-  // Groupe formulaire 5:
+  // Groupe formulaire 6:
 
   // Form-group:
   let divFormGroup6 = createTag('div')
   addClass(divFormGroup6, ['form-group'])
 
   // Injecte dans le html:
-  formUpdateUser.appendChild(divFormGroup4)
+  formUpdateUser.appendChild(divFormGroup6)
+
+  //---------------------------------------------------------
+  // Bouton:
 
   // Cadre bouton:
   let divFrameButton = createTag('div')
   addClass(divFrameButton, ['divFrameButton'])
 
   //Validr:
-  let btnValidateUpdateUser = createTag('button')
-  addClass(btnValidateUpdateUser, ['btn--sendPostModify', 'shadow', 'shadow', 'rounded', 'my-3'])
-  btnValidateUpdateUser.setAttribute('id', 'btnValidateUpdateUser')
-  btnValidateUpdateUser.setAttribute('type', 'button')
-  btnValidateUpdateUser.innerHTML = 'Valider'
+  let linkValidateModifyUser = createTag('a')
+  addClass(linkValidateModifyUser, ['button'])
+  linkValidateModifyUser.setAttribute('id', 'linkValidateModifyUser_' + user.id)
+  linkValidateModifyUser.setAttribute('data-idValidateModifyUser', user.id)
+  linkValidateModifyUser.setAttribute('type', 'button')
+  linkValidateModifyUser.innerHTML = 'Valider'
+
+  // Icone du le bouton modifier:
+  let iconeModifyUser = createTag('i')
+  addClass(iconeModifyUser, ['far', 'fa-check-circle'])
 
   //Retour:
-  let btnReturnAllUser = createTag('button')
-  addClass(btnReturnAllUser, ['btn--sendPostModify', 'shadow', 'shadow', 'rounded', 'my-3'])
-  btnReturnAllUser.setAttribute('id', 'btnReturnAllUser')
-  btnReturnAllUser.setAttribute('type', 'button')
-  btnReturnAllUser.innerHTML = 'Retour'
+  let linkReturnAllUser = createTag('a')
+  addClass(linkReturnAllUser, ['button'])
+  linkReturnAllUser.setAttribute('id', 'linkReturnAllUser')
+  linkReturnAllUser.setAttribute('type', 'button')
+  linkReturnAllUser.setAttribute("href", "../html/postWall.html")
+  linkReturnAllUser.innerHTML = 'Retour'
 
+  // Icone du bouton retour:
+  let iconeReturnUser = createTag('i')
+  addClass(iconeReturnUser, ['fas', 'fa-undo'])
 
   divFormGroup6.appendChild(divFrameButton)
-  divFrameButton.appendChild(btnValidateUpdateUser)
-  divFrameButton.appendChild(btnReturnAllUser)
 
+  divFrameButton.appendChild(linkValidateModifyUser)
+  linkValidateModifyUser.appendChild(iconeModifyUser)
+
+  divFrameButton.appendChild(linkReturnAllUser)
+  linkReturnAllUser.appendChild(iconeReturnUser)
+
+}
+
+///////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////
+// Envoie du formulaire:
+
+function sendModifyProfil(user) {
+
+  // Sélectionne l'icone modify du post correspondant:
+  let iconmodifyComment = document.getElementById('linkValidateModifyUser_' + user.id)
+  console.log(iconmodifyComment)
+
+  iconmodifyComment.addEventListener('click', (event) => {
+    event.preventDefault();
+    console.log(iconmodifyComment)
+
+
+    //---------------------------------------------------------
+    // Autorisation:
+
+    // Sélectionne l'auteur du post:
+    let getIdAuthor = user.id
+    console.log(getIdAuthor)
+
+    // Si auteur autorisé sinon non:
+    if (idUserConnect != getIdAuthor) {
+      console.log('désolé')
+    } else {
+      console.log('ok')
+
+      //---------------------------------------------------------
+      // Sélectionne:
+
+      // Input username:
+      let inputPseudo = document.getElementById('inputPseudo_' + user.id)
+      console.log(inputPseudo)
+
+      // Input email:
+      let inputMail = document.getElementById('inputMail_' + user.id)
+      console.log(inputMail)
+
+      //Input password:
+      let inputPassword = document.getElementById('inputPassword_' + user.id)
+      console.log(inputPassword)
+
+      // Input confirm password:
+      let inputConfirmPassword = document.getElementById('inputConfirmPassword_' + user.id)
+      console.log(inputConfirmPassword)
+
+      // Input bio:
+      let inputBio = document.getElementById('inputBio_' + user.id)
+      console.log(inputBio)
+
+      // Récuoere l'id du post a modifier:
+      const getIdModify = ('data-idValidateModifyUser', user.id)
+      console.log(getIdModify)
+
+      //---------------------------------------------------------
+      // Préparation de l'url pour la modification du comment:
+
+      // Recupere l'id du post:
+      let getModify = document.getElementById('formUpdateUser_' + user.id)
+      console.log('ModifyPost l512 getModify :')
+      console.log(getModify)
+
+      // Ajoute a l'url l'id du post:
+      const url = "http://localhost:3000/api/users/user/" + getIdModify
+      console.log('ModifyPost l515 url:')
+      console.log(url)
+
+      //---------------------------------------------------------
+      // Récupére la modification du post:
+
+      if (inputPassword.value != inputConfirmPassword.value) {
+        console.log('Désolé les mdp ne corresponde pas')
+      } else {
+        console.log('Les mdp corresponde !')
+        let formData = {
+          id: idUserConnect,
+          username: inputPseudo.value,
+          email: inputMail.value,
+          password: inputPassword.value,
+          bio: inputBio.value
+        }
+        console.log(formData)
+
+        //---------------------------------------------------------
+        // Envoie la modification du post:
+
+        var myInit = {
+          method: "PUT",
+          headers: new Headers({
+            "Content-Type": "application/json;charset=UTF-8",
+            "Authorization": 'Bearer ' + tokenConnect
+          }),
+          body: JSON.stringify(formData),
+          mode: 'cors',
+          cache: 'default'
+        };
+
+        fetch(url, myInit)
+          .then(response => response.json())
+          //.then(res => document.location.reload())
+          .catch(err => console.log(err))
+      }
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+  })
 
 }
