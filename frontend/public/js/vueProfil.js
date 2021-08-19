@@ -78,7 +78,7 @@ connectUser(urlUser)
 ///////////////////////////////////////////////////////////
 // NavBar:
 
-function displayNavBar() {
+function displayNavBar(user) {
 
   //Selectionne l'id parent:
    // header:
