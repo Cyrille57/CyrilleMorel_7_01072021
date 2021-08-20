@@ -5,6 +5,8 @@
 .titlePage{
   margin-top: 10%;
 }
+
+
 .btn--sendComment{
   width: 140px;
 }
@@ -18,7 +20,9 @@
 .modify-DisplayPost{
   align-self: flex-start;
 }
-
+.modifySizeInput{
+  width: 100%;
+}
 .display-frameCard__username{
   align-self: flex-start;
   margin-top: 5%;
@@ -55,7 +59,7 @@
   align-items: center;
 }
 textarea{
-  margin-bottom: 10%;
+  //margin-bottom: 10%;
   resize : none;
 }
 .modify-btn-send, .modifyReturn {

@@ -3,12 +3,34 @@
 ///////////////////////////////////////////////////////////
 
 
+
+
+
 ///////////////////////////////////////////////////////////
 // Connexion et récupération: valide
 
 
 //---------------------------------------------------------
 // Users:
+
+
+//---------------------------------------------------------
+//token:
+
+// récupére l'id de l'user:
+var idUserConnect = parseInt(localStorage.getItem('infoUserId'))
+console.log('idUserConnect:')
+console.log(idUserConnect)
+
+// Récupére le token:
+var tokenConnect = localStorage.getItem('infoUserToken')
+console.log(tokenConnect)
+
+// Récupére le role admin:
+
+var admin = localStorage.getItem('infoAdmin')
+console.log(admin)
+
 
 
 // Url pour recupérer les users:
@@ -771,7 +793,8 @@ function displayAll(getUser) {
                 var myInit = {
                     method: "PUT",
                     headers: new Headers({
-                        "Content-Type": "application/json;charset=UTF-8"
+                        "Content-Type": "application/json;charset=UTF-8",
+                        "Authorization": 'Bearer ' + tokenConnect
                     }),
                     body: JSON.stringify(modifyFormData()),
                     mode: 'cors',
@@ -903,7 +926,10 @@ function displayAll(getUser) {
             //---------------------------------------------------------
             // Envoie la requête:
             var myInit = {
-                method: "DELETE"
+                method: "DELETE",
+                headers: new Headers({
+                    "Authorization": 'Bearer ' + tokenConnect
+                  })
             };
 
             fetch(getUrlDelete(), myInit)

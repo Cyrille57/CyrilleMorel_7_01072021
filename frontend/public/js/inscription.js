@@ -7,7 +7,7 @@ const url = 'http://localhost:3000/api/users/signup'
 
 const singUpForm = document.getElementById('signInForm')
 
-singUpForm.addEventListener('submit', function(event) {
+singUpForm.addEventListener('submit', function (event) {
 
   event.preventDefault()
   //console.log('Inscription.js log de event:')
@@ -15,37 +15,43 @@ singUpForm.addEventListener('submit', function(event) {
 
   let formData = {
     username: document.getElementById('inputPseudo').value,
-    email:    document.getElementById('inputEmail').value,
+    email: document.getElementById('inputEmail').value,
     password: document.getElementById('inputPassword').value
   }
   //console.log('Inscription.js log de formData:')
   //console.log(formData)
 
   var myInit = {
-    method:   "post",
-    headers:  new Headers({
-              "Content-Type": "application/json;charset=UTF-8"
+    method: "post",
+    headers: new Headers({
+      "Content-Type": "application/json;charset=UTF-8"
     }),
-    body:     JSON.stringify(formData),
-    mode:     'cors',
-    cache:    'default'
+    body: JSON.stringify(formData),
+    mode: 'cors',
+    cache: 'default'
   };
   //console.log('Inscription.js log de myInit:')
   //console.log(myInit)
 
   fetch(url, myInit)
-  .then(response => response.json())
-  // Quand la promesse est tenue, elle est parsée au format Json
-  .then(json_object => {
+    .then(response => response.json())
+    // Quand la promesse est tenue, elle est parsée au format Json
+    .then(json_object => {
 
       let getUser = json_object
       //console.log(getUser)
 
-      window.location = "/frontend/public/html/postWall.html"
-  })
-  .catch((error) => {
-    console.log(error)
-  })
+      let infoUserId = json_object.userId
+      let infoUserToken = json_object.token
+      console.log(json_object)
+
+      localStorage.setItem('infoUserId', infoUserId)
+      localStorage.setItem('infoUserToken', infoUserToken);
+
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 
 })
 
@@ -95,9 +101,9 @@ singUpForm.addEventListener('submit', function(event) {
      connect(url)
      */
 
-      // Va à la page:-
-      //window.location = "confirmation.html"
-  //})
+// Va à la page:-
+//window.location = "confirmation.html"
+//})
 
 
 
@@ -180,9 +186,3 @@ const sendSignIn = (() =>{
 })
 
 */
-
-
-
-
-
-

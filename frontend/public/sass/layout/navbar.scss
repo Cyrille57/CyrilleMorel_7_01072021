@@ -84,10 +84,12 @@
     display: flex;
     justify-content: flex-end;
 
+
+
     //border: 1px solid red;
 
     // postWall-linkProfil contenu dans __ul:
-    .postWall-linkProfil {
+    .postWall-linkProfil, .postWall-linkAdmin{
 
       margin-right: 10%;
 
@@ -102,12 +104,13 @@
 
     }
 
-    .postWall-linkProfil__icon, .postWall-linkDeconnect__icon{
+    .postWall-linkProfil__icon, .postWall-linkDeconnect__icon, .postWall-linkAdmin__icon{
       color: black;
       font-size: 35px;
       cursor: pointer;
     }
   }
+
 
 }
 

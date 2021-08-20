@@ -11,14 +11,15 @@
 // post*frameCard base:
 .post-frameCard{
 
+  height: auto;
   display: flex;
   justify-content: center;
 
   // card-send-post contenu dans frameCard :
   &__send-post{
     width:  100%;
-    height: 150px;
-    margin-top: 10%;
+    height: auto;
+    //margin-top: 10%;
 
     background: rgba(255, 255, 255, 0.1);
     overflow: hidden;
@@ -32,30 +33,43 @@
   &__form
   {
     width: 100%;
-    height: 100%;
+    height: auto;
 
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    align-items: center;
 
   }
 
+  .sizeLabel{
+    width: 90%;
+    height: auto;
+    margin-bottom: 0% !important;
+  }
+
   &__input{
+    height: 75px;
+    margin-bottom: 5%;
     display: flex;
     justify-content: center;
 
       // Textarea:
     textarea{
+      height: auto;
       width: 90% !important;
+
       resize: none;
     }
   }
 
   &__frameBtn{
     margin-right: 30px;
+    margin-bottom: 5%;
 
     display: flex;
-    justify-content: right;
+    align-self: flex-end;
+
 
   }
 

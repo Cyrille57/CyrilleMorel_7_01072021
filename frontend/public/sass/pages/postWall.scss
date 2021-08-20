@@ -3,6 +3,25 @@
 // ***************************************
 
 
+// ***************************************
+// Card envoie Post:
+
+
+// post*frameCard base:
+.post-frameCard{
+
+  height: auto;
+  display: flex;
+  justify-content: center;
+
+  &__input{
+    width: 100%;
+    height: 75px;
+    display: flex;
+    justify-content: center;
+  }
+
+}
 
 // ***************************************
 // Card affiche les Post et comments:
@@ -21,7 +40,7 @@
 // Post:
 // card display post contenu dans postAndComment:
 .display-frameCard{
-  width: 100%;
+  //width: 100%;
   height: auto;
 
   display: flex;

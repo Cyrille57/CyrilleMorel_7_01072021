@@ -181,9 +181,9 @@ function displayNavBar(comment) {
   // Ecoute le lien:
   getLinkLogout.addEventListener('click', (event) => {
 
-      localStorage.removeItem('infoUserToken')
-      localStorage.removeItem('infoUserId')
-      location.href = '../../index.html'
+    localStorage.removeItem('infoUserToken')
+    localStorage.removeItem('infoUserId')
+    location.href = '../../index.html'
   })
 
 }
@@ -194,19 +194,28 @@ displayNavBar()
 ///////////////////////////////////////////////////////////
 // Affiche tous les comentaire du post: OK
 
+//---------------------------------------------------------
+
 
 function displayAllCommentOfPost(comment) {
+
+  //---------------------------------------------------------
+  //Selectionne l'id parent:
+  let main = document.querySelector('main')
+
+  //---------------------------------------------------------
+  // Titre de la page:
+  let titlePage = createTag('h1')
+  addClass(titlePage, ['titlePage', 'text-center'])
+  titlePage.innerHTML = 'Les commentaires du post:'
+
+  // Injecte dans le html:
+  main.appendChild(titlePage)
   //console.log(comment)
   for (let i = 0; i < comment.length; i++) {
 
-    let commentLength = comment.length
-    sessionStorage.setItem("commentLength", commentLength)
-
     //---------------------------------------------------------
     // Création des éléments de base enfants:
-
-    //Selectionne l'id parent:
-    let main = document.querySelector('main')
 
     // Container:
     let divContainer = createTag('div') //
@@ -226,6 +235,8 @@ function displayAllCommentOfPost(comment) {
     divContainer.appendChild(divRow)
     divRow.appendChild(divCol)
 
+
+
     //---------------------------------------------------------
     // Cadre de la card qui affiche les posts et comments:
 
@@ -236,7 +247,7 @@ function displayAllCommentOfPost(comment) {
 
     // Frame de la card:
     let divReadComment = createTag('div') // divReadPost
-    addClass(divReadComment, ['display-frameCard__read-post','modifyReadComment', 'shadow', 'rounded'])
+    addClass(divReadComment, ['display-frameCard__read-post', 'modifyReadComment', 'shadow', 'rounded'])
     //divReadComment.setAttribute('id', 'divReadPost')
     divReadComment.setAttribute('id', 'divReadPost_' + comment[i].id)
     divReadComment.setAttribute('data-divReadPost', comment[i].id)
@@ -261,7 +272,7 @@ function displayAllCommentOfPost(comment) {
 
     // Cadre du displayPost:
     let divDisplayPost = createTag('div')
-    addClass(divDisplayPost, ['display-frameCard__displayPost','modify-DisplayPost', 'shadow', 'rounded'])
+    addClass(divDisplayPost, ['display-frameCard__displayPost', 'modify-DisplayPost', 'shadow', 'rounded'])
     divDisplayPost.setAttribute('id', 'displayPost_' + comment[i].id)
 
     // Affichage du post:
@@ -304,7 +315,7 @@ function displayAllCommentOfPost(comment) {
     //---------------------------------------------------------
     // PLacement du bouton retour au waal post;
 
-    let backToPost= createTag('a')
+    let backToPost = createTag('a')
     addClass(backToPost, ['button-backToPost'])
     backToPost.setAttribute('id', 'btnViewComment')
     backToPost.setAttribute("href", "../html/postWall.html")
@@ -315,9 +326,9 @@ function displayAllCommentOfPost(comment) {
     let iconeBackToPost = createTag('i')
     addClass(iconeBackToPost, ['far', 'fa-hand-point-left'])
 
-     // Injecte dans le html:
-     divReadComment.appendChild(backToPost)
-     backToPost.appendChild(iconeBackToPost)
+    // Injecte dans le html:
+    divReadComment.appendChild(backToPost)
+    backToPost.appendChild(iconeBackToPost)
 
   }
 

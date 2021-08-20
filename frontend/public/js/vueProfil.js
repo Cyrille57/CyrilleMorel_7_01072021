@@ -199,6 +199,16 @@ function displayUser(user) {
   divRow.appendChild(divCol)
 
   //---------------------------------------------------------
+  // Titre de la page:
+  let titlePage = createTag('h1')
+  addClass(titlePage, ['titlePage', 'text-center'])
+  titlePage.innerHTML = 'Le profil de:'
+
+  // Injecte dans le html:
+  divCol.appendChild(titlePage)
+
+
+  //---------------------------------------------------------
   // Cadre Card User:
 
   let frameCardUser = createTag('div')

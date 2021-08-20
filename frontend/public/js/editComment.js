@@ -223,14 +223,14 @@ function displayFormComment() {
   divContainer.appendChild(divRow)
   divRow.appendChild(divCol)
 
-   //---------------------------------------------------------
+  //---------------------------------------------------------
   // Titre de la page:
   let titlePage = createTag('h1')
-  addClass(titlePage, ['titlePage','text-center'])
-  titlePage.innerHTML = 'Edition commentaires:'
+  addClass(titlePage, ['titlePage', 'text-center'])
+  titlePage.innerHTML = 'Edition commentaire:'
 
-   // Injecte dans le html:
-   divCol.appendChild(titlePage)
+  // Injecte dans le html:
+  divCol.appendChild(titlePage)
 
   //---------------------------------------------------------
   // Cadre Card Post:
@@ -253,9 +253,14 @@ function displayFormComment() {
   addClass(commentForm, ['post-frameCard__form'])
   commentForm.setAttribute('id', 'postForm')
 
+  // Label :
+  let divLabelInputComment = createTag('label')
+  addClass(divLabelInputComment, ['sizeLabel', 'control-label', 'mt-2', 'mb-2'])
+  divLabelInputComment.innerHTML = 'Votre commentaire:'
+
   // Input:
   let divInputComment = createTag('div')
-  addClass(divInputComment, ['post-frameCard__input'])
+  addClass(divInputComment, ['post-frameCard__input', 'modifySizeInput'])
 
   // Textarea:
   let textareaComment = createTag('textarea')
@@ -283,7 +288,8 @@ function displayFormComment() {
 
   // Injecte dans le html:
   divSendComment.appendChild(commentForm)
-  commentForm.appendChild(divInputComment)
+  commentForm.appendChild(divLabelInputComment)
+  divLabelInputComment.appendChild(divInputComment)
   divInputComment.appendChild(textareaComment)
   commentForm.appendChild(divBtnComment)
   divBtnComment.appendChild(btnComment)

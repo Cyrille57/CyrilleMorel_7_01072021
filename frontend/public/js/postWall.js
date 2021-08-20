@@ -24,6 +24,12 @@ console.log(idUserConnect)
 var tokenConnect = localStorage.getItem('infoUserToken')
 console.log(tokenConnect)
 
+// Récupére le role admin:
+
+var admin = localStorage.getItem('infoAdmin')
+console.log(admin)
+
+
 // Url pour recupérer les posts:
 const urlPost = 'http://localhost:3000/api/posts'
 
@@ -123,6 +129,41 @@ function displayNavBar() {
   containerNavBar.appendChild(frameUl)
   frameUl.appendChild(ulNav)
 
+  //---------------------------------------------------------
+  // Menu:
+
+  //---------------------------------------------------------
+  // Admin:
+
+  // li admin
+  let liAdmin = createTag('li')
+  addClass(liAdmin, ['postWall-linkAdmin'])
+
+  // lien de admin:
+  let linkAdmin = createTag('a')
+  linkAdmin.setAttribute("href", "../html/admin.html?id=" + idUserConnect)
+
+  // icone Admin:
+  let iconeAdmin = createTag('i')
+  addClass(iconeAdmin, ['fas', 'fa-user-lock', 'fa', 'postWall-linkAdmin__icon'])
+
+  // Injecte dans le html SI admin
+  if (admin != 'true') {
+    console.log(' JE SUIS PAS ADMIN§ :(')
+    console.log(admin)
+
+  } else {
+    console.log(' JE SUIS ADMIN§!!!')
+    console.log(admin)
+    ulNav.appendChild(liAdmin)
+    liAdmin.appendChild(linkAdmin)
+    linkAdmin.appendChild(iconeAdmin)
+
+  }
+
+  //---------------------------------------------------------
+  // Voir lr profil:
+
   // li vue profil:
   let liViewProfil = createTag('li')
   addClass(liViewProfil, ['postWall-linkProfil'])
@@ -139,6 +180,11 @@ function displayNavBar() {
   ulNav.appendChild(liViewProfil)
   liViewProfil.appendChild(linkViewProfil)
   linkViewProfil.appendChild(iconeViewProfil)
+
+
+
+  //---------------------------------------------------------
+  // Logout:
 
   // li logout:
   let liLogOut = createTag('li')
@@ -210,6 +256,15 @@ function displayFormPost() {
   divRow.appendChild(divCol)
 
   //---------------------------------------------------------
+  // Titre de la page:
+  let titlePage = createTag('h1')
+  addClass(titlePage, ['titlePage', 'text-center'])
+  titlePage.innerHTML = 'Le mur:'
+
+  // Injecte dans le html:
+  divCol.appendChild(titlePage)
+
+  //---------------------------------------------------------
   // Cadre Card Post:
 
   let divPostFrameCard = createTag('div')
@@ -229,6 +284,11 @@ function displayFormPost() {
   let postForm = createTag('form')
   addClass(postForm, ['post-frameCard__form'])
   postForm.setAttribute('id', 'postForm')
+
+  // Label :
+  let divLabelInputComment = createTag('label')
+  addClass(divLabelInputComment, ['sizeLabel', 'control-label', 'mt-2', 'mb-2'])
+  divLabelInputComment.innerHTML = 'Votre commentaire:'
 
   // Input:
   let divInputPost = createTag('div')
@@ -260,7 +320,8 @@ function displayFormPost() {
 
   // Injecte dans le html:
   divSendPost.appendChild(postForm)
-  postForm.appendChild(divInputPost)
+  postForm.appendChild(divLabelInputComment)
+  divLabelInputComment.appendChild(divInputPost)
   divInputPost.appendChild(textareaPost)
   postForm.appendChild(divBtnPost)
   divBtnPost.appendChild(btnPost)

@@ -217,6 +217,7 @@ exports.login = (req, res) => {
                 //data: token,
                 status: '201',
                 userId: user.id,
+                adminoupas: user.admin,
                 message: 'Authentification reussie !',
                 token: jwt.sign({
                     userId: user.id
@@ -402,6 +403,8 @@ exports.deleteUser = (req, res) => {
       where: {
         id: req.params.id,
       },
+    include:[{ all: true, nested: true }]
+    ,
     })
     .then((user) => {
 

@@ -10753,13 +10753,13 @@ textarea.form-control-lg {
   }
 }
 .post-frameCard {
+  height: auto;
   display: flex;
   justify-content: center;
 }
 .post-frameCard__send-post {
   width: 100%;
-  height: 150px;
-  margin-top: 10%;
+  height: auto;
   background: rgba(255, 255, 255, 0.1);
   overflow: hidden;
   backdrop-filter: blur(10px);
@@ -10768,23 +10768,33 @@ textarea.form-control-lg {
 }
 .post-frameCard__form {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  align-items: center;
+}
+.post-frameCard .sizeLabel {
+  width: 90%;
+  height: auto;
+  margin-bottom: 0% !important;
 }
 .post-frameCard__input {
+  height: 75px;
+  margin-bottom: 5%;
   display: flex;
   justify-content: center;
 }
 .post-frameCard__input textarea {
+  height: auto;
   width: 90% !important;
   resize: none;
 }
 .post-frameCard__frameBtn {
   margin-right: 30px;
+  margin-bottom: 5%;
   display: flex;
-  justify-content: right;
+  align-self: flex-end;
 }
 .post-frameCard__btn {
   width: 80px;
@@ -10896,10 +10906,10 @@ header {
   display: flex;
   justify-content: flex-end;
 }
-.postWall-frameUlNav__ul .postWall-linkProfil {
+.postWall-frameUlNav__ul .postWall-linkProfil, .postWall-frameUlNav__ul .postWall-linkAdmin {
   margin-right: 10%;
 }
-.postWall-frameUlNav__ul .postWall-linkProfil__icon, .postWall-frameUlNav__ul .postWall-linkDeconnect__icon {
+.postWall-frameUlNav__ul .postWall-linkProfil__icon, .postWall-frameUlNav__ul .postWall-linkDeconnect__icon, .postWall-frameUlNav__ul .postWall-linkAdmin__icon {
   color: black;
   font-size: 35px;
   cursor: pointer;
@@ -11345,6 +11355,18 @@ legend {
   justify-content: space-around;
 }
 
+.post-frameCard {
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+.post-frameCard__input {
+  width: 100%;
+  height: 75px;
+  display: flex;
+  justify-content: center;
+}
+
 .postAndComment {
   height: auto;
   margin-bottom: 10%;
@@ -11353,7 +11375,6 @@ legend {
 }
 
 .display-frameCard {
-  width: 100%;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -11521,6 +11542,10 @@ legend {
   font-style: italic;
 }
 
+.titlePage {
+  margin-bottom: 10%;
+}
+
 .modifyReadComment {
   display: flex;
   flex-direction: column;
@@ -11564,6 +11589,10 @@ legend {
   align-self: flex-start;
 }
 
+.modifySizeInput {
+  width: 100%;
+}
+
 .display-frameCard__username {
   align-self: flex-start;
   margin-top: 5%;
@@ -11600,7 +11629,6 @@ legend {
 }
 
 textarea {
-  margin-bottom: 10%;
   resize: none;
 }
 
