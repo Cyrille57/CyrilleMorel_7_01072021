@@ -68,13 +68,12 @@ connectPost(urlPost)
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// NavBar:
+// Navbar:
 
-/*
 function displayNavBar() {
 
   //Selectionne l'id parent:
-   // header:
+  // header:
   let header = document.getElementById('header')
   console.log(header)
 
@@ -171,12 +170,13 @@ function displayNavBar() {
 
     localStorage.removeItem('infoUserToken')
     localStorage.removeItem('infoUserId')
-    location.href =  '../../index.html'
+    location.href = '../../index.html'
   })
 
 }
+
 displayNavBar()
-*/
+
 
 ///////////////////////////////////////////////////////////
 
@@ -374,7 +374,7 @@ function displayAllPosts(post) {
     // Icone modifier post:
     let iconModifyPost = createTag('i') //
     addClass(iconModifyPost, ['fas', 'fa-reply']) //
-    iconModifyPost.setAttribute('id', 'modifyPost_'+ post[i].id) //
+    iconModifyPost.setAttribute('id', 'modifyPost_' + post[i].id) //
     iconModifyPost.setAttribute('data-bs-toggle', 'tooltip')
     iconModifyPost.setAttribute('data-bs-placement', 'right')
     iconModifyPost.setAttribute('title', 'Modifier')
@@ -646,7 +646,7 @@ function modifyPost(post) {
         // Ecoute le bouton mettre à jour:
         divBtnSendPostModify.addEventListener('click', (event) => {
 
-           //---------------------------------------------------------
+          //---------------------------------------------------------
           // Préparation de l'url pour la modification du comment:
 
           // Recupere l'id du post:

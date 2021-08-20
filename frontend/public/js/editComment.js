@@ -63,6 +63,7 @@ async function connectComment(urlComment) {
 
       comment.reverse()
 
+      displayNavBar(comment)
       displayAllCommentOfPost(comment)
       modifyComment(comment)
       deleteComment(comment)
@@ -77,6 +78,118 @@ async function connectComment(urlComment) {
   xhr.send()
 }
 connectComment(urlComment)
+
+
+///////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////
+// Navbar:
+
+
+function displayNavBar(comment) {
+
+  //Selectionne l'id parent:
+  // header:
+  let header = document.getElementById('header')
+  console.log(header)
+
+  // frame de la navbar:
+  let frameNavBar = createTag('nav')
+  addClass(frameNavBar, ['navbar', 'postWall-navbar'])
+
+  // container de la navbar:
+  let containerNavBar = createTag('div')
+  addClass(containerNavBar, ['container', 'postWall-container'])
+
+  // Injecte dans le html:
+  header.appendChild(frameNavBar)
+  frameNavBar.appendChild(containerNavBar)
+
+  // frame logo:
+  let frameLogo = createTag('div')
+  addClass(frameLogo, ['postWall-frame-logo'])
+
+  // lien du lmogo:
+  let linkLogo = createTag('a')
+  //addClass(linkLogo, [''])
+  linkLogo.setAttribute('href', '../html/postWall.html')
+
+  // image du logo:
+  let logo = createTag('img')
+  addClass(logo, ['postWall-logo-site'])
+  logo.setAttribute('src', '../images/Logo Groupomania/icon-left-font-monochrome-black.png')
+  logo.setAttribute('width', '35')
+  logo.setAttribute('height', '35')
+  logo.setAttribute('alt', 'Logo de Groupomania')
+
+  // Injecte dans le html:
+  containerNavBar.appendChild(frameLogo)
+  frameLogo.appendChild(linkLogo)
+  linkLogo.appendChild(logo)
+
+  // frame ul:
+  let frameUl = createTag('div')
+  addClass(frameUl, ['postWall-frameUlNav'])
+
+  // ul
+  let ulNav = createTag('ul')
+  addClass(ulNav, ['postWall-frameUlNav__ul'])
+
+  // Injecte dans le html:
+  containerNavBar.appendChild(frameUl)
+  frameUl.appendChild(ulNav)
+
+  // li vue profil:
+  let liViewProfil = createTag('li')
+  addClass(liViewProfil, ['postWall-linkProfil'])
+
+  // lien de viewProfil:
+  let linkViewProfil = createTag('a')
+  linkViewProfil.setAttribute("href", "../html/vueProfil.html?id=" + comment)
+
+  // icone vue profil:
+  let iconeViewProfil = createTag('i')
+  addClass(iconeViewProfil, ['fas', 'fa-user-circle', 'fa', 'postWall-linkProfil__icon'])
+
+  // Injecte dans le html:
+  //ulNav.appendChild(liViewProfil)
+  //liViewProfil.appendChild(linkViewProfil)
+  //linkViewProfil.appendChild(iconeViewProfil)
+
+  // li logout:
+  let liLogOut = createTag('li')
+  addClass(liLogOut, ['postWall-linkDeconnect'])
+
+  // lien de logout:
+  let linkLogout = createTag('a')
+  //linkLogout.setAttribute('href', '../../index.html')
+  linkLogout.setAttribute('id', 'logOut')
+
+  // icone logOut:
+  let iconeLogOut = createTag('i')
+  addClass(iconeLogOut, ['fas', 'fa-sign-out-alt', 'fa', 'postWall-linkDeconnect__icon'])
+
+  // Injecte dans le html:
+  ulNav.appendChild(liLogOut)
+  liLogOut.appendChild(linkLogout)
+  linkLogout.appendChild(iconeLogOut)
+
+  //---------------------------------------------------------
+  // LogOut:
+
+  // Sélectionne l'icone:
+  let getLinkLogout = document.getElementById('logOut')
+  console.log(getLinkLogout)
+
+  // Ecoute le lien:
+  getLinkLogout.addEventListener('click', (event) => {
+
+    localStorage.removeItem('infoUserToken')
+    localStorage.removeItem('infoUserId')
+    location.href = '../../index.html'
+  })
+
+}
 
 
 ///////////////////////////////////////////////////////////
@@ -109,6 +222,15 @@ function displayFormComment() {
   main.appendChild(divContainer)
   divContainer.appendChild(divRow)
   divRow.appendChild(divCol)
+
+   //---------------------------------------------------------
+  // Titre de la page:
+  let titlePage = createTag('h1')
+  addClass(titlePage, ['titlePage','text-center'])
+  titlePage.innerHTML = 'Edition commentaires:'
+
+   // Injecte dans le html:
+   divCol.appendChild(titlePage)
 
   //---------------------------------------------------------
   // Cadre Card Post:
@@ -195,7 +317,7 @@ function displayFormComment() {
 
     fetch(urlSendComment, myInit)
       .then(res => res.text()) // or res.json()
-    .then(res => window.location.reload())
+      .then(res => window.location.reload())
 
   })
 
@@ -227,7 +349,7 @@ function displayAllCommentOfPost(comment) {
 
     // Frame de la card:
     let divReadComment = createTag('div') // divReadPost
-    addClass(divReadComment, ['display-frameCard__read-post', 'shadow', 'rounded'])
+    addClass(divReadComment, ['display-frameCard__read-post', 'modifyReadPost', 'shadow', 'rounded'])
     //divReadComment.setAttribute('id', 'divReadPost')
     divReadComment.setAttribute('id', 'divReadPost_' + comment[i].id)
     divReadComment.setAttribute('data-divReadPost', comment[i].id)
@@ -252,7 +374,7 @@ function displayAllCommentOfPost(comment) {
 
     // Cadre du displayPost:
     let divDisplayPost = createTag('div')
-    addClass(divDisplayPost, ['display-frameCard__displayPost', 'shadow', 'rounded'])
+    addClass(divDisplayPost, ['display-frameCard__displayPost', 'modify-DisplayPost', 'shadow', 'rounded'])
     divDisplayPost.setAttribute('id', 'displayPost_' + comment[i].id)
 
     // Affichage du post:
@@ -325,6 +447,24 @@ function displayAllCommentOfPost(comment) {
     divReadComment.appendChild(divInfoDate)
     divInfoDate.appendChild(pDate)
 
+    //---------------------------------------------------------
+    // PLacement du bouton retour au waal post;
+
+    let backToPost = createTag('a')
+    addClass(backToPost, ['button-backToPost'])
+    backToPost.setAttribute('id', 'btnViewComment')
+    backToPost.setAttribute("href", "../html/postWall.html")
+    //backToPost.setAttribute('data-viewComment', post[i].id)
+    backToPost.innerHTML = 'Retour aux posts'
+
+    // Icone dans le bouton vue:
+    let iconeBackToPost = createTag('i')
+    addClass(iconeBackToPost, ['far', 'fa-hand-point-left'])
+
+    // Injecte dans le html:
+    divReadComment.appendChild(backToPost)
+    backToPost.appendChild(iconeBackToPost)
+
   }
 
 }
@@ -376,7 +516,7 @@ function modifyComment(comment) {
 
     // Sélectionne l'icone modify du post correspondant:
     let iconmodifyComment = document.getElementById('modifyPost_' + comment[i].id)
-    //console.log(iconmodifyComment)
+    console.log(iconmodifyComment)
 
     iconmodifyComment.addEventListener('click', (event) => {
       event.preventDefault();
@@ -405,6 +545,9 @@ function modifyComment(comment) {
         let pDate = document.getElementById('pDate_' + comment[i].id)
         console.log(pDate)
 
+        // bouton backToPost:
+        let backToPost = document.getElementById('btnViewComment')
+
         let readComment = document.getElementById('divReadPost_' + comment[i].id)
         console.log(readComment) // divReadPost
 
@@ -418,12 +561,13 @@ function modifyComment(comment) {
         // Cache le post pour introduire le input pour update le post:
         displayPost.style.display = 'none'
         pDate.style.display = 'none'
+        backToPost.style.display = 'none'
 
         let formModify = createTag('form')
-        addClass(formModify, ['d-flex', 'flex-column', 'justify-content-around', 'postForm'])
+        addClass(formModify, ['d-flex', 'modifyForm', 'flex-column', 'justify-content-around', 'postForm'])
 
         let frameTextereaModifyComment = createTag('div')
-        addClass(frameTextereaModifyComment, ['frameTextereaModifyPost', 'input-field'])
+        addClass(frameTextereaModifyComment, ['frameTextereaModifyPost', 'input-field', 'modifieFrame'])
         returnModifyComment(frameTextereaModifyComment)
 
         let textareaModyfyPost = createTag('textarea')
@@ -434,17 +578,20 @@ function modifyComment(comment) {
         textareaModyfyPost.setAttribute('rows', '2')
         textareaModyfyPost.setAttribute('placeholder', 'On efface et on recommence ?')
 
-
         readComment.appendChild(formModify)
         formModify.appendChild(frameTextereaModifyComment)
         frameTextereaModifyComment.appendChild(textareaModyfyPost)
 
         // Btn:
-        let divBtnSendPostModify = createTag('button')
-        addClass(divBtnSendPostModify, ['btn--sendPostModify', 'shadow', 'rounded', 'mt-3'])
+        let divBtnSendPostModify = createTag('a')
+        addClass(divBtnSendPostModify, ['button-backToPost', 'shadow', 'rounded', 'modify-btn-send'])
         divBtnSendPostModify.setAttribute('id', 'btnSendPostModify')
         divBtnSendPostModify.setAttribute('type', 'button')
         divBtnSendPostModify.innerHTML = 'Mettre à jour'
+
+        // Icone dans le bouton :
+        let iconePostModify = createTag('i')
+        addClass(iconePostModify, ['fas', 'fa-external-link-alt'])
 
         // Ecoute le bouton mettre à jour:
         divBtnSendPostModify.addEventListener('click', (event) => {
@@ -502,10 +649,15 @@ function modifyComment(comment) {
 
         // Injecte dans le html:
         readComment.appendChild(formModify)
+
         formModify.appendChild(frameTextereaModifyComment)
         frameTextereaModifyComment.appendChild(textareaModyfyPost)
+
         frameTextereaModifyComment.appendChild(divBtnSendPostModify)
-        //frameTextereaModifyComment.appendChild(btnReturnReadPost)
+        divBtnSendPostModify.appendChild(iconePostModify)
+
+        frameTextereaModifyComment.appendChild(btnReturnReadPost)
+        btnReturnReadPost.appendChild(iconeReturnReadPost)
 
       }
 
@@ -526,12 +678,19 @@ modifyComment()
 function returnModifyComment(frameTextereaModifyComment) {
 
   let btnReturnReadPost = createTag('button')
-  addClass(btnReturnReadPost, ['btn--sendPostModify', 'shadow', 'shadow', 'rounded', 'my-3'])
+  addClass(btnReturnReadPost, ['button-backToPost', 'shadow', 'rounded', 'modifyReturn'])
   btnReturnReadPost.setAttribute('id', 'btnReturnReadPost')
   btnReturnReadPost.setAttribute('type', 'button')
   btnReturnReadPost.innerHTML = 'Retour'
 
+  // Icone dans le bouton :
+  let iconeReturnReadPost = createTag('i')
+  addClass(iconeReturnReadPost, ['fas', 'fa-undo'])
+
+
+
   frameTextereaModifyComment.appendChild(btnReturnReadPost)
+  btnReturnReadPost.appendChild(iconeReturnReadPost)
 
   //---------------------------------------------------------
   // Ecoute le bouton retour:

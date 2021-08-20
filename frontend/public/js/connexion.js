@@ -39,7 +39,7 @@ loginForm.addEventListener('submit', function(event) {
     if(json_object.status == 201){
       console.log(' je suis dans le 201 !!!')
       location.href  = "/frontend/public/html/postWall.html"
-    } 
+    }
 
     let infoUserId = json_object.userId
     let infoUserToken = json_object.token
