@@ -27,8 +27,6 @@ module.exports = (req, res, next) => {
     const userId = decodedToken.userId;
 
     const admin = decodedToken.adminoupas
-    console.log('admin:')
-    console.log(admin)
 
     // Si la demande contient un ID user, compare à celui extrait du token:
     if (req.body.userId && req.body.userId !== userId) {
