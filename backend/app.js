@@ -16,13 +16,10 @@ const express = require('express')
 const helmet = require("helmet");
 
 // Package body-parser:
-const bodyParser = require('body-parser') // Convertit le corp de la requéte en json en objet Js
+const bodyParser = require('body-parser')
 
 // Mysql:
 const connectDB = require('./config/connexion')
-
-// Route Auth:
-//const authRoute = require('./routes/userRoute')
 
 // Route User:
 const userRoute = require('./routes/userRoute')
@@ -43,7 +40,7 @@ app.use(helmet());
 // Ajoute des headers pour permettre l'accées à l'api:
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*') // accés depuis localhost ou si en ligne, mettre l'ip du serveur
+  res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization'
@@ -60,17 +57,16 @@ app.use((req, res, next) => {
 // Appelée à chaque requête envoyée au serveur:
 
 // Body-parser,défini la fonction json, comme middleware global pour l'application:
-app.use(bodyParser.json()) // convertit le corp de la requéte en json en objet Javascript
+app.use(bodyParser.json())
 app.use(
   bodyParser.urlencoded({
     extended: true,
   })
-) // force le parse dans les objet inclus dans d'autre
+)
 
 
 // Les routes:
-// Authentification:
-//app.use('/api/auth', authRoute);
+
 // User:
 app.use('/api/users', userRoute);
 // Post:

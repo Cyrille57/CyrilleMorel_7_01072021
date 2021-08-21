@@ -162,7 +162,7 @@ exports.deleteComment = (req, res) => {
 
 // Récupére via l'id:
 exports.getOneComment = (req, res) => {
-console.log(req.params)
+  console.log(req.params)
   Comment.findOne({
       where: {
         id: req.params.id,
@@ -192,12 +192,14 @@ console.log(req.params)
 exports.getAllComments = (req, res) => {
 
   Comment.findAll({
-    where: {
-      postId: req.params.id
-    },
-    include:[{ all: true, nested: true }]
-    ,
-  })
+      where: {
+        postId: req.params.id
+      },
+      include: [{
+        all: true,
+        nested: true
+      }],
+    })
     .then((comment) => {
       res.status(200).json(comment)
     })
@@ -209,28 +211,3 @@ exports.getAllComments = (req, res) => {
       })
     })
 }
-/*
-// Récupére tous les commentaires par rapport à l'id du post:
-exports.getAllCommentforOnePost = (req, res) => {
-
-  Post.findOne({
-      where: {
-        id: req.params.id,
-      },
-    })
-    .then((post) => {
-      Comment.findAll()
-        .then((comment) => {
-          res.status(200).json(comment)
-        })
-        .catch((error) => {
-          res.status(400).json({
-            message: 'Désolés, les commentaires n\'ont pas pu être chargés',
-            error: error
-          })
-        })
-
-    })
-
-}
-*/

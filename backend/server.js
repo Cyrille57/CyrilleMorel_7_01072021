@@ -16,7 +16,10 @@ const http = require('http')
 const app = require('./app')
 
 // Sequelize:
-const { db, dbConnect } = require('./config/connexion')
+const {
+  db,
+  dbConnect
+} = require('./config/connexion')
 
 // Se connect a mysql:
 dbConnect(db)

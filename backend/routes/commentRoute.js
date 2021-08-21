@@ -37,9 +37,6 @@ router.get('/:id', commentCtrl.getOneComment)
 // Récupére tout:
 router.get('/post/:id', commentCtrl.getAllComments)
 
-// Récupére les comment par rapport au post:
-//router.get('/:id', commentCtrl.getAllCommentforOnePost)
-
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Exportation:
 module.exports = router

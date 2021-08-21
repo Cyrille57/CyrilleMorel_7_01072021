@@ -2,6 +2,7 @@
 //////////////////// Fonction de base: ////////////////////
 ///////////////////////////////////////////////////////////
 
+// NETTOYER
 //////////////////////////////////////////////////////////
 // Fonction qui crées les balises:
 function createTag(tag) {
@@ -24,18 +25,9 @@ function showPassword() {
   const password = document.getElementById('inputPassword');
 
   if (password.type === 'password') {
-    //console.log('INFOS SHOWPASSWORD IF')
-    //console.log(password.type)
     password.type = "text";
-  }
-  else {
-    //console.log('INFOS SHOWPASSWORD ELSE')
-    //console.log(password.type)
-  password.type = "password";
+  } else {
+    password.type = "password";
   }
 
 }
-
-
-//}
-

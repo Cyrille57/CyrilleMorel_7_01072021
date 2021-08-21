@@ -2,7 +2,7 @@
 // PostWall.js: ///////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 
-
+// NETTOYER
 ///////////////////////////////////////////////////////////
 // Connexion et récupération: valide
 
@@ -22,11 +22,13 @@ console.log(idUserConnect)
 
 // Récupére le token:
 var tokenConnect = localStorage.getItem('infoUserToken')
+console.log('Admin.js token:')
 console.log(tokenConnect)
 
 // Récupére le role admin:
 
 var admin = localStorage.getItem('infoAdmin')
+console.log('Admin.js admin:')
 console.log(admin)
 
 
@@ -42,8 +44,6 @@ async function connectPost(urlPost) {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
 
       var post = JSON.parse(this.responseText)
-      //console.log('postWall l35 post:')
-      //console.log(post)
 
       post.reverse()
 
@@ -52,11 +52,8 @@ async function connectPost(urlPost) {
       deletePost(post)
       displayUsername(post)
 
-
       for (var i = 0; i < post.length; i++) {
         var userIdPost = post[i].userId
-        //console.log('postWall l44 userIdPost:')
-        console.log(userIdPost)
       }
 
       sessionStorage.setItem("userIdPost", userIdPost)
@@ -81,7 +78,6 @@ function displayNavBar() {
   //Selectionne l'id parent:
   // header:
   let header = document.getElementById('header')
-  console.log(header)
 
   // frame de la navbar:
   let frameNavBar = createTag('nav')
@@ -101,7 +97,6 @@ function displayNavBar() {
 
   // lien du lmogo:
   let linkLogo = createTag('a')
-  //addClass(linkLogo, [''])
   linkLogo.setAttribute('href', '../html/postWall.html')
 
   // image du logo:
@@ -182,7 +177,6 @@ function displayNavBar() {
   linkViewProfil.appendChild(iconeViewProfil)
 
 
-
   //---------------------------------------------------------
   // Logout:
 
@@ -192,7 +186,6 @@ function displayNavBar() {
 
   // lien de logout:
   let linkLogout = createTag('a')
-  //linkLogout.setAttribute('href', '../../index.html')
   linkLogout.setAttribute('id', 'logOut')
 
   // icone logOut:
@@ -209,7 +202,6 @@ function displayNavBar() {
 
   // Sélectionne l'icone:
   let getLinkLogout = document.getElementById('logOut')
-  console.log(getLinkLogout)
 
   // Ecoute le lien:
   getLinkLogout.addEventListener('click', (event) => {
@@ -227,7 +219,7 @@ displayNavBar()
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Affiche l'input et envoie les posts: OK
+// Affiche l'input et envoie les posts:
 
 
 function displayFormPost() {
@@ -236,7 +228,7 @@ function displayFormPost() {
 
   //Selectionne l'id parent:
   let main = document.querySelector('main')
-  console.log(main)
+
   // Container:
   let divContainer = createTag('div') //
   addClass(divContainer, ['container'])
@@ -353,8 +345,8 @@ function displayFormPost() {
     };
 
     fetch(urlSendPost, myInit)
-      .then(res => res.text()) // or res.json()
-    .then(res => window.location.reload())
+      .then(res => res.text())
+      .then(res => window.location.reload())
 
   })
 
@@ -365,7 +357,7 @@ displayFormPost()
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Affiche tous les posts: OK
+// Affiche tous les posts:
 
 
 function displayAllPosts(post) {
@@ -453,9 +445,6 @@ function displayAllPosts(post) {
     iconDeletePost.setAttribute('title', 'Supprimer')
     iconDeletePost.setAttribute('data-idDeletePost', post[i].id)
 
-    // Récupére l'id du post a supprimer:
-    //deletePost(iconDeletePost)
-
     // Injecte dans le html:
     divDisplayPost.appendChild(divPlaceIcon)
     divPlaceIcon.appendChild(iconModifyPost)
@@ -490,8 +479,6 @@ function displayAllPosts(post) {
     addClass(divFrameButton, ['display-frameCard__option'])
     divFrameButton.setAttribute('id', 'frameOption_' + post[i].id)
 
-    modifyPost(divReadPost, divDisplayPost, iconModifyPost, getIdModify, divFrameButton)
-
     // Lien bouton voir commentaires:
     let linkView = createTag('a')
     addClass(linkView, ['button'])
@@ -517,8 +504,6 @@ function displayAllPosts(post) {
     linkEdit.setAttribute('data-editComment', post[i].id)
     linkEdit.innerHTML = 'Comment'
 
-    //createComment(post, divReadPost, btnEditComment, divDisplayPost, divFrameButton)
-
     // Icone dans le bouton edit:
     let iconeEditComment = createTag('i')
     addClass(iconeEditComment, ['far', 'fa-edit'])
@@ -534,54 +519,6 @@ function displayAllPosts(post) {
     divFrameButton.appendChild(linkEdit)
     linkEdit.appendChild(iconeEditComment)
 
-    /*
-    //---------------------------------------------------------
-    // Affiche les commentaires:
-    // Cadre affichage du commentaires:
-    let divFrameReadComment = createTag('div')
-    addClass(divFrameReadComment, ['display-frameCard__readComment'])
-    // Affichage du comment:
-    let pComment = createTag('p')
-    // Injecte dans le html:
-    divReadPost.appendChild(divFrameReadComment)
-    divFrameReadComment.appendChild(pComment)
-    //---------------------------------------------------------
-    // Emplacement des boutons:
-    // Cadre des boutons:
-    let divFrameButtonComment = createTag('div')
-    addClass(divFrameButtonComment, ['display-frameCard__icon-Modify-Delete-Comment'])
-    // Icon modify comment:
-    let iconModifyComment = createTag('i')
-    addClass(iconModifyComment, ['fas', 'fa-reply'])
-    iconModifyComment.setAttribute('data-idModifyComment', post[i].id)
-    iconModifyComment.setAttribute('data-bs-toggle', 'tooltip')
-    iconModifyComment.setAttribute('data-bs-placement', 'right')
-    iconModifyComment.setAttribute('title', 'Modifier')
-    // Icon delete comment:
-    let iconDeleteComment = createTag('i')
-    addClass(iconDeleteComment, ['fas', 'fa-times-circle'])
-    iconDeleteComment.setAttribute('data-idDeleteComment', post[i].id)
-    iconDeleteComment.setAttribute('data-bs-toggle', 'tooltip')
-    iconDeleteComment.setAttribute('data-bs-placement', 'right')
-    iconDeleteComment.setAttribute('title', 'Supprimer')
-    // Injecte dans le html:
-    divFrameReadComment.appendChild(divFrameButtonComment)
-    divFrameButtonComment.appendChild(iconModifyComment)
-    divFrameButtonComment.appendChild(iconDeleteComment)
-    //---------------------------------------------------------
-    // Emplacement des boutons:
-    // Cadre pour username et date:
-    let divFrameInfoComment = createTag('div')
-    addClass(divFrameInfoComment, ['display-frameCard__infoComment'])
-    // Username du comment:
-    let usernameComment = createTag('h2')
-    // Date du comment:
-    let dateComment = createTag('p')
-    // Injecte dans le html:
-    divFrameReadComment.appendChild(divFrameInfoComment)
-    divFrameInfoComment.appendChild(usernameComment)
-    divFrameInfoComment.appendChild(dateComment)
-    */
   }
 }
 
@@ -589,21 +526,18 @@ function displayAllPosts(post) {
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Affiche le username du post: OK
+// Affiche le username du post:
 
 
 function displayUsername(post) {
-  //console.log(post)
 
   for (let i = 0; i < post.length; i++) {
 
     //Sélectionne le h2 du comment correspondant:
     let hUsername = document.getElementById('username_' + post[i].id)
-    //console.log(hUsername)
 
     // Récupe l'userId et l'ajoute a l'url des user:
     let findUrlUser = 'http://localhost:3000/api/users/' + post[i].userId
-    //console.log(findUrlUser)
 
     fetch(findUrlUser)
       .then(response => response.json())
@@ -622,7 +556,7 @@ displayUsername()
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Fonction modifie le post: --
+// Fonction modifie le post:
 
 
 function modifyPost(post) {
@@ -631,18 +565,15 @@ function modifyPost(post) {
 
     // Sélectionne l'icone modify du post correspondant:
     let iconmodifyPost = document.getElementById('modifyPost_' + post[i].id)
-    console.log(iconmodifyPost)
 
     iconmodifyPost.addEventListener('click', (event) => {
       event.preventDefault();
-      console.log(iconmodifyPost)
 
       //---------------------------------------------------------
       // Autorisation:
 
       // Sélectionne l'auteur du post:
       let getIdAuthor = post[i].userId
-      console.log(getIdAuthor)
 
       // Si auteur autorisé sinon non:
       if (idUserConnect != getIdAuthor) {
@@ -654,20 +585,15 @@ function modifyPost(post) {
 
         // le post:
         let displayPost = document.getElementById('displayPost_' + post[i].id)
-        console.log(displayPost)
 
         // info date:
         let pDate = document.getElementById('pDate_' + post[i].id)
-        console.log(pDate)
 
         let readComment = document.getElementById('divReadPost_' + post[i].id)
-        console.log(readComment)
 
         let frameOption = document.getElementById('frameOption_' + post[i].id)
-        console.log(frameOption)
 
         let postAndComment = document.getElementById('postAndComment_' + post[i].id)
-        console.log(postAndComment)
 
         // Récuoere l'id du post a modifier:
         const getIdModify = ('data-idModifyPost', post[i].id)
@@ -684,7 +610,6 @@ function modifyPost(post) {
         let frameTextereaModifyComment = createTag('div')
         addClass(frameTextereaModifyComment, ['frameTextereaModifyPost', 'input-field'])
         frameTextereaModifyComment.setAttribute('id', 'frameModifyPost')
-        //returnModifyComment(frameTextereaModifyComment)
 
         let textareaModyfyPost = createTag('textarea')
         addClass(textareaModyfyPost, ['form-control', 'input-lg', 'p-text-area', 'shadow', 'rounded'])
@@ -702,7 +627,6 @@ function modifyPost(post) {
         let divBtnSendPostModify = createTag('a')
         addClass(divBtnSendPostModify, ['button', 'shadow', 'rounded'])
         divBtnSendPostModify.setAttribute('id', 'btnSendPostModify')
-        //divBtnSendPostModify.setAttribute('type', 'button')
         divBtnSendPostModify.innerHTML = 'Mettre à jour'
 
         // Icone dans le bouton vue:
@@ -717,12 +641,9 @@ function modifyPost(post) {
 
           // Recupere l'id du post:
           let getModify = document.getElementById('postAndComment_' + getIdModify)
-          console.log('ModifyPost l512 getModify :')
-          console.log(getModify)
+
           // Ajoute a l'url l'id du post:
           const url = "http://localhost:3000/api/posts/" + getIdModify
-          console.log('ModifyPost l515 url:')
-          console.log(url)
 
           //---------------------------------------------------------
           // Récupére la modification du post:
@@ -736,7 +657,6 @@ function modifyPost(post) {
                 userId: idUserConnect,
                 content: textareaModyfyPost.value
               }
-              console.log(formData)
               return formData
             }
           }
@@ -787,8 +707,6 @@ modifyPost()
 
 function returnModifyPost(frameTextereaModifyPost) {
 
-  console.log(frameTextereaModifyPost)
-
   let btnReturnReadPost = createTag('button')
   addClass(btnReturnReadPost, ['btn--sendPostModify', 'shadow', 'shadow', 'rounded', 'my-3'])
   btnReturnReadPost.setAttribute('id', 'btnReturnReadPost')
@@ -806,7 +724,7 @@ function returnModifyPost(frameTextereaModifyPost) {
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Delete Post: OK
+// Delete Post:
 
 
 function deletePost(post) {
@@ -815,33 +733,28 @@ function deletePost(post) {
 
     // Sélectionne l'icone delete du post correspondant:
     let getDelete = document.getElementById('deleteComment_' + post[i].id)
-    //console.log(getDelete)
 
     // Ecoute l'icone delete:
     getDelete.addEventListener('click', (event) => {
-      //console.log(post)
+
       event.preventDefault();
 
       // Cible l'icone du comment:
       let getIdDelete = event.target.getAttribute('data-idDeletePost')
-      //console.log(getIdDelete)
 
       // Sélectionne l'id du post:
       let getIdPost = document.getElementById('postAndComment_' + post[i].id)
-      //console.log(getIdPost)
 
       //---------------------------------------------------------
       // Autorisation:
 
       // Sélectionne l'auteur du post:
       let getIdAuthor = post[i].userId
-      //console.log(getIdAuthor)
 
       // Si auteur autorisé sinon non:
       if (idUserConnect != getIdAuthor) {
-        //console.log('désolé')
+
       } else {
-        //console.log('ok')
 
         //---------------------------------------------------------
         // Supprime le post coté front:
@@ -855,8 +768,6 @@ function deletePost(post) {
 
           for (var i = 0; i < post.length; i++) {
             const url = "http://localhost:3000/api/posts/" + getIdDelete
-            //console.log('postWall.js delePost l640 url a suppr:')
-            //console.log(url)
             return url
           }
         }
@@ -869,8 +780,6 @@ function deletePost(post) {
           },
           method: "DELETE"
         };
-        //console.log('postWall.js delePost l653 myInit:')
-        //console.log(myInit)
 
         // Envoie la requête cioté back:
         fetch(getUrlDelete(), myInit)

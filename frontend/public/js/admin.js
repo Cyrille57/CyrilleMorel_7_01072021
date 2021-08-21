@@ -3,11 +3,9 @@
 ///////////////////////////////////////////////////////////
 
 
-
-
-
+//NETTOYER
 ///////////////////////////////////////////////////////////
-// Connexion et récupération: valide
+// Connexion et récupération:
 
 
 //---------------------------------------------------------
@@ -19,19 +17,19 @@
 
 // récupére l'id de l'user:
 var idUserConnect = parseInt(localStorage.getItem('infoUserId'))
-console.log('idUserConnect:')
+console.log('Admin.js idUserConnect:')
 console.log(idUserConnect)
 
 // Récupére le token:
 var tokenConnect = localStorage.getItem('infoUserToken')
+console.log('Admin.js token:')
 console.log(tokenConnect)
 
 // Récupére le role admin:
 
 var admin = localStorage.getItem('infoAdmin')
+console.log('Admin.js admin:')
 console.log(admin)
-
-
 
 // Url pour recupérer les users:
 const urlUser = 'http://localhost:3000/api/users'
@@ -43,9 +41,7 @@ async function connectUser(urlUser) {
     xhr.onreadystatechange = function () {
         if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
 
-
             var getUser = JSON.parse(this.responseText)
-            //console.log(getUser)
 
             displayAll(getUser)
             displayNavBar(getUser)
@@ -72,7 +68,6 @@ function displayNavBar(getUser) {
     //Selectionne l'id parent:
     // header:
     let header = document.getElementById('header')
-    console.log(header)
 
     // frame de la navbar:
     let frameNavBar = createTag('nav')
@@ -92,7 +87,6 @@ function displayNavBar(getUser) {
 
     // lien du lmogo:
     let linkLogo = createTag('a')
-    //addClass(linkLogo, [''])
     linkLogo.setAttribute('href', '../html/postWall.html')
 
     // image du logo:
@@ -143,7 +137,6 @@ function displayNavBar(getUser) {
 
     // lien de logout:
     let linkLogout = createTag('a')
-    //linkLogout.setAttribute('href', '../../index.html')
     linkLogout.setAttribute('id', 'logOut')
 
     // icone logOut:
@@ -160,11 +153,9 @@ function displayNavBar(getUser) {
 
     // Sélectionne l'icone:
     let getLinkLogout = document.getElementById('logOut')
-    console.log(getLinkLogout)
 
     // Ecoute le lien:
     getLinkLogout.addEventListener('click', (event) => {
-
         localStorage.removeItem('infoUserToken')
         localStorage.removeItem('infoUserId')
         location.href = '../../index.html'
@@ -179,10 +170,9 @@ function displayNavBar(getUser) {
 // Affiche les users
 
 function displayAll(getUser) {
-    //console.log(getUser)
+
     //Selectionne l'id parent:
     let main = document.querySelector('main')
-    console.log(main)
 
     //---------------------------------------------------------
     // Création des éléments de base enfants:
@@ -289,7 +279,6 @@ function displayAll(getUser) {
         let trBody = createTag('tr')
         addClass(trBody, ['text-center', 'table-striped', 'align-middle', 'text-white'])
         trBody.setAttribute("id", "trRowUser_" + getUser[i].id)
-        console.log(trBody)
 
         // Entete de la ligne:
         let thRow = createTag('th')
@@ -397,11 +386,9 @@ function displayAll(getUser) {
 
             // Cible l'id de vue utilisé:
             let idView = parseInt(event.target.getAttribute('data-actionvue'))
-            console.log(idView)
 
             // Sélectionne la ligne de l'user:
             let getRowUser = document.getElementById("trRowUser_" + idView)
-            console.log(getRowUser)
 
             //---------------------------------------------------------
             // Cache le tableau pour afficher la card user:
@@ -476,7 +463,6 @@ function displayAll(getUser) {
             // Bio:
             let divBio = createTag('p')
             addClass(divBio, ['divBio', 'text-center'])
-            console.log(getBio)
             if (getBio === null) {
                 divBio.innerHTML = "Bio: </br>" + "Cette personne n'a pas rempli sa biographie."
             } else {
@@ -518,15 +504,12 @@ function displayAll(getUser) {
         actionEdit.addEventListener('click', (event) => {
 
             event.preventDefault();
-            console.log(event)
 
             // Cible l'id de vue utilisé:
             let idEdit = parseInt(event.target.getAttribute('data-actionedit'))
-            console.log(idEdit)
 
             // Sélectionne la ligne de l'user:
             let getRowUser = document.getElementById("trRowUser_" + idEdit)
-            console.log(getRowUser)
 
             //---------------------------------------------------------
             // Cache le tableau pour afficher la card user:
@@ -708,7 +691,6 @@ function displayAll(getUser) {
 
             // Rôles:
             const getRole = getUser.find(user => user.id === idEdit).admin
-            console.log(getRole)
 
             if (getRole == true) {
                 checkInput2.checked = true
@@ -787,8 +769,6 @@ function displayAll(getUser) {
                             email: inputMail.value,
                             admin: yesOrNotThatIsTheQuestion()
                         }
-                        //console.log(getUser)
-                        //console.log(formData)
                         return formData
 
                     }
@@ -811,7 +791,7 @@ function displayAll(getUser) {
 
                 fetch(urlUpdateUser, myInit)
                     .then(response => response.json())
-                    //.then(res => document.location.reload())
+                    .then(res => document.location.reload())
                     .catch(err => console.log(err))
             })
 
@@ -822,83 +802,10 @@ function displayAll(getUser) {
                 document.location.reload()
             })
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //---------------------------------------------------------
-            // Préparation de l'url pour la modification du comment:
-            /*
-                // Cible l'id du delete utilisé:
-                let idEdit = event.target.getAttribute('data-actionEdit')
-                console.log(idEdit)
-
-                // Selectionne l'id  de la ligne
-                //let getDelete = document.getElementById('trBody_' + idEdit)
-
-                // vas sur la page profil correspondant:
-                const url = 'http://localhost:3000/api/users/' +
-                    idEdit
-                console.log(url)
-            */
-            //---------------------------------------------------------
-            // Récupére la modification du comment:
-            /*
-                function modifyFormData() {
-                    /*
-                    for (var i = 0; i < getUser.length; i++) {
-
-                        let formData = {
-                            id: getIdModify,
-                            username: textareaModyfyPost.value
-                            email: ,
-                            password: ,
-                            bio: ,
-                            admin:
-                        }
-                        console.log(formData)
-                        return formData
-                    }
-
-                }
-            */
-            //---------------------------------------------------------
-            // Envoie la modification du post:
-            /*
-                var myInit = {
-                    method: "PUT",
-                    headers: new Headers({
-                        "Content-Type": "application/json;charset=UTF-8"
-                    }),
-                    body: JSON.stringify(getUser),
-                    mode: 'cors',
-                    cache: 'default'
-                };
-
-                    // Fetch à laquelle on donne en paramétres l'url et options:
-                    fetch(url, myInit)
-                    .then(response => response.json())
-
-                    // Recharge la page:
-                    //location.reload()
-            */
         })
 
 
-        //Delete: Valide
+        //Delete:
         actionDelete.addEventListener('click', (event) => {
 
             event.preventDefault();
@@ -908,11 +815,9 @@ function displayAll(getUser) {
 
             // Cible l'id du delete utilisé:
             let idDelete = event.target.getAttribute('data-actionDelete')
-            console.log(idDelete)
 
             // Cible l'id de la ligne correspondant:
             let getDelete = document.getElementById('trRowUser_' + idDelete)
-            console.log(getDelete)
 
             //---------------------------------------------------------
             // Supprime le post coté front:

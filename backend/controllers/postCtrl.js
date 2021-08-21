@@ -14,8 +14,6 @@ const Post = require('../models/post')
 const User = require('../models/user')
 
 
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////
 // CRUD:
 
@@ -80,17 +78,17 @@ exports.modifyPost = (req, res) => {
   // Vakidation des saisies utilisateur:
   const schemaValidator = {
     content: {
-      type:     "string",
+      type: "string",
       optional: false,
-      min:      2,
-      max:      50
+      min: 2,
+      max: 50
     }
   }
 
   const v = new Validator();
   const validationResponse = v.validate(postObject, schemaValidator)
 
-  if(validationResponse !== true){
+  if (validationResponse !== true) {
     return res.status(400).json({
       message: "Validation échouée",
       errors: validationResponse
@@ -100,7 +98,7 @@ exports.modifyPost = (req, res) => {
   Post.update({
       _id: req.params.id,
       ...postObject
-    },{
+    }, {
       where: {
         id: req.params.id,
       },
@@ -132,8 +130,10 @@ exports.deletePost = (req, res) => {
       where: {
         id: req.params.id,
       },
-    include:[{ all: true, nested: true }]
-    ,
+      include: [{
+        all: true,
+        nested: true
+      }],
     })
     .then((post) => {
 

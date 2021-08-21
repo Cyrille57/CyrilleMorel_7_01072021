@@ -15,7 +15,7 @@ const MIME_TYPES = {
 
 // Storage , à passer à multer comme configuration, qui contient la logique nécessaire pour indiquer à multer où enregistrer les fichiers entrant:
 const storage = multer.diskStorage({
-    // destination indique à multer d'enregistrer les fichiers dans le dossier images:
+  // destination indique à multer d'enregistrer les fichiers dans le dossier images:
   destination: (req, file, callback) => {
     callback(null, 'images');
   },
@@ -29,4 +29,6 @@ const storage = multer.diskStorage({
 });
 
 // Exportation de l'élément multer entièrement configuré, on passe la constante storage en lui indiquand de gérers uniquement les téléchargements de fichiers image:
-module.exports = multer({storage: storage}).single('image');
+module.exports = multer({
+  storage: storage
+}).single('image');

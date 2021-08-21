@@ -2,7 +2,7 @@
 // editProfil.js: ////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 
-
+// NETTOYER
 ///////////////////////////////////////////////////////////
 // Récuére l'id et la concaténe avec l'ulr comment;
 
@@ -16,51 +16,40 @@ const getIdEditProfilUrl = window.location.search
 
 // Analyser les paramètres de la chaîne de requête:
 const getUrlParams = new URLSearchParams(getIdEditProfilUrl);
-//console.log(getUrlParams)
 
 // Recupére l'id du user:
 const getIdUser = parseInt(getUrlParams.get('id'))
-console.log('id du user:')
-console.log(getIdUser)
 
 //---------------------------------------------------------
 // Url de comments:
 
 const urlUser = "http://localhost:3000/api/users/" + getIdUser;
-console.log(urlUser)
 
 //---------------------------------------------------------
 //token:
 
 // récupére l'id de l'user:
 var idUserConnect = parseInt(localStorage.getItem('infoUserId'))
-console.log('idUserConnect:')
-console.log(idUserConnect)
 
 // Récupére le token:
 var tokenConnect = localStorage.getItem('infoUserToken')
-//console.log(tokenConnect)
 
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Connexion: OK
+// Connexion:
 
 
 // Fonction qui récupére le comments:
 
 async function connectUser(urlUser) {
 
-  //console.log(urlComment)
   let xhr = new XMLHttpRequest()
-  //console.log(xhr)
 
   xhr.onreadystatechange = function () {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
 
       var user = JSON.parse(this.responseText)
-      //console.log('comment l35 comment:')
-      console.log(user)
 
       displayNavBar(user)
       displayEditProfil(user)
@@ -86,7 +75,6 @@ function displayNavBar(user) {
   //Selectionne l'id parent:
   // header:
   let header = document.getElementById('header')
-  console.log(header)
 
   // frame de la navbar:
   let frameNavBar = createTag('nav')
@@ -106,7 +94,6 @@ function displayNavBar(user) {
 
   // lien du lmogo:
   let linkLogo = createTag('a')
-  //addClass(linkLogo, [''])
   linkLogo.setAttribute('href', '../html/postWall.html')
 
   // image du logo:
@@ -215,14 +202,11 @@ function displayEditProfil(user) {
 
   let frameCardUser = createTag('div')
   addClass(frameCardUser, ['frameCardUser'])
-  //postAndComment.setAttribute('id', 'postAndComment_' + post[i].id)
 
   // Frame de la card:
   let divDisplayUser = createTag('div')
   addClass(divDisplayUser, ['display-frameCard__displayUser', 'shadow', 'rounded'])
   divDisplayUser.setAttribute('id', 'divDisplayUser')
-  //divDisplayUser.setAttribute('id', 'divDisplayUser_' + post[i].id)
-  //divDisplayUser.setAttribute('data-divDisplayUser', post[i].id)
 
   // Injecte dans le html:
   divCol.appendChild(frameCardUser)
@@ -495,19 +479,16 @@ function sendModifyProfil(user) {
 
   // Sélectionne l'icone modify du post correspondant:
   let iconmodifyComment = document.getElementById('linkValidateModifyUser_' + user.id)
-  console.log(iconmodifyComment)
 
   iconmodifyComment.addEventListener('click', (event) => {
-    event.preventDefault();
-    console.log(iconmodifyComment)
 
+    event.preventDefault();
 
     //---------------------------------------------------------
     // Autorisation:
 
     // Sélectionne l'auteur du post:
     let getIdAuthor = user.id
-    console.log(getIdAuthor)
 
     // Si auteur autorisé sinon non:
     if (idUserConnect != getIdAuthor) {
@@ -520,48 +501,37 @@ function sendModifyProfil(user) {
 
       // Input username:
       let inputPseudo = document.getElementById('inputPseudo_' + user.id)
-      console.log(inputPseudo)
 
       // Input email:
       let inputMail = document.getElementById('inputMail_' + user.id)
-      console.log(inputMail)
 
       //Input password:
       let inputPassword = document.getElementById('inputPassword_' + user.id)
-      console.log(inputPassword)
 
       // Input confirm password:
       let inputConfirmPassword = document.getElementById('inputConfirmPassword_' + user.id)
-      console.log(inputConfirmPassword)
 
       // Input bio:
       let inputBio = document.getElementById('inputBio_' + user.id)
-      console.log(inputBio)
 
       // Récuoere l'id du post a modifier:
       const getIdModify = ('data-idValidateModifyUser', user.id)
-      console.log(getIdModify)
 
       //---------------------------------------------------------
       // Préparation de l'url pour la modification du comment:
 
       // Recupere l'id du post:
       let getModify = document.getElementById('formUpdateUser_' + user.id)
-      console.log('ModifyPost l512 getModify :')
-      console.log(getModify)
 
       // Ajoute a l'url l'id du post:
       const url = "http://localhost:3000/api/users/user/" + getIdModify
-      console.log('ModifyPost l515 url:')
-      console.log(url)
 
       //---------------------------------------------------------
       // Récupére la modification du post:
 
       if (inputPassword.value != inputConfirmPassword.value) {
-        console.log('Désolé les mdp ne corresponde pas')
+        console.log('Désolé les mdp ne correspondent pas')
       } else {
-        console.log('Les mdp corresponde !')
         let formData = {
           id: idUserConnect,
           username: inputPseudo.value,
@@ -569,7 +539,6 @@ function sendModifyProfil(user) {
           password: inputPassword.value,
           bio: inputBio.value
         }
-        console.log(formData)
 
         //---------------------------------------------------------
         // Envoie la modification du post:
@@ -587,24 +556,11 @@ function sendModifyProfil(user) {
 
         fetch(url, myInit)
           .then(response => response.json())
-          //.then(res => document.location.reload())
+          .then(res => document.location.reload())
           .catch(err => console.log(err))
       }
 
-
-
-
-
-
-
-
-
-
     }
-
-
-
-
 
   })
 

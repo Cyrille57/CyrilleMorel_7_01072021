@@ -22,7 +22,9 @@ module.exports = {
         // Validate email in use or not
         .custom(async (email) => {
             const existingUser =
-                await repo.getOneBy({ email })
+                await repo.getOneBy({
+                    email
+                })
 
             if (existingUser) {
                 throw new Error('Email already in use')

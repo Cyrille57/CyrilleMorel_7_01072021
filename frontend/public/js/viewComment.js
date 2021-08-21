@@ -2,7 +2,7 @@
 // viewComment.js: ////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 
-
+// NETTOYER
 ///////////////////////////////////////////////////////////
 // Récuére l'id et la concaténe avec l'ulr comment;
 
@@ -16,12 +16,9 @@ const getIdEditCommentOfPostUrl = window.location.search
 
 // Analyser les paramètres de la chaîne de requête:
 const getUrlParams = new URLSearchParams(getIdEditCommentOfPostUrl);
-//console.log(getUrlParams)
 
 // Recupére l'id du post:
 const getIdPost = parseInt(getUrlParams.get('id'))
-console.log('id du post:')
-console.log(getIdPost)
 
 //---------------------------------------------------------
 // Url de comments:
@@ -33,33 +30,25 @@ const urlComment = "http://localhost:3000/api/comments/post/" + getIdPost;
 
 // récupére l'id de l'user:
 var idUserConnect = parseInt(localStorage.getItem('infoUserId'))
-console.log('idUserConnect:')
-console.log(idUserConnect)
 
 // Récupére le token:
 var tokenConnect = localStorage.getItem('infoUserToken')
-//console.log(tokenConnect)
 
 ///////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////
-// Connexion: OK
-
+// Connexion:
 
 // Fonction qui récupére le comments:
 
 async function connectComment(urlComment) {
 
-  //console.log(urlComment)
   let xhr = new XMLHttpRequest()
-  //console.log(xhr)
 
   xhr.onreadystatechange = function () {
     if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
 
       var comment = JSON.parse(this.responseText)
-      //console.log('comment l35 comment:')
-      //console.log(comment)
 
       comment.reverse()
 
@@ -88,7 +77,6 @@ function displayNavBar(comment) {
   //Selectionne l'id parent:
   // header:
   let header = document.getElementById('header')
-  console.log(header)
 
   // frame de la navbar:
   let frameNavBar = createTag('nav')
@@ -108,7 +96,6 @@ function displayNavBar(comment) {
 
   // lien du lmogo:
   let linkLogo = createTag('a')
-  //addClass(linkLogo, [''])
   linkLogo.setAttribute('href', '../html/postWall.html')
 
   // image du logo:
@@ -148,18 +135,12 @@ function displayNavBar(comment) {
   let iconeViewProfil = createTag('i')
   addClass(iconeViewProfil, ['fas', 'fa-user-circle', 'fa', 'postWall-linkProfil__icon'])
 
-  // Injecte dans le html:
-  //ulNav.appendChild(liViewProfil)
-  //liViewProfil.appendChild(linkViewProfil)
-  //linkViewProfil.appendChild(iconeViewProfil)
-
   // li logout:
   let liLogOut = createTag('li')
   addClass(liLogOut, ['postWall-linkDeconnect'])
 
   // lien de logout:
   let linkLogout = createTag('a')
-  //linkLogout.setAttribute('href', '../../index.html')
   linkLogout.setAttribute('id', 'logOut')
 
   // icone logOut:
@@ -176,7 +157,6 @@ function displayNavBar(comment) {
 
   // Sélectionne l'icone:
   let getLinkLogout = document.getElementById('logOut')
-  console.log(getLinkLogout)
 
   // Ecoute le lien:
   getLinkLogout.addEventListener('click', (event) => {
@@ -211,7 +191,6 @@ function displayAllCommentOfPost(comment) {
 
   // Injecte dans le html:
   main.appendChild(titlePage)
-  //console.log(comment)
   for (let i = 0; i < comment.length; i++) {
 
     //---------------------------------------------------------
@@ -235,8 +214,6 @@ function displayAllCommentOfPost(comment) {
     divContainer.appendChild(divRow)
     divRow.appendChild(divCol)
 
-
-
     //---------------------------------------------------------
     // Cadre de la card qui affiche les posts et comments:
 
@@ -248,10 +225,8 @@ function displayAllCommentOfPost(comment) {
     // Frame de la card:
     let divReadComment = createTag('div') // divReadPost
     addClass(divReadComment, ['display-frameCard__read-post', 'modifyReadComment', 'shadow', 'rounded'])
-    //divReadComment.setAttribute('id', 'divReadPost')
     divReadComment.setAttribute('id', 'divReadPost_' + comment[i].id)
     divReadComment.setAttribute('data-divReadPost', comment[i].id)
-
 
     // Injecte dans le html:
     divCol.appendChild(commentOfPost)
@@ -267,8 +242,7 @@ function displayAllCommentOfPost(comment) {
     //Username:
     let divUsername = createTag('h2')
     divUsername.setAttribute("id", "username_" + comment[i].id)
-    divUsername.setAttribute('data-idUsername', comment[i].userId) //comment[i].id
-    console.log(divUsername)
+    divUsername.setAttribute('data-idUsername', comment[i].userId)
 
     // Cadre du displayPost:
     let divDisplayPost = createTag('div')
@@ -285,17 +259,13 @@ function displayAllCommentOfPost(comment) {
     divReadComment.appendChild(divDisplayPost)
     divDisplayPost.appendChild(divPost)
 
-
-
     //---------------------------------------------------------
     // PLacement de la date du publication du post:
 
     // Cadre de la date:
     let divInfoDate = createTag('div')
     addClass(divInfoDate, ['display-frameCard__infoPost'])
-    //iconModifyPost.setAttribute('id', 'infoDate_' + comment[i].id)
     divInfoDate.setAttribute('data-idInfoDate', comment[i].id)
-
 
     // Convertit la date:
     let convertsDate = new Date(comment[i].createdAt);
@@ -311,7 +281,6 @@ function displayAllCommentOfPost(comment) {
     divReadComment.appendChild(divInfoDate)
     divInfoDate.appendChild(pDate)
 
-
     //---------------------------------------------------------
     // PLacement du bouton retour au waal post;
 
@@ -319,7 +288,6 @@ function displayAllCommentOfPost(comment) {
     addClass(backToPost, ['button-backToPost'])
     backToPost.setAttribute('id', 'btnViewComment')
     backToPost.setAttribute("href", "../html/postWall.html")
-    //backToPost.setAttribute('data-viewComment', post[i].id)
     backToPost.innerHTML = 'Retour aux posts'
 
     // Icone dans le bouton vue:
@@ -341,17 +309,13 @@ function displayAllCommentOfPost(comment) {
 
 function displayUsername(comment) {
 
-  console.log(comment)
-
   for (let i = 0; i < comment.length; i++) {
 
     //Sélectionne le h2 du comment correspondant:
     let hUsername = document.getElementById('username_' + comment[i].id)
-    console.log(hUsername)
 
     // Récupe l'userId et l'ajoute a l'url des user:
     let findUrlUser = 'http://localhost:3000/api/users/' + comment[i].userId
-    console.log(findUrlUser)
 
     fetch(findUrlUser)
       .then(response => response.json())

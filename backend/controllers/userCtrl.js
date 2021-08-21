@@ -84,12 +84,7 @@ exports.signup = (req, res) => {
       message: 'Le mot de passe doit contenir une lettre majuscule, une lettre minuscule, un chiffre, un caractère spécial et au moins 8 caractères'
     })
   }
-  // bio:
-/*  if (!bioRegex.test(bio)) {
-    return res.status(400).json({
-      message: ' Les caractéres spéciaux ne sont pas valides'
-    })
-  }*/
+
 
   // *****************************************************************************************
   // Code inscription:
@@ -197,7 +192,6 @@ exports.login = (req, res) => {
             } else {
 
               res.status(200).json({
-                //data: token,
                 status: '201',
                 userId: user.id,
                 adminoupas: user.admin,
@@ -221,7 +215,6 @@ exports.login = (req, res) => {
     })
 
 }
-
 
 // *****************************************************************************************
 // Crud:
@@ -383,8 +376,7 @@ exports.deleteUser = (req, res) => {
           })
         )
         .catch((error) =>
-          res.status(400).json({
-          })
+          res.status(400).json({})
         )
 
     })

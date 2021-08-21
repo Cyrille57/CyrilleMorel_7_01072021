@@ -12,7 +12,7 @@ const jwt = require('jsonwebtoken');
 
 
 module.exports = (req, res, next) => {
-  
+
   try {
     // Extrait le token du header Authorization de la requête entrante:
     const token = req.headers.authorization.split(' ')[1];
@@ -28,16 +28,16 @@ module.exports = (req, res, next) => {
     console.log('Auth.js userId:')
     console.log(userId)
 
-       // Si la demande contient un ID user, compare à celui extrait du token:
-       if (req.body.userId && req.body.userId !== userId) {
-         throw 'Identifiant utilisateur invalide';
-       } else {
-         req.userid = userId//req.body.userid = userId
-         console.log('Auth.js req.user.id:')
-         console.log(req.userid)
-         // L'user est authentifié:
-         next();
-       }
+    // Si la demande contient un ID user, compare à celui extrait du token:
+    if (req.body.userId && req.body.userId !== userId) {
+      throw 'Identifiant utilisateur invalide';
+    } else {
+      req.userid = userId //req.body.userid = userId
+      console.log('Auth.js req.user.id:')
+      console.log(req.userid)
+      // L'user est authentifié:
+      next();
+    }
 
   } catch (err) {
     res.status(401).json({

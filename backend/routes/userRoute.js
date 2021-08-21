@@ -33,9 +33,6 @@ router.post('/signup', userCtrl.signup)
 // Login:
 router.post('/login', userCtrl.login)
 
-// LogOut:
-//router.get('/logout', userCtrl.logout)
-
 // *****************************************************************************************
 // Crud User:
 
@@ -53,12 +50,6 @@ router.put('/user/:id', auth, userCtrl.modifyOfUserByUser);
 
 // Supprime le user:
 router.delete('/:id', auth, userCtrl.deleteUser);
-
-// Admin:
-//router.get('/', userCtrl.getUserProfil);
-
-// Page 404:
-//router.get('*', userCtrl.notFound )
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 // Exportation:

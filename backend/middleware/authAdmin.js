@@ -13,12 +13,12 @@ const User = require('../models/user');
 
 module.exports = (req, res, next) => {
 
-  console.log( 'NFO REQ.BODY.ADMIN DU AUTHADMIN')
+  console.log('NFO REQ.BODY.ADMIN DU AUTHADMIN')
   console.log(req.body.admin)
 
-  if (req.body.admin !== 'false'){
+  if (req.body.admin !== 'false') {
 
-    console.log( 'NFO REQ.BODY.ADMIN DU AUTHADMIN du if')
+    console.log('NFO REQ.BODY.ADMIN DU AUTHADMIN du if')
     console.log(req.body.admin)
 
     res.status(500)
@@ -26,4 +26,3 @@ module.exports = (req, res, next) => {
   }
   next()
 }
-
