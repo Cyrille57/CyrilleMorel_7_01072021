@@ -18,7 +18,7 @@ function addClass(name, classe) {
 
 //////////////////////////////////////////////////////////
 // affiche le mot de passe:
-/*
+
 function showPassword() {
 
   const password = document.getElementById('inputPassword');
@@ -37,5 +37,5 @@ function showPassword() {
 }
 
 
-}
-*/
+//}
+

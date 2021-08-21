@@ -114,7 +114,7 @@ function displayNavBar(comment) {
   // image du logo:
   let logo = createTag('img')
   addClass(logo, ['postWall-logo-site'])
-  logo.setAttribute('src', '../images/Logo Groupomania/icon-left-font-monochrome-black.png')
+  logo.setAttribute('src', '../images/Logo Groupomania/icon-font-monochrome-white.png')
   logo.setAttribute('width', '35')
   logo.setAttribute('height', '35')
   logo.setAttribute('alt', 'Logo de Groupomania')
@@ -207,7 +207,7 @@ function displayAllCommentOfPost(comment) {
   // Titre de la page:
   let titlePage = createTag('h1')
   addClass(titlePage, ['titlePage', 'text-center'])
-  titlePage.innerHTML = 'Les commentaires du post:'
+  titlePage.innerHTML = 'Les commentaires du post'
 
   // Injecte dans le html:
   main.appendChild(titlePage)

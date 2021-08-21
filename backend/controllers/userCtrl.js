@@ -54,48 +54,43 @@ exports.signup = (req, res) => {
     admin
   } = req.body
 
-  console.log('userCtrl.js back signUp req.body:')
-  console.log(req.body)
-  console.log('userCtrl.js back signUp req.body.admin:')
-  console.log(req.body.admin)
-
-
   // *****************************************************************************************
   // Validation des données:
-  /*
-    // username:
-    if (username.length > 20) {
-      return res.json({
-        status: 'error',
-        message: 'Le nombre de caractére dépasse le nombre requis'
-      })
-    }
-    if (username.length <= 2) {
-      return res.json({
-        status: 'error',
-        message: 'Le nombre de caractére n\'as pas atteint le nombre requis'
-      })
-    }
-    // email:
-    if (!emailRegex.test(email)) {
-      return res.json({
-        status: 'error',
-        message: 'Le mail n\'est pas valide'
-      })
-    }
-    //  password:
-    if (!passwordRegex.test(password)) {
-      return res.json({
-        status: 'error',
-        message: 'Le mot de passe doit contenir une lettre majuscule, une lettre minuscule, un chiffre, un caractère spécial et au moins 8 caractères'
-      })
-    }
-    // bio:
-      if(!bioRegex.test(bio)){
-        return res.status(400).json({
-          message: ' Les caractéres spéciaux ne sont pas valides'
-        })
-      }*/
+
+  // username:
+  if (username.length > 20) {
+    return res.json({
+      status: 'error',
+      message: 'Le nombre de caractére dépasse le nombre requis'
+    })
+  }
+  if (username.length <= 2) {
+    return res.json({
+      status: 'error',
+      message: 'Le nombre de caractére n\'as pas atteint le nombre requis'
+    })
+  }
+  // email:
+  if (!emailRegex.test(email)) {
+    return res.json({
+      status: 'error',
+      message: 'Le mail n\'est pas valide'
+    })
+  }
+  //  password:
+  if (!passwordRegex.test(password)) {
+    return res.json({
+      status: 'error',
+      message: 'Le mot de passe doit contenir une lettre majuscule, une lettre minuscule, un chiffre, un caractère spécial et au moins 8 caractères'
+    })
+  }
+  // bio:
+  if (!bioRegex.test(bio)) {
+    return res.status(400).json({
+      message: ' Les caractéres spéciaux ne sont pas valides'
+    })
+  }
+
   // *****************************************************************************************
   // Code inscription:
   models
@@ -131,7 +126,6 @@ exports.signup = (req, res) => {
               .catch((err) => {
                 console.log(err)
                 res.status(500).json({
-                  err: err,
                   error: "Le pseudo existe déja",
                 })
               })
@@ -140,7 +134,6 @@ exports.signup = (req, res) => {
 
         } else {
           return res.status(409).json({
-            error: error,
             error: 'L\'email existe déjà',
           })
         }
@@ -193,18 +186,8 @@ exports.login = (req, res) => {
         })
       } else {
 
-        console.log('Connexion password:')
-        console.log(password)
-        console.log('Connexion user.password:')
-        console.log(user.password)
-
         bcrypt.compare(password, user.password)
           .then(valid => {
-
-            console.log('Connexion password:')
-            console.log(password)
-            console.log('Connexion user.password:')
-            console.log(user.password)
 
             if (!valid) {
               // Retourne une erreur 401 Unauthorized
@@ -227,7 +210,6 @@ exports.login = (req, res) => {
                   }
                 )
 
-
               })
 
             }
@@ -236,16 +218,9 @@ exports.login = (req, res) => {
 
       }
 
-
-
-
     })
 
 }
-
-exports.logout = (req, res) => [
-
-]
 
 
 // *****************************************************************************************
@@ -297,7 +272,6 @@ exports.modifyUser = (req, res) => {
               console.log('MISE A JOUR ERR:')
               console.log(err)
               res.status(500).json({
-                error: error,
                 error: "Impossible de modifier votre profil",
 
               })
@@ -308,7 +282,6 @@ exports.modifyUser = (req, res) => {
         } else {
           res.status(404).json({
             message: 'Profil introuvable !',
-            error: error,
           })
         }
       })
@@ -316,8 +289,7 @@ exports.modifyUser = (req, res) => {
       console.log('MISE A JOUR ERR2:')
       console.log(error)
       res.status(500).json({
-        message: 'Impossible de vérifier ce profil',
-        error: error,
+        message: 'Impossible de vérifier ce profil'
       })
     })
 
@@ -336,8 +308,6 @@ exports.modifyOfUserByUser = (req, res) => {
     bio
   } = req.body
 
-  console.log(req.body)
-  console.log(req.params)
   // *****************************************************************************************
   // Code modification:
   models
@@ -367,12 +337,8 @@ exports.modifyOfUserByUser = (req, res) => {
                 })
               })
               .catch((err) => {
-                console.log('MISE A JOUR ERR:')
-                console.log(err)
                 res.status(500).json({
-                  error: error,
                   error: "Impossible de modifier votre profil",
-
                 })
               })
 
@@ -380,17 +346,13 @@ exports.modifyOfUserByUser = (req, res) => {
 
         } else {
           res.status(404).json({
-            message: 'Profil introuvable !',
-            error: error,
+            message: 'Profil introuvable !'
           })
         }
       })
     .catch((error) => {
-      console.log('MISE A JOUR ERR2:')
-      console.log(error)
       res.status(500).json({
-        message: 'Impossible de vérifier ce profil',
-        error: error,
+        message: 'Impossible de vérifier ce profil'
       })
     })
 
@@ -403,8 +365,10 @@ exports.deleteUser = (req, res) => {
       where: {
         id: req.params.id,
       },
-    include:[{ all: true, nested: true }]
-    ,
+      include: [{
+        all: true,
+        nested: true
+      }],
     })
     .then((user) => {
 
@@ -420,28 +384,19 @@ exports.deleteUser = (req, res) => {
         )
         .catch((error) =>
           res.status(400).json({
-            error: error,
           })
         )
 
     })
     .catch((error) =>
       res.status(500).json({
-        message: 'Désolé, l\'utilisateur n\'a pas pu être supprimé !',
-        error: error
+        message: 'Désolé, l\'utilisateur n\'a pas pu être supprimé !'
       })
     )
 }
 
 // Récupére via l'id:
 exports.getOneUser = (req, res) => {
-
-  console.log('LOG DE REQ.PARAMS:')
-  console.log(req.params)
-  console.log('LOG DE REQ.BODY:')
-  console.log(req.body)
-
-
 
   models.findOne({
       where: {
@@ -470,11 +425,6 @@ exports.getOneUser = (req, res) => {
 // Récupére tout:
 exports.getAllUsers = (req, res) => {
 
-  console.log('INFOS ADMIN USERCTRL: req-body-admin')
-  console.log(req.body.admin)
-  console.log('REQ.PARAMS.ADMIN')
-  console.log(req.params.admin)
-
   models.findAll(
       ({
         attributes: {
@@ -483,21 +433,11 @@ exports.getAllUsers = (req, res) => {
       })
     )
     .then((user) => {
-      console.log('Récupere USERCTRL le .then:')
-      console.log(req.body.admin)
-
-      /*if (req.body.admin != false){
-        console.log('Récupere USERCTRL tout dans le if:')
-        console.log(req.body.admin)
-        res.status(500)
-        res.send('non autorisé')
-      }*/
       res.status(200).json(user)
     })
     .catch((error) => {
       res.status(400).json({
-        message: 'Désolés, les utilisateurs n\'ont pas pu être chargés',
-        error: error
+        message: 'Désolés, les utilisateurs n\'ont pas pu être chargés'
       })
     })
 }

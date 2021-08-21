@@ -28,14 +28,10 @@ exports.createComment = (req, res) => {
   // Déclarations:
   const comment = {
     userId: req.body.userId,
-    postId: req.body.postId, //24,//req.params.postId,//15,//req.body.postId,
+    postId: req.body.postId,
     content: req.body.content,
   }
 
-  console.log('INFO CREATECOMMENT:')
-  console.log(req.body)
-  console.log(req.body.postid)
-  //console.log(res.locals.userId)
   // *****************************************************************************************
   // Vakidation des saisies utilisateur:
   const schemaValidator = {
@@ -60,7 +56,6 @@ exports.createComment = (req, res) => {
   // *****************************************************************************************
   // Code création:
 
-
   Comment.create(comment)
     .then((result) => {
       res.status(201).json({
@@ -70,8 +65,7 @@ exports.createComment = (req, res) => {
     })
     .catch((error) => {
       res.status(500).json({
-        message: "Désolé, impossible d'ajouter votre commentaire !",
-        error: error
+        message: "Désolé, impossible d'ajouter votre commentaire !"
       })
     })
 
@@ -126,8 +120,7 @@ exports.modifyComment = (req, res) => {
     )
     .catch((error) =>
       res.status(400).json({
-        message: "Désolé, votre commentaire n'a pas pu être modifié",
-        error: error
+        message: "Désolé, votre commentaire n'a pas pu être modifié"
       })
     )
 }

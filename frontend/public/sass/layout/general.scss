@@ -21,6 +21,16 @@ header {
     height: 12%;
 }
 
+h1, h2, p, label, button{
+    color: white;
+}
+
+textarea{
+    resize: none;
+}
+
+
+
 
 // ***************************************
 // Body index:
@@ -31,6 +41,7 @@ header {
 
 // ***************************************
 // Body inscription:
+
 .inscription-body{
     width: 100%;
     height: 100%;
@@ -93,3 +104,24 @@ header {
     background-color: #2152ab;
 }
 
+.row{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.col-12{
+    // Media Queries: ***************************************
+  @include mobile-landscape-tablet { // 480 - 768
+
+  }
+  @include tablet-landscape {       // 768 - 1024
+    width: 70%;
+  }
+  @include pc {                     // 1024 - 1600
+    width: 50%;
+  }
+  @include pc-xl {                  // > 1600
+    width: 50%;
+  }
+}

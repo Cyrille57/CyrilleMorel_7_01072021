@@ -107,7 +107,7 @@ function displayNavBar() {
   // image du logo:
   let logo = createTag('img')
   addClass(logo, ['postWall-logo-site'])
-  logo.setAttribute('src', '../images/Logo Groupomania/icon-left-font-monochrome-black.png')
+  logo.setAttribute('src', '../images/Logo Groupomania/icon-font-monochrome-white.png')
   logo.setAttribute('width', '35')
   logo.setAttribute('height', '35')
   logo.setAttribute('alt', 'Logo de Groupomania')
@@ -162,7 +162,7 @@ function displayNavBar() {
   }
 
   //---------------------------------------------------------
-  // Voir lr profil:
+  // Voir le profil:
 
   // li vue profil:
   let liViewProfil = createTag('li')
@@ -258,8 +258,8 @@ function displayFormPost() {
   //---------------------------------------------------------
   // Titre de la page:
   let titlePage = createTag('h1')
-  addClass(titlePage, ['titlePage', 'text-center'])
-  titlePage.innerHTML = 'Le mur:'
+  addClass(titlePage, ['titlePage', 'text-center', 'text-white'])
+  titlePage.innerHTML = 'The Wall'
 
   // Injecte dans le html:
   divCol.appendChild(titlePage)
@@ -683,6 +683,7 @@ function modifyPost(post) {
 
         let frameTextereaModifyComment = createTag('div')
         addClass(frameTextereaModifyComment, ['frameTextereaModifyPost', 'input-field'])
+        frameTextereaModifyComment.setAttribute('id', 'frameModifyPost')
         //returnModifyComment(frameTextereaModifyComment)
 
         let textareaModyfyPost = createTag('textarea')
@@ -698,11 +699,15 @@ function modifyPost(post) {
         frameTextereaModifyComment.appendChild(textareaModyfyPost)
 
         // Btn:
-        let divBtnSendPostModify = createTag('button')
-        addClass(divBtnSendPostModify, ['btn--sendPostModify', 'shadow', 'rounded', 'mt-3'])
+        let divBtnSendPostModify = createTag('a')
+        addClass(divBtnSendPostModify, ['button', 'shadow', 'rounded'])
         divBtnSendPostModify.setAttribute('id', 'btnSendPostModify')
-        divBtnSendPostModify.setAttribute('type', 'button')
+        //divBtnSendPostModify.setAttribute('type', 'button')
         divBtnSendPostModify.innerHTML = 'Mettre à jour'
+
+        // Icone dans le bouton vue:
+        let iconeSendPostModify = createTag('i')
+        addClass(iconeSendPostModify, ['far', 'fa-edit'])
 
         // Ecoute le bouton mettre à jour:
         divBtnSendPostModify.addEventListener('click', (event) => {
@@ -764,31 +769,11 @@ function modifyPost(post) {
         formModify.appendChild(frameTextereaModifyComment)
         frameTextereaModifyComment.appendChild(textareaModyfyPost)
         frameTextereaModifyComment.appendChild(divBtnSendPostModify)
-        //frameTextereaModifyComment.appendChild(btnReturnReadPost)
-
-
-
-
-
-
+        divBtnSendPostModify.appendChild(iconeSendPostModify)
 
 
       }
-
-
-
     })
-
-
-
-
-
-
-
-
-
-
-
   }
 }
 modifyPost()
@@ -801,6 +786,8 @@ modifyPost()
 
 
 function returnModifyPost(frameTextereaModifyPost) {
+
+  console.log(frameTextereaModifyPost)
 
   let btnReturnReadPost = createTag('button')
   addClass(btnReturnReadPost, ['btn--sendPostModify', 'shadow', 'shadow', 'rounded', 'my-3'])
@@ -815,7 +802,6 @@ function returnModifyPost(frameTextereaModifyPost) {
   })
 
 }
-
 
 ///////////////////////////////////////////////////////////
 

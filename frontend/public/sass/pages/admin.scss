@@ -23,6 +23,8 @@ ul {
   list-style: none;
 }
 
+.modifyRowAdmin{}
+
 // ***************************************
 // Card qui apparais au clik de vue:
 .display-frameCard__cardUser {
@@ -39,7 +41,7 @@ ul {
   backdrop-filter: blur(10px);
 
   //border: 1px solid rgba(255, 255, 255, 0.5);
-  border: 2px solid black;
+  //border: 2px solid black;
   border-radius: 3% !important;
 
   display: flex;
@@ -55,10 +57,23 @@ ul {
 
   overflow: hidden;
 
-  border: 1px solid red;
+  //border: 1px solid red;
 
   display: flex;
   flex-direction: column;
+
+  .divEmailUser{
+    width: 100%;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    display: flex;
+    justify-content: center;
+  }
+  .divInfoRole{
+    display: flex;
+    text-align: center;
+
+  }
 }
 
 .divRightCardUser {
@@ -69,7 +84,25 @@ ul {
 
   overflow: hidden;
 
-  border: 1px solid rgb(158, 231, 21)
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  //border: 1px solid rgb(158, 231, 21)
+
+  .divBio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.display-frameCard__cardUserUsername{
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .display-frameCard__cardUserUsername>h2 {
@@ -89,7 +122,7 @@ ul {
 
 .cardEditUser {
   margin-top: 20%;
-  border:1px solid black;
+  //border:1px solid black;
 }
 // Formulaire:
 .form-group{
@@ -103,6 +136,7 @@ ul {
 .sizeLabel{
 
   width: 80%;
+  margin-top: 10%;
     // Media Queries: ***************************************
     @include mobile-landscape-tablet { // 480 - 768
 

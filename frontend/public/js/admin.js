@@ -98,7 +98,7 @@ function displayNavBar(getUser) {
     // image du logo:
     let logo = createTag('img')
     addClass(logo, ['postWall-logo-site'])
-    logo.setAttribute('src', '../images/Logo Groupomania/icon-left-font-monochrome-black.png')
+    logo.setAttribute('src', '../images/Logo Groupomania/icon-font-monochrome-white.png')
     logo.setAttribute('width', '35')
     logo.setAttribute('height', '35')
     logo.setAttribute('alt', 'Logo de Groupomania')
@@ -193,12 +193,21 @@ function displayAll(getUser) {
 
     // Row:
     let divRow = createTag('div')
-    addClass(divRow, ['row'])
+    addClass(divRow, ['row', 'modifyRowAdmin'])
 
     // Col-12
     let divCol = createTag('div')
     addClass(divCol, ['col-12'])
     divCol.setAttribute('id', 'divCol')
+
+    //---------------------------------------------------------
+    // Titre de la page:
+    let titlePage = createTag('h1')
+    addClass(titlePage, ['titlePage', 'text-center', 'text-white'])
+    titlePage.innerHTML = 'DashBoard'
+
+    // Injecte dans le html:
+    divCol.appendChild(titlePage)
 
     //---------------------------------------------------------
     // Création du tableau:
@@ -447,25 +456,26 @@ function displayAll(getUser) {
 
             // Username:
             let divUsername = createTag('h2')
+            addClass(divUsername, ['text-white'])
             divUsername.innerHTML = getUsername
 
             // Email;
             let divEmailUser = createTag('p')
-            addClass(divEmailUser, ['divEmailUser'])
-            divEmailUser.innerHTML = "Email: </br>" + getEmail
+            addClass(divEmailUser, ['divEmailUser', 'text-white'])
+            divEmailUser.innerHTML = "Email: " + getEmail
 
             // Rôles:
             let divInfoRole = createTag('p')
             addClass(divInfoRole, ['divInfoRole'])
             if (getRole == true) {
-                divInfoRole.innerHTML = "Rôles: </br>" + "Cette personne est administrateur."
+                divInfoRole.innerHTML = "Rôles: " + "Cette personne est administrateur."
             } else(
-                divInfoRole.innerHTML = "Rôles: </br>" + "Cette personne n'est pas administrateur."
+                divInfoRole.innerHTML = "Rôles: " + "Cette personne n'est pas administrateur."
             )
 
             // Bio:
             let divBio = createTag('p')
-            addClass(divBio, ['divBio'])
+            addClass(divBio, ['divBio', 'text-center'])
             console.log(getBio)
             if (getBio === null) {
                 divBio.innerHTML = "Bio: </br>" + "Cette personne n'a pas rempli sa biographie."
@@ -474,8 +484,8 @@ function displayAll(getUser) {
             }
 
             //Retour:
-            let btnReturnAllUser = createTag('button')
-            addClass(btnReturnAllUser, ['btn--sendPostModify', 'shadow', 'shadow', 'rounded', 'my-3'])
+            let btnReturnAllUser = createTag('a')
+            addClass(btnReturnAllUser, ['button', 'shadow', 'rounded', 'my-3'])
             btnReturnAllUser.setAttribute('id', 'btnReturnAllUser')
             btnReturnAllUser.setAttribute('type', 'button')
             btnReturnAllUser.innerHTML = 'Retour'
@@ -535,8 +545,6 @@ function displayAll(getUser) {
             // Frame de la card:
             let divReadCardEditUser = createTag('div')
             addClass(divReadCardEditUser, ['display-frameCard__cardEditUser', 'shadow', 'rounded'])
-
-
 
             // Injecte dans le html:
             getDivCol.appendChild(cardEditUser)
@@ -649,7 +657,7 @@ function displayAll(getUser) {
             addClass(divFrameCheckBox, ['divFrameCheckBox'])
 
             let legendRadio = createTag('legend')
-            addClass(legendRadio, ['col-form-label', 'col-sm-2', 'pt-0'])
+            addClass(legendRadio, ['col-form-label', 'col-sm-2', 'pt-0', 'text-white'])
             legendRadio.innerHTML = 'Administrateur: </br>'
 
             // Injecte dans le html:
@@ -715,15 +723,15 @@ function displayAll(getUser) {
             addClass(divFrameButton, ['divFrameButton'])
 
             //Retour:
-            let btnReturnAllUser = createTag('button')
-            addClass(btnReturnAllUser, ['btn--sendPostModify', 'shadow', 'shadow', 'rounded', 'my-3'])
+            let btnReturnAllUser = createTag('a')
+            addClass(btnReturnAllUser, ['button', 'shadow', 'rounded', 'text-white'])
             btnReturnAllUser.setAttribute('id', 'btnReturnAllUser')
             btnReturnAllUser.setAttribute('type', 'button')
             btnReturnAllUser.innerHTML = 'Retour'
 
             //Validr:
-            let btnValidateUpdateUser = createTag('button')
-            addClass(btnValidateUpdateUser, ['btn--sendPostModify', 'shadow', 'shadow', 'rounded', 'my-3'])
+            let btnValidateUpdateUser = createTag('a')
+            addClass(btnValidateUpdateUser, ['button', 'shadow', 'rounded', 'text-white'])
             btnValidateUpdateUser.setAttribute('id', 'btnValidateUpdateUser')
             btnValidateUpdateUser.setAttribute('type', 'button')
             btnValidateUpdateUser.innerHTML = 'Valider'
@@ -929,7 +937,7 @@ function displayAll(getUser) {
                 method: "DELETE",
                 headers: new Headers({
                     "Authorization": 'Bearer ' + tokenConnect
-                  })
+                })
             };
 
             fetch(getUrlDelete(), myInit)
