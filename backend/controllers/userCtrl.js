@@ -190,14 +190,18 @@ exports.login = (req, res) => {
                 error: 'Pseudo et/ou mot de passe incorrect !'
               });
             } else {
-
+              console.log(' UserCtrl admin:')
+              console.log(user.admin)
+              //console.log(' UserCtrl res:')
+              //console.log(json_object)
               res.status(200).json({
                 status: '201',
                 userId: user.id,
                 adminoupas: user.admin,
                 message: 'Authentification reussie !',
                 token: jwt.sign({
-                    userId: user.id
+                    userId: user.id,
+                    adminoupas: user.admin
                   },
                   process.env.TOKEN_LOGIN_USER, {
                     expiresIn: '24h'
@@ -231,7 +235,9 @@ exports.modifyUser = (req, res) => {
     admin
   } = req.body
 
-  console.log(req.body)
+  console.log('MODIFYUser , req.body:')
+  console.log(req.body.admin)
+  console.log('MODIFYUser , req.params:')
   console.log(req.params)
   // *****************************************************************************************
   // Code modification:
@@ -245,6 +251,9 @@ exports.modifyUser = (req, res) => {
     .then(
       (user) => {
         if (user) {
+          console.log('MODIFYUser , admin:')
+          console.log(typeof(admin))
+          if ( req.body.admin === admin ){
 
           //bcrypt.hash(password, 10, function (err, bcryptPassword) {
 
@@ -269,6 +278,11 @@ exports.modifyUser = (req, res) => {
 
               })
             })
+          } else{
+            return res.status(401).json({
+              error: 'Vous n\'etes pas administrateur, désolé'
+            });
+          }
 
           //})
 

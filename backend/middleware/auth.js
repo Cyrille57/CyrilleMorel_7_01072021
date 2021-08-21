@@ -9,6 +9,9 @@ const dotEnv = require("dotenv").config();
 // Importe le package qui créer et vérifie les tokens d'authentification:
 const jwt = require('jsonwebtoken');
 
+// Import du models user:
+const models = require('../models/user')
+
 
 
 module.exports = (req, res, next) => {
@@ -16,25 +19,22 @@ module.exports = (req, res, next) => {
   try {
     // Extrait le token du header Authorization de la requête entrante:
     const token = req.headers.authorization.split(' ')[1];
-    console.log('Auth.js token:')
-    console.log(token)
 
     // La fonction verify décode le token:
     const decodedToken = jwt.verify(token, process.env.TOKEN_LOGIN_USER);
-    console.log("process.env.TOKEN_LOGIN_USER:")
-    console.log(process.env.TOKEN_LOGIN_USER)
+
     // Extrait l'ID user du token:
     const userId = decodedToken.userId;
-    console.log('Auth.js userId:')
-    console.log(userId)
+
+    const admin = decodedToken.adminoupas
+    console.log('admin:')
+    console.log(admin)
 
     // Si la demande contient un ID user, compare à celui extrait du token:
     if (req.body.userId && req.body.userId !== userId) {
       throw 'Identifiant utilisateur invalide';
     } else {
-      req.userid = userId //req.body.userid = userId
-      console.log('Auth.js req.user.id:')
-      console.log(req.userid)
+      req.userid = userId
       // L'user est authentifié:
       next();
     }
