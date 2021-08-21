@@ -24,13 +24,13 @@ function showPassword() {
   const password = document.getElementById('inputPassword');
 
   if (password.type === 'password') {
-    console.log('INFOS SHOWPASSWORD IF')
-    console.log(password.type)
+    //console.log('INFOS SHOWPASSWORD IF')
+    //console.log(password.type)
     password.type = "text";
   }
   else {
-    console.log('INFOS SHOWPASSWORD ELSE')
-    console.log(password.type)
+    //console.log('INFOS SHOWPASSWORD ELSE')
+    //console.log(password.type)
   password.type = "password";
   }
 

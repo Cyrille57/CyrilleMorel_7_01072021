@@ -354,7 +354,7 @@ function displayFormPost() {
 
     fetch(urlSendPost, myInit)
       .then(res => res.text()) // or res.json()
-    //.then(res => window.location.reload())
+    .then(res => window.location.reload())
 
   })
 
@@ -758,7 +758,7 @@ function modifyPost(post) {
 
           fetch(url, myInit)
             .then(response => response.json())
-            //.then(res => document.location.reload())
+            .then(res => document.location.reload())
             .catch(err => console.log(err))
 
 

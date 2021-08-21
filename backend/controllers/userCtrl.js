@@ -85,11 +85,11 @@ exports.signup = (req, res) => {
     })
   }
   // bio:
-  if (!bioRegex.test(bio)) {
+/*  if (!bioRegex.test(bio)) {
     return res.status(400).json({
       message: ' Les caractéres spéciaux ne sont pas valides'
     })
-  }
+  }*/
 
   // *****************************************************************************************
   // Code inscription:
